@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://wmwu7g8xut7"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_fm7kd"]
+
+[resource]
+script = ExtResource("1_fm7kd")
+skID = 102
+SkName = "AsOne"
+SkDesc = "Damage received have a max of 30"
+skType = 1
+SkHit = 3
+reward = true
+reward_chance = 0.67
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

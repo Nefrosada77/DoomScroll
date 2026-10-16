@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bwbvaynone8kd"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_xy0qs"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_be6m6"]
+size = Vector2(128, 128)
+
+[resource]
+script = ExtResource("1_xy0qs")
+skID = 4
+use_weight = 0.75
+SkName = "FireWall Update"
+SkDesc = "Increases user's defense by 25%"
+SkCost = 20
+skType = 2
+SkHit = 3
+SkIcon = SubResource("PlaceholderTexture2D_be6m6")
+reward = true
+sellable = true
+reward_chance = 0.6
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

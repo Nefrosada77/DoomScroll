@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bdx3pipfubwyq"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_um2ej"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cmuiv"]
+size = Vector2(128, 128)
+
+[resource]
+script = ExtResource("1_um2ej")
+skID = 6
+use_weight = 0.5
+SkName = "Corrupt"
+SkDesc = "Inflicts the target with virus"
+SkCost = 12
+skType = 2
+SkIcon = SubResource("PlaceholderTexture2D_cmuiv")
+reward = true
+sellable = true
+reward_chance = 0.5
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

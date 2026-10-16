@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://ds21dcbi75xgc"]
+
+[ext_resource type="Script" uid="uid://d0ulr7kow1t6o" path="res://scripts/EnemiesScripts/Crypto.gd" id="1_lydia"]
+[ext_resource type="Texture2D" uid="uid://dydqq0m0c2vem" path="res://Assets/Images/AttackIcon.png" id="2_0xwlp"]
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="3_v1guh"]
+[ext_resource type="Resource" uid="uid://bwbvaynone8kd" path="res://skills/actives/firewall_update.tres" id="4_4rrlf"]
+[ext_resource type="Resource" uid="uid://bdx3pipfubwyq" path="res://skills/actives/Corrupt.tres" id="5_su3gb"]
+[ext_resource type="ArrayMesh" uid="uid://bu5gc7pn5hqf7" path="res://Assets/Models/Crypto/Crypto.obj" id="6_w3pom"]
+
+[sub_resource type="Resource" id="Resource_w3pom"]
+script = ExtResource("3_v1guh")
+use_weight = 0.2
+SkName = "Attack"
+skPower = 10
+SkIcon = ExtResource("2_0xwlp")
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lxe82"]
+
+[sub_resource type="Animation" id="Animation_ixcpu"]
+resource_name = "basic_attack"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CryptoModel:quaternion")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, 0.40778053, 0, 0.91308), Quaternion(0, -0.026095156, 0, 0.9996595)]
+}
+
+[sub_resource type="Animation" id="Animation_w3pom"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CryptoModel:quaternion")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Quaternion(0.08996014, 0.17413186, 9.497433e-10, 0.9806045), Quaternion(-0.054972466, -0.32837152, 0, 0.94294757)]
+}
+
+[sub_resource type="Animation" id="Animation_a62ln"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CryptoModel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CryptoModel:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hi74q"]
+resource_name = "death_animation"
+length = 0.93333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CryptoModel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 97.00588),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xuskm"]
+_data = {
+&"Attack": SubResource("Animation_ixcpu"),
+&"Idle": SubResource("Animation_w3pom"),
+&"RESET": SubResource("Animation_a62ln"),
+&"death_animation": SubResource("Animation_hi74q")
+}
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6yjb0"]
+radius = 0.8305664
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sw0xa"]
+radius = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0a0k2"]
+transparency = 1
+albedo_color = Color(1, 0.43529412, 0.40392157, 0.08235294)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j1ss0"]
+material = SubResource("StandardMaterial3D_0a0k2")
+top_radius = 5.0
+bottom_radius = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d535r"]
+albedo_color = Color(1, 0.76862746, 0.42745098, 1)
+metallic = 0.75
+roughness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n3oun"]
+albedo_color = Color(0.4045111, 0.40451115, 0.4045111, 1)
+metallic = 0.45
+roughness = 0.0
+
+[node name="Crypto" type="CharacterBody3D" unique_id=1574311527 node_paths=PackedStringArray("animation", "marker_analysis")]
+motion_mode = 1
+script = ExtResource("1_lydia")
+baseLevel = 6
+charName = "Crypto"
+level = 6
+xp = 343
+money = 50
+maxHP = 120
+currHP = 120
+attack = 7
+curr_attack = 7.0
+defense = 10
+curr_defense = 10.0
+main_attack = SubResource("Resource_w3pom")
+skills = Array[ExtResource("3_v1guh")]([ExtResource("4_4rrlf"), ExtResource("5_su3gb")])
+hp_evolve = 15
+def_evolve = 2
+animation = NodePath("CharAnimationPlayer")
+marker_analysis = NodePath("Marker3D")
+metadata/_custom_type_script = "uid://dbsx7lljx7o3a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1355891461]
+shape = SubResource("CapsuleShape3D_lxe82")
+
+[node name="CharAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1935505226]
+libraries/ = SubResource("AnimationLibrary_xuskm")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=2053502384]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.85, 0.25, -2)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=114685909]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=978584743]
+shape = SubResource("CylinderShape3D_6yjb0")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=394201851]
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="LookArea" type="Area3D" parent="." unique_id=1844800554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LookArea" unique_id=1076959927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+shape = SubResource("CylinderShape3D_sw0xa")
+
+[node name="DebugArea" type="MeshInstance3D" parent="LookArea" unique_id=1325728561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+visible = false
+mesh = SubResource("CylinderMesh_j1ss0")
+
+[node name="CryptoModel" type="MeshInstance3D" parent="." unique_id=970600103]
+rotation_edit_mode = 1
+mesh = ExtResource("6_w3pom")
+surface_material_override/0 = SubResource("StandardMaterial3D_d535r")
+surface_material_override/1 = SubResource("StandardMaterial3D_n3oun")
+surface_material_override/3 = SubResource("StandardMaterial3D_n3oun")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="LookArea" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="LookArea" to="." method="_on_look_area_body_exited"]

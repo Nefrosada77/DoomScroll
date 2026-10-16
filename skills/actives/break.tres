@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cxrmyi3thcv4g"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_vn6ie"]
+
+[resource]
+script = ExtResource("1_vn6ie")
+skID = 9
+use_weight = 0.5
+SkName = "Break"
+SkDesc = "Doubles power if target is guarding"
+SkCost = 15
+skPower = 12
+crit_bonus = 0.1
+sellable = true
+reward_chance = 0.3
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

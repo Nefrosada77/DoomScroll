@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://cpamtj5glqveo"]
+
+[ext_resource type="Script" uid="uid://baom2qvcww5ef" path="res://scripts/player.gd" id="1_cvunv"]
+[ext_resource type="Resource" uid="uid://d22ehi0p4ay7t" path="res://skills/actives/defend.tres" id="2_hi74q"]
+[ext_resource type="Resource" uid="uid://bqcmcfrb11des" path="res://skills/actives/basic_attack.tres" id="2_qmos2"]
+[ext_resource type="PackedScene" uid="uid://venpvf7dpywq" path="res://Assets/Models/basePlayer/exported-model.glb" id="4_hi74q"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a0dc1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a0dc1"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6yjb0"]
+radius = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi74q"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.08235294)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6yjb0"]
+material = SubResource("StandardMaterial3D_hi74q")
+top_radius = 1.5
+bottom_radius = 1.5
+
+[node name="Player" type="CharacterBody3D" unique_id=428104958 node_paths=PackedStringArray("camera", "model", "interact_area", "animation", "marker_analysis")]
+script = ExtResource("1_cvunv")
+defend = ExtResource("2_hi74q")
+camera = NodePath("Camera3D")
+model = NodePath("exported-model/Skinned Mesh 0/Skeleton3D/Skinned Mesh 0")
+interact_area = NodePath("Area3D")
+charName = "Player"
+main_attack = ExtResource("2_qmos2")
+animation = NodePath("exported-model/AnimationPlayer")
+marker_analysis = NodePath("Marker3D")
+
+[node name="exported-model" parent="." unique_id=101721941 instance=ExtResource("4_hi74q")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.6, 0)
+
+[node name="Skeleton3D" parent="exported-model/Skinned Mesh 0" parent_id_path=PackedInt32Array(101721941, 1528081832) index="0" unique_id=1337091651]
+bones/1/position = Vector3(0.1346675, -0.048809603, 1.5104958)
+bones/1/rotation = Quaternion(0.6781873, -0.01083682, 0.0026225846, 0.7348045)
+bones/2/rotation = Quaternion(-0.06470268, 1.1649197e-07, -7.906543e-09, 0.9979046)
+bones/3/rotation = Quaternion(0.20375623, 0.0017506336, 0.01910577, 0.9788337)
+bones/4/rotation = Quaternion(0.019248053, 0.006107986, 0.01869837, 0.99962133)
+bones/5/rotation = Quaternion(0.2911285, -0.0021446648, -0.019450521, 0.9564838)
+bones/6/rotation = Quaternion(-0.1052227, 0.0861142, -0.011182893, 0.99065006)
+bones/7/rotation = Quaternion(-0.016260555, 4.7782052e-08, -6.9447155e-09, 0.9998678)
+bones/8/rotation = Quaternion(-0.53019476, -0.3779006, -0.40743315, 0.6403772)
+bones/9/rotation = Quaternion(0.32463852, 0.5464148, -0.6720678, 0.3799547)
+bones/10/rotation = Quaternion(0.7549061, -0.23562087, 0.3991863, 0.46395046)
+bones/11/rotation = Quaternion(0.101607844, 0.013815759, -0.061069906, 0.9928523)
+bones/12/rotation = Quaternion(0.4536484, 0.5562002, -0.4366291, 0.54240155)
+bones/13/rotation = Quaternion(-0.6060121, 0.22676681, 0.31834078, 0.6928097)
+bones/14/rotation = Quaternion(-0.23103301, 0.57518023, -0.689962, -0.3738234)
+bones/15/rotation = Quaternion(0.85477185, 0.11982354, -0.22707514, 0.4510482)
+bones/16/rotation = Quaternion(0.11670898, 0.002916694, 0.044778638, 0.9921519)
+bones/17/rotation = Quaternion(0.45364836, -0.55619985, 0.43662992, 0.54240143)
+bones/18/rotation = Quaternion(0.9507416, 0.08913681, -0.010990317, 0.29668894)
+bones/19/rotation = Quaternion(0.5546564, -0.08980599, 0.060364995, 0.8250135)
+bones/20/rotation = Quaternion(-0.67637664, 0.15844327, 0.064784594, 0.7163891)
+bones/21/rotation = Quaternion(-0.00013714893, 0.9643067, -0.26478744, -0.0004995425)
+bones/22/rotation = Quaternion(-4.6629935e-08, -3.2590805e-08, -1.1643009e-10, 1)
+bones/23/rotation = Quaternion(0.9848098, -0.15862395, 0.019557925, -0.067865364)
+bones/24/rotation = Quaternion(0.3671795, 0.0794224, -0.031495698, 0.92621773)
+bones/25/rotation = Quaternion(-0.7193322, 0.27554536, -0.107570216, 0.6285415)
+bones/26/rotation = Quaternion(-0.00013702942, 0.9643067, -0.26478744, -0.00049954175)
+bones/27/rotation = Quaternion(-3.1728803e-08, -3.2619937e-08, 7.4505664e-09, 1)
+
+[node name="DebugMesh" type="MeshInstance3D" parent="." unique_id=1344799489]
+visible = false
+mesh = SubResource("CapsuleMesh_a0dc1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1774503686]
+shape = SubResource("CapsuleShape3D_a0dc1")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=1757155284]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.85, 0.25, -2)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1049990855]
+transform = Transform3D(1, 0, 0, 0, 0.9396927, 0.34202015, 0, -0.34202015, 0.9396927, 0, 2.18, 3.435)
+fov = 80.0
+size = 6.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=767568768]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=254406209]
+shape = SubResource("CylinderShape3D_6yjb0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=934788342]
+visible = false
+mesh = SubResource("CylinderMesh_6yjb0")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_interact_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_interact_body_exited"]
+
+[editable path="exported-model"]

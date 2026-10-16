@@ -1,0 +1,535 @@
+[gd_scene format=3 uid="uid://bstysqye8ymkm"]
+
+[ext_resource type="Script" uid="uid://ce2ockfjs422q" path="res://scripts/first_level.gd" id="1_048ga"]
+[ext_resource type="AudioStream" uid="uid://b7rjg82ppn6tc" path="res://Assets/Sounds/Music/ambient.ogg" id="2_2fma4"]
+[ext_resource type="PackedScene" uid="uid://clkyqcltmppsh" path="res://scenes/teleporter.tscn" id="3_a0dj8"]
+[ext_resource type="PackedScene" uid="uid://cnjp6k0iuhr6p" path="res://characters/ratkingbot.tscn" id="4_048ga"]
+[ext_resource type="PackedScene" uid="uid://bqoe241yd6ttd" path="res://scenes/Main_Menu.tscn" id="5_048ga"]
+[ext_resource type="Script" uid="uid://boir3t3l0yqrm" path="res://scripts/healer.gd" id="6_wxjxf"]
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="7_2ewt3"]
+[ext_resource type="PackedScene" uid="uid://bx3ngx7b0xkjj" path="res://scenes/menu_control.tscn" id="8_e4h20"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hvci7"]
+sky_top_color = Color(0.51672906, 0.2620303, 0.19227186, 1)
+sky_horizon_color = Color(0.72074807, 0.65257055, 0.4443576, 1)
+sky_curve = 0.06
+ground_bottom_color = Color(0.30046397, 0.101732664, 0.07463705, 1)
+ground_horizon_color = Color(0.7774846, 0.6308622, 0.40020674, 1)
+ground_curve = 1.2187707
+use_debanding = false
+
+[sub_resource type="Sky" id="Sky_l5ivm"]
+sky_material = SubResource("ProceduralSkyMaterial_hvci7")
+
+[sub_resource type="Environment" id="Environment_5xbjy"]
+background_mode = 2
+background_color = Color(0.9565256, 0.3225082, 0.4667222, 1)
+sky = SubResource("Sky_l5ivm")
+sky_custom_fov = 90.0
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 3
+tonemap_exposure = 0.6
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_1s5k1"]
+agent_height = 2.0
+
+[sub_resource type="Shader" id="Shader_pa8r4"]
+code = "shader_type spatial;
+
+global uniform vec3 level_color;
+uniform float circle_size : hint_range(0.0, 0.6, 0.05) = 0.45;
+uniform float brightness : hint_range(0.0, 1.0, 0.01) = 0.2;
+
+void fragment() {
+	ALBEDO.rgb = level_color;
+	float circle = distance(UV, vec2(0.5));
+	ALPHA = (step(circle_size, circle) + 0.75) * ((abs(sin(TIME))*(brightness)+0.15)*circle);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pa8r4"]
+render_priority = 0
+shader = SubResource("Shader_pa8r4")
+shader_parameter/circle_size = 0.0
+shader_parameter/brightness = 0.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2y5yt"]
+material = SubResource("ShaderMaterial_pa8r4")
+size = Vector2(5, 5)
+center_offset = Vector3(0, -0.5, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e3sih"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15mv3"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.03529412)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y5xye"]
+material = SubResource("StandardMaterial3D_15mv3")
+size = Vector3(5, 5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pa8r4"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="MeshLibrary" id="MeshLibrary_a0dc1"]
+item/0/name = "Ground | 1x1"
+item/0/mesh = SubResource("PlaneMesh_2y5yt")
+item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/mesh_cast_shadow = 0
+item/0/shapes = [SubResource("BoxShape3D_e3sih"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/navigation_layers = 1
+item/1/name = "Wall | 1x1"
+item/1/mesh = SubResource("BoxMesh_y5xye")
+item/1/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/mesh_cast_shadow = 1
+item/1/shapes = [SubResource("BoxShape3D_pa8r4"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/1/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/navigation_layers = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftsjt"]
+albedo_color = Color(0.48570347, 0.48570353, 0.48570347, 1)
+metallic = 0.5
+metallic_specular = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_a0dc1"]
+material = SubResource("StandardMaterial3D_ftsjt")
+size = Vector3(1, 2, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4p1o3"]
+data = PackedVector3Array(-0.5, 1, 0.5, 0.5, 1, 0.5, -0.5, -1, 0.5, 0.5, 1, 0.5, 0.5, -1, 0.5, -0.5, -1, 0.5, 0.5, 1, -0.5, -0.5, 1, -0.5, 0.5, -1, -0.5, -0.5, 1, -0.5, -0.5, -1, -0.5, 0.5, -1, -0.5, 0.5, 1, 0.5, 0.5, 1, -0.5, 0.5, -1, 0.5, 0.5, 1, -0.5, 0.5, -1, -0.5, 0.5, -1, 0.5, -0.5, 1, -0.5, -0.5, 1, 0.5, -0.5, -1, -0.5, -0.5, 1, 0.5, -0.5, -1, 0.5, -0.5, -1, -0.5, 0.5, 1, 0.5, -0.5, 1, 0.5, 0.5, 1, -0.5, -0.5, 1, 0.5, -0.5, 1, -0.5, 0.5, 1, -0.5, -0.5, -1, 0.5, 0.5, -1, 0.5, -0.5, -1, -0.5, 0.5, -1, 0.5, 0.5, -1, -0.5, -0.5, -1, -0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0dc1"]
+draw_center = false
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2y5yt"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_go7sj"]
+bg_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_2y5yt"]
+font_size = 32
+outline_size = 16
+outline_color = Color(0.0436391, 0.58010924, 0.2399899, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15mv3"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sih"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_e3sih"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2os1m"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2os1m"]
+bg_color = Color(0.05465565, 0.6882809, 0.66115725, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_go7sj"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7gny6"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="Animation" id="Animation_4nkto"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fcfvj"]
+resource_name = "start_battle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3, 50]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pa8r4"]
+_data = {
+&"RESET": SubResource("Animation_4nkto"),
+&"start_battle": SubResource("Animation_fcfvj")
+}
+
+[node name="Level2" type="Node3D" unique_id=110289429 node_paths=PackedStringArray("spawn_point", "animation_player", "world", "interact_label", "encounter_radar", "worldGUI", "healthGUI", "manaGUI", "levelGUI", "ambient_player", "world_level_label", "world_level_bar", "world_timer_label")]
+script = ExtResource("1_048ga")
+level_id = 1
+level_color = Color(0.9999879, 0.17518699, 0.1174477, 1)
+spawn_point = NodePath("WorldSubContainer/WorldSubViewport/World/SpawnPoint")
+animation_player = NodePath("AnimationPlayer")
+world = NodePath("WorldSubContainer/WorldSubViewport/World")
+interact_label = NodePath("WorldGUI/MarginContainer/InteractLabel")
+encounter_radar = NodePath("WorldGUI/EncounterRadar")
+worldGUI = NodePath("WorldGUI")
+healthGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/HP")
+manaGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/MP")
+levelGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/XP")
+ambient_player = NodePath("AudioStreamPlayer")
+world_level_label = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldLevel")
+world_level_bar = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldTimer")
+world_timer_label = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldTimer/MarginContainer/WorldTimer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1316422463]
+stream = ExtResource("2_2fma4")
+autoplay = true
+bus = &"Music"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1918319049]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1509840868]
+environment = SubResource("Environment_5xbjy")
+
+[node name="WorldSubContainer" type="SubViewportContainer" parent="." unique_id=453856165]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+stretch_shrink = 3
+
+[node name="WorldSubViewport" type="SubViewport" parent="WorldSubContainer" unique_id=1928821806]
+handle_input_locally = false
+size = Vector2i(426, 240)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="WorldSubContainer/WorldSubViewport" unique_id=1800277861]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="WorldSubContainer/WorldSubViewport/World" unique_id=943753529]
+navigation_mesh = SubResource("NavigationMesh_1s5k1")
+
+[node name="GridMap" type="GridMap" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=314986038]
+mesh_library = SubResource("MeshLibrary_a0dc1")
+cell_size = Vector3(5, 1, 5)
+cell_center_y = false
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(65535, 65535, 655360, 0, 65535, 655360, 0, 0, 655360, 1, 0, 655360, 1, 1, 655360, 0, 1, 655360, 65535, 1, 655360, 65535, 0, 655360, 1, 65535, 655360, 0, 65534, 655360, 0, 65533, 655360, 0, 65532, 655360, 0, 65531, 655360, 0, 65530, 655360, 1, 65529, 655360, 2, 65529, 655360, 3, 65528, 655360, 3, 65529, 655360, 3, 65527, 655360, 4, 65527, 655360, 4, 65528, 655360, 1, 65530, 655360, 5, 65527, 655360, 6, 65527, 655360, 7, 65527, 655360, 8, 65527, 655360, 65535, 65530, 655360, 65534, 65530, 655360, 65533, 65530, 655360, 65532, 65530, 655360, 65531, 65530, 655360, 65531, 65529, 655360, 65531, 65528, 655360, 65531, 65527, 655360, 65530, 65527, 655360, 65530, 65526, 655360, 65530, 65525, 655360, 65529, 65525, 655360, 65529, 65526, 655360, 65528, 65526, 655360, 65528, 65525, 655360, 65528, 65524, 655360, 65529, 65524, 655360, 65530, 65524, 655360, 8, 65528, 655360, 8, 65529, 655360, 8, 65530, 655360, 8, 65531, 655360, 8, 65532, 655360, 8, 65533, 655360, 8, 65534, 655360, 8, 65535, 655360, 8, 0, 655360, 8, 1, 655360, 8, 2, 655360, 8, 3, 655360, 9, 65532, 655360, 10, 65532, 655360, 11, 65532, 655360, 12, 65532, 655360, 13, 65532, 655360, 13, 65531, 655360, 14, 65531, 655360, 15, 65531, 655360, 16, 65531, 655360, 17, 65531, 655360, 15, 65530, 655360, 15, 65529, 655360, 15, 65528, 655360, 15, 65527, 655360, 15, 65526, 655360, 15, 65525, 655360, 16, 65525, 655360, 17, 65525, 655360, 17, 65526, 655360, 17, 65527, 655360, 16, 65527, 655360, 16, 65526, 655360, 16, 65524, 655360, 16, 65523, 655360, 16, 65522, 655360, 16, 65521, 655360, 16, 65520, 655360, 15, 65520, 655360, 14, 65520, 655360, 13, 65520, 655360, 12, 65520, 655360, 11, 65520, 655360, 10, 65520, 655360, 9, 65520, 655360, 8, 65520, 655360, 8, 65521, 655360, 8, 65522, 655360, 8, 65523, 655360, 8, 65524, 655360, 8, 65525, 655360, 8, 65526, 655360, 9, 65521, 655360, 9, 65522, 655360, 10, 65522, 655360, 10, 65521, 655360, 65527, 65526, 655360, 65526, 65526, 655360, 65525, 65526, 655360, 65524, 65526, 655360, 65523, 65526, 655360, 65523, 65527, 655360, 65523, 65528, 655360, 65523, 65529, 655360, 65523, 65530, 655360, 65522, 65530, 655360, 65522, 65531, 655360, 65522, 65532, 655360, 65522, 65533, 655360, 65522, 65534, 655360, 65522, 65535, 655360, 65521, 65530, 655360, 65520, 65530, 655360, 65519, 65530, 655360, 65518, 65530, 655360, 65517, 65530, 655360, 65516, 65530, 655360, 65518, 65529, 655360, 65518, 65528, 655360, 65518, 65527, 655360, 65518, 65526, 655360, 65519, 65526, 655360, 65520, 65526, 655360, 65521, 65526, 655360, 65522, 65526, 655360, 65518, 65525, 655360, 65518, 65524, 655360, 65518, 65523, 655360, 65519, 65523, 655360, 65520, 65523, 655360, 65520, 65522, 655360, 65519, 65522, 655360, 65518, 65522, 655360, 65522, 0, 655360, 65521, 0, 655360, 65520, 0, 655360, 65519, 0, 655360, 65519, 1, 655360, 65519, 2, 655360, 65519, 3, 655360, 65518, 3, 655360, 65517, 3, 655360, 65517, 4, 655360, 65517, 5, 655360, 65518, 5, 655360, 65519, 5, 655360, 65519, 4, 655360, 65518, 4, 655360, 9, 3, 655360, 10, 3, 655360, 11, 3, 655360, 11, 2, 655360, 11, 1, 655360, 12, 1, 655360, 13, 1, 655360, 13, 2, 655360, 13, 3, 655360, 12, 3, 655360, 12, 2, 655360, 65516, 65531, 655360, 65516, 65532, 655360, 65515, 65532, 655360, 65515, 65533, 655360, 65513, 65534, 655360, 65513, 65535, 655360, 65514, 65533, 655360, 65513, 65533, 655360, 65512, 65534, 655360, 65512, 65535, 655360, 65511, 65535, 655360, 65510, 65535, 655360, 65509, 65535, 655360, 65509, 65534, 655360, 65509, 65533, 655360, 65509, 65532, 655360, 65508, 65532, 655360, 65508, 65531, 655360, 65507, 65531, 655360, 65507, 65532, 655360, 65535, 65531, 655361, 65535, 65532, 655361, 65535, 65533, 655361, 65535, 65534, 655361, 65534, 65535, 655361, 65534, 0, 655361, 65534, 1, 655361, 65535, 2, 655361, 0, 2, 655361, 1, 2, 655361, 2, 1, 655361, 2, 0, 655361, 2, 65535, 655361, 1, 65534, 655361, 1, 65533, 655361, 1, 65532, 655361, 1, 65531, 655361, 2, 65530, 655361, 3, 65530, 655361, 0, 65529, 655361, 1, 65528, 655361, 2, 65528, 655361, 4, 65529, 655361, 2, 65527, 655361, 3, 65526, 655361, 4, 65526, 655361, 5, 65528, 655361, 6, 65528, 655361, 7, 65528, 655361, 5, 65526, 655361, 6, 65526, 655361, 7, 65526, 655361, 7, 65525, 655361, 7, 65524, 655361, 7, 65523, 655361, 7, 65522, 655361, 7, 65521, 655361, 7, 65520, 655361, 8, 65519, 655361, 9, 65519, 655361, 10, 65519, 655361, 11, 65519, 655361, 12, 65519, 655361, 13, 65519, 655361, 14, 65519, 655361, 15, 65519, 655361, 16, 65519, 655361, 17, 65520, 655361, 17, 65521, 655361, 17, 65522, 655361, 17, 65523, 655361, 17, 65524, 655361, 15, 65524, 655361, 15, 65523, 655361, 15, 65522, 655361, 15, 65521, 655361, 14, 65521, 655361, 13, 65521, 655361, 12, 65521, 655361, 11, 65521, 655361, 11, 65522, 655361, 10, 65523, 655361, 9, 65523, 655361, 9, 65524, 655361, 9, 65525, 655361, 9, 65526, 655361, 9, 65527, 655361, 9, 65528, 655361, 9, 65529, 655361, 9, 65530, 655361, 9, 65531, 655361, 10, 65531, 655361, 11, 65531, 655361, 12, 65531, 655361, 13, 65530, 655361, 14, 65530, 655361, 14, 65529, 655361, 14, 65528, 655361, 14, 65527, 655361, 14, 65526, 655361, 14, 65525, 655361, 18, 65525, 655361, 18, 65526, 655361, 18, 65527, 655361, 17, 65528, 655361, 16, 65528, 655361, 16, 65529, 655361, 16, 65530, 655361, 17, 65530, 655361, 18, 65531, 655361, 17, 65532, 655361, 16, 65532, 655361, 15, 65532, 655361, 14, 65532, 655361, 13, 65533, 655361, 12, 65533, 655361, 11, 65533, 655361, 10, 65533, 655361, 9, 65533, 655361, 7, 65529, 655361, 7, 65530, 655361, 7, 65531, 655361, 7, 65532, 655361, 7, 65533, 655361, 7, 65534, 655361, 7, 65535, 655361, 7, 0, 655361, 7, 1, 655361, 7, 2, 655361, 7, 3, 655361, 8, 4, 655361, 9, 4, 655361, 10, 4, 655361, 11, 4, 655361, 12, 4, 655361, 13, 4, 655361, 14, 3, 655361, 14, 2, 655361, 14, 1, 655361, 13, 0, 655361, 12, 0, 655361, 11, 0, 655361, 10, 1, 655361, 10, 2, 655361, 9, 2, 655361, 9, 1, 655361, 9, 0, 655361, 9, 65535, 655361, 9, 65534, 655361, 65535, 65529, 655361, 65534, 65529, 655361, 65533, 65529, 655361, 65532, 65529, 655361, 65534, 65531, 655361, 65533, 65531, 655361, 65532, 65531, 655361, 65531, 65531, 655361, 65530, 65530, 655361, 65530, 65529, 655361, 65530, 65528, 655361, 65532, 65528, 655361, 65532, 65527, 655361, 65531, 65526, 655361, 65531, 65525, 655361, 65531, 65524, 655361, 65529, 65527, 655361, 65528, 65527, 655361, 65527, 65527, 655361, 65526, 65527, 655361, 65525, 65527, 655361, 65524, 65527, 655361, 65530, 65523, 655361, 65529, 65523, 655361, 65528, 65523, 655361, 65527, 65524, 655361, 65527, 65525, 655361, 65526, 65525, 655361, 65525, 65525, 655361, 65524, 65525, 655361, 65523, 65525, 655361, 65522, 65525, 655361, 65521, 65525, 655361, 65520, 65525, 655361, 65519, 65525, 655361, 65519, 65524, 655361, 65520, 65524, 655361, 65521, 65523, 655361, 65521, 65522, 655361, 65520, 65521, 655361, 65519, 65521, 655361, 65518, 65521, 655361, 65517, 65522, 655361, 65517, 65523, 655361, 65517, 65524, 655361, 65517, 65525, 655361, 65517, 65526, 655361, 65517, 65527, 655361, 65517, 65528, 655361, 65517, 65529, 655361, 65519, 65527, 655361, 65519, 65528, 655361, 65519, 65529, 655361, 65520, 65529, 655361, 65521, 65529, 655361, 65522, 65529, 655361, 65522, 65528, 655361, 65522, 65527, 655361, 65521, 65527, 655361, 65520, 65527, 655361, 65524, 65528, 655361, 65524, 65529, 655361, 65524, 65530, 655361, 65523, 65531, 655361, 65521, 65531, 655361, 65520, 65531, 655361, 65519, 65531, 655361, 65518, 65531, 655361, 65517, 65531, 655361, 65516, 65529, 655361, 65515, 65530, 655361, 65515, 65531, 655361, 65521, 65532, 655361, 65521, 65533, 655361, 65521, 65534, 655361, 65521, 65535, 655361, 65523, 65532, 655361, 65523, 65533, 655361, 65523, 65534, 655361, 65523, 65535, 655361, 65523, 0, 655361, 65522, 1, 655361, 65521, 1, 655361, 65520, 1, 655361, 65520, 65535, 655361, 65519, 65535, 655361, 65518, 0, 655361, 65518, 1, 655361, 65518, 2, 655361, 65517, 2, 655361, 65520, 2, 655361, 65520, 3, 655361, 65520, 4, 655361, 65520, 5, 655361, 65519, 6, 655361, 65518, 6, 655361, 65517, 6, 655361, 65516, 5, 655361, 65516, 4, 655361, 65516, 3, 655361, 65517, 65532, 655361, 65516, 65533, 655361, 65515, 65534, 655361, 65514, 65534, 655361, 65514, 65535, 655361, 65513, 0, 655361, 65512, 0, 655361, 65511, 0, 655361, 65510, 0, 655361, 65509, 0, 655361, 65508, 65535, 655361, 65508, 65534, 655361, 65508, 65533, 655361, 65507, 65533, 655361, 65506, 65532, 655361, 65506, 65531, 655361, 65507, 65530, 655361, 65508, 65530, 655361, 65509, 65531, 655361, 65510, 65532, 655361, 65510, 65533, 655361, 65510, 65534, 655361, 65511, 65534, 655361, 65511, 65533, 655361, 65512, 65533, 655361, 65513, 65532, 655361, 65514, 65532, 655361)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Teleporter" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=1082447074 instance=ExtResource("3_a0dj8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140, -0.5, -20)
+boss = ExtResource("4_048ga")
+next_level = ExtResource("5_048ga")
+
+[node name="Healer" type="MeshInstance3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=73279302 groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -111.33301, 1, -1)
+mesh = SubResource("BoxMesh_a0dc1")
+script = ExtResource("6_wxjxf")
+price = 250
+description = "[img=100]Assets/Images/InteractIcon.png[/img] [font_size=42]Heal: 250[/font_size]"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Healer" unique_id=545616704]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Healer/StaticBody3D" unique_id=1948228345]
+shape = SubResource("ConcavePolygonShape3D_4p1o3")
+
+[node name="SpawnPoint" type="Marker3D" parent="WorldSubContainer/WorldSubViewport/World" unique_id=1573232919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 3)
+
+[node name="DB_SPAWN" type="Marker3D" parent="WorldSubContainer/WorldSubViewport/World" unique_id=650249593]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1, -118)
+
+[node name="WorldGUI" type="Control" parent="." unique_id=1997823638]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="EncounterRadar" type="PanelContainer" parent="WorldGUI" unique_id=2115682692]
+modulate = Color(0.14509805, 0.7411765, 0.27450982, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a0dc1")
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI" unique_id=523143414]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WorldGUI/MarginContainer" unique_id=1418562141]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+alignment = 2
+
+[node name="XP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=2083528880]
+custom_minimum_size = Vector2(350, 20)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_2y5yt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_go7sj")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=1327328568]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -30.0
+offset_right = 66.000015
+offset_bottom = 25.0
+theme_override_font_sizes/font_size = 32
+text = "Lvl. 1"
+label_settings = SubResource("LabelSettings_2y5yt")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=794654133]
+layout_mode = 0
+offset_left = 196.0
+offset_top = -30.0
+offset_right = 342.0
+offset_bottom = 25.0
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 32
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_2y5yt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=736948913]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_15mv3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_e3sih")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP" unique_id=1175866908]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer" unique_id=1048896065]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=321740782]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "HP"
+label_settings = SubResource("LabelSettings_e3sih")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=1520841514]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_2os1m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=515191332]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_2y5yt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2os1m")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP" unique_id=1864055137]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer" unique_id=2108251959]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=485198245]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "MP"
+label_settings = SubResource("LabelSettings_go7sj")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=98662588]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_7gny6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteractLabel" type="RichTextLabel" parent="WorldGUI/MarginContainer" unique_id=1679336036]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[img=100]Assets/Images/InteractIcon.png[/img] [font_size=42]Interact[/font_size]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerContainer" type="VBoxContainer" parent="WorldGUI/MarginContainer" unique_id=549856256]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="WorldTimer" type="ProgressBar" parent="WorldGUI/MarginContainer/TimerContainer" unique_id=1728476632]
+custom_minimum_size = Vector2(350, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("7_2ewt3")
+fill_mode = 1
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/TimerContainer/WorldTimer" unique_id=1516412005]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="WorldTimer" type="Label" parent="WorldGUI/MarginContainer/TimerContainer/WorldTimer/MarginContainer" unique_id=80423663]
+layout_mode = 2
+text = "currTime / Timer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldLevel" type="Label" parent="WorldGUI/MarginContainer/TimerContainer" unique_id=914772482]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "World Level : +0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=628769856]
+root_node = NodePath("../WorldSubContainer")
+libraries/ = SubResource("AnimationLibrary_pa8r4")
+
+[node name="ConfigMenu" parent="." unique_id=710978952 instance=ExtResource("8_e4h20")]
+visible = false
+z_index = 10
+focus_mode = 2
+focus_behavior_recursive = 1
+mouse_filter = 0
+mouse_target = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=428017320]
+color = Color(0, 0, 0, 1)

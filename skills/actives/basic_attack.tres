@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://bqcmcfrb11des"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_pie0v"]
+[ext_resource type="Texture2D" uid="uid://dydqq0m0c2vem" path="res://Assets/Images/AttackIcon.png" id="1_rst5n"]
+
+[resource]
+script = ExtResource("1_pie0v")
+use_weight = 0.85
+SkName = "Attack"
+skPower = 10
+SkIcon = ExtResource("1_rst5n")
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

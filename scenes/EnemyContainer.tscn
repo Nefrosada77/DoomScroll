@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://spnv5dx8kiot"]
+
+[ext_resource type="Shader" uid="uid://hem0kemxlsil" path="res://scripts/shaders/guiControl.gdshader" id="1_2o6l7"]
+[ext_resource type="Script" uid="uid://b2jn62i2k7b4v" path="res://scripts/enemy_container.gd" id="1_h6bfu"]
+[ext_resource type="Texture2D" uid="uid://bm2dur7s3k8gb" path="res://icon.svg" id="3_2o6l7"]
+[ext_resource type="Texture2D" uid="uid://dydqq0m0c2vem" path="res://Assets/Images/AttackIcon.png" id="4_qp8pj"]
+[ext_resource type="Texture2D" uid="uid://bn3v27b3ridcs" path="res://Assets/Images/DefendIcon.png" id="5_qp8pj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vquho"]
+shader = ExtResource("1_2o6l7")
+shader_parameter/Speed = 2.000000095
+shader_parameter/PixelIncrease = 10.0
+shader_parameter/Hovered = false
+shader_parameter/direction = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2o6l7"]
+bg_color = Color(0.4622122, 0.14120802, 0.11150291, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.2, 0.20392157, 0.18039216, 1)
+corner_radius_top_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vquho"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q8ihx"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[sub_resource type="Animation" id="Animation_q8ihx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2o6l7"]
+resource_name = "death_container"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vquho"]
+_data = {
+&"RESET": SubResource("Animation_q8ihx"),
+&"death_container": SubResource("Animation_2o6l7")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8up6f"]
+bg_color = Color(0.16924527, 0.1692453, 0.16924527, 0.50980395)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.92156863, 0.44705883, 0.3882353, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f5a8b"]
+bg_color = Color(0.16924527, 0.1692453, 0.16924527, 0.50980395)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.92156863, 0.44705883, 0.3882353, 1)
+border_blend = true
+
+[node name="EnemyContainer" type="PanelContainer" unique_id=9602947 node_paths=PackedStringArray("NameLabel", "healthBar", "animation", "status_texture", "atk_stats_container", "stats_status", "atk_stats_label", "def_stats_container", "def_stats_label")]
+material = SubResource("ShaderMaterial_vquho")
+custom_minimum_size = Vector2(200, 0)
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2o6l7")
+script = ExtResource("1_h6bfu")
+NameLabel = NodePath("MarginContainer/VBoxContainer/Label")
+healthBar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
+animation = NodePath("AnimationPlayer")
+status_texture = NodePath("status")
+atk_stats_container = NodePath("StatsStatus/AtkStatus")
+stats_status = NodePath("StatsStatus")
+atk_stats_label = NodePath("StatsStatus/AtkStatus/AtkStatus/AtkLabel")
+def_stats_container = NodePath("StatsStatus/DefStatus")
+def_stats_label = NodePath("StatsStatus/DefStatus/DefStatus/DefLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1185106150]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2011469709]
+use_parent_material = true
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2054962345]
+use_parent_material = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "CHARNAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer" unique_id=1561325588]
+use_parent_material = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_vquho")
+theme_override_styles/fill = SubResource("StyleBoxFlat_q8ihx")
+value = 50.0
+show_percentage = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=248421886]
+libraries/ = SubResource("AnimationLibrary_vquho")
+
+[node name="status" type="TextureRect" parent="." unique_id=1402102017]
+visible = false
+custom_minimum_size = Vector2(0, 48)
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(16, -24)
+offset_transform_visual_only = false
+texture = ExtResource("3_2o6l7")
+expand_mode = 2
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=1413155597]
+bus = &"SFX"
+
+[node name="StatsStatus" type="HBoxContainer" parent="." unique_id=912531113]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 45)
+
+[node name="AtkStatus" type="PanelContainer" parent="StatsStatus" unique_id=1453675444]
+visible = false
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+offset_transform_enabled = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_8up6f")
+
+[node name="AtkStatus" type="HBoxContainer" parent="StatsStatus/AtkStatus" unique_id=1830611748]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="StatsStatus/AtkStatus/AtkStatus" unique_id=1634982314]
+custom_maximum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_qp8pj")
+
+[node name="AtkLabel" type="Label" parent="StatsStatus/AtkStatus/AtkStatus" unique_id=896756926]
+layout_mode = 2
+text = "x1.0"
+
+[node name="DefStatus" type="PanelContainer" parent="StatsStatus" unique_id=509636990]
+visible = false
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+offset_transform_enabled = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_f5a8b")
+
+[node name="DefStatus" type="HBoxContainer" parent="StatsStatus/DefStatus" unique_id=84634891]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="StatsStatus/DefStatus/DefStatus" unique_id=622475842]
+custom_maximum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_qp8pj")
+
+[node name="DefLabel" type="Label" parent="StatsStatus/DefStatus/DefStatus" unique_id=227755109]
+layout_mode = 2
+text = "x1.0"

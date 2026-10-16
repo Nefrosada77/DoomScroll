@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dar6yerkndnng"]
+
+[ext_resource type="Shader" uid="uid://ckvw1rjjprxd8" path="res://scripts/shaders/transparent_ground.gdshader" id="1_eqygt"]
+[ext_resource type="Script" uid="uid://dm2usavf0ofkh" path="res://scripts/ground.gd" id="2_scu27"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0r4r"]
+render_priority = 0
+shader = ExtResource("1_eqygt")
+shader_parameter/circle_size = 0.45000000670554
+shader_parameter/brightness = 0.5999999865888
+
+[node name="Ground" type="CSGBox3D" unique_id=161240709 groups=["change_color"]]
+cast_shadow = 0
+use_collision = true
+size = Vector3(5, 0.01, 5)
+material = SubResource("ShaderMaterial_y0r4r")
+script = ExtResource("2_scu27")

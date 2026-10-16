@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dpex5wj0y1alo"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_hmcx0"]
+
+[resource]
+script = ExtResource("1_hmcx0")
+skID = 5
+use_weight = 0.3
+SkName = "Scratch"
+SkDesc = "Hits two times"
+skPower = 6
+minhits = 2
+maxhits = 2
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

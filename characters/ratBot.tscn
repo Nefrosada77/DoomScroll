@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://qsgwwe2wo3fd"]
+
+[ext_resource type="Script" uid="uid://bfalan0d3ugmn" path="res://scripts/EnemiesScripts/rat_bot.gd" id="1_h8kyo"]
+[ext_resource type="Resource" uid="uid://bqcmcfrb11des" path="res://skills/actives/basic_attack.tres" id="2_fyrtk"]
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="3_h8kyo"]
+[ext_resource type="Resource" uid="uid://85hlykgr4ok1" path="res://skills/actives/discord.tres" id="4_1ced2"]
+[ext_resource type="Resource" uid="uid://d2jd8y8kxe21b" path="res://skills/actives/Cook.tres" id="5_1ced2"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6yjb0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lxe82"]
+
+[sub_resource type="Animation" id="Animation_ixcpu"]
+resource_name = "basic_attack"
+
+[sub_resource type="Animation" id="Animation_a62ln"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_hi74q"]
+resource_name = "death_animation"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xuskm"]
+_data = {
+&"Attack": SubResource("Animation_ixcpu"),
+&"RESET": SubResource("Animation_a62ln"),
+&"death_animation": SubResource("Animation_hi74q")
+}
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6yjb0"]
+radius = 0.8305664
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sw0xa"]
+radius = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0a0k2"]
+transparency = 1
+albedo_color = Color(1, 0.43529412, 0.40392157, 0.08235294)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j1ss0"]
+material = SubResource("StandardMaterial3D_0a0k2")
+top_radius = 5.0
+bottom_radius = 5.0
+
+[node name="ratBot" type="CharacterBody3D" unique_id=1574311527 node_paths=PackedStringArray("animation", "marker_analysis")]
+motion_mode = 1
+script = ExtResource("1_h8kyo")
+baseLevel = 7
+charName = "RatBot"
+level = 7
+xp = 343
+money = 40
+maxHP = 40
+currHP = 40
+attack = 6
+curr_attack = 6.0
+defense = 7
+curr_defense = 7.0
+main_attack = ExtResource("2_fyrtk")
+skills = Array[ExtResource("3_h8kyo")]([ExtResource("4_1ced2"), ExtResource("5_1ced2")])
+hp_evolve = 8
+atk_evolve = 2
+animation = NodePath("CharAnimationPlayer")
+marker_analysis = NodePath("Marker3D")
+metadata/_custom_type_script = "uid://dbsx7lljx7o3a"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=514105752]
+mesh = SubResource("CapsuleMesh_6yjb0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1355891461]
+shape = SubResource("CapsuleShape3D_lxe82")
+
+[node name="CharAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1935505226]
+libraries/ = SubResource("AnimationLibrary_xuskm")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=2053502384]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.85, 0.25, -2)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=114685909]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=978584743]
+shape = SubResource("CylinderShape3D_6yjb0")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=394201851]
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="LookArea" type="Area3D" parent="." unique_id=1844800554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LookArea" unique_id=1076959927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+shape = SubResource("CylinderShape3D_sw0xa")
+
+[node name="DebugArea" type="MeshInstance3D" parent="LookArea" unique_id=1325728561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+visible = false
+mesh = SubResource("CylinderMesh_j1ss0")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

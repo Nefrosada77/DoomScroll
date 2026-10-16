@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://b5jvpquuqgl2l"]
+
+[ext_resource type="Script" uid="uid://hx2uwgrvoypm" path="res://scripts/shop_skill_container.gd" id="1_7mn4d"]
+[ext_resource type="Texture2D" uid="uid://bm2dur7s3k8gb" path="res://icon.svg" id="2_eekn5"]
+
+[node name="Skill1Container" type="PanelContainer" unique_id=1086212674 node_paths=PackedStringArray("skNameLabel", "skIcon", "skEffectLabel", "priceLabel", "learnMenu", "skillchangeMenu", "learnButton")]
+custom_minimum_size = Vector2(370, 456)
+custom_maximum_size = Vector2(370, 456)
+size_flags_horizontal = 3
+script = ExtResource("1_7mn4d")
+skNameLabel = NodePath("MarginContainer/SkillBuy/Skill_name")
+skIcon = NodePath("MarginContainer/SkillBuy/TextureRect")
+skEffectLabel = NodePath("MarginContainer/SkillBuy/Skill_Effect")
+priceLabel = NodePath("MarginContainer/SkillBuy/Cost")
+learnMenu = NodePath("MarginContainer/SkillBuy")
+skillchangeMenu = NodePath("MarginContainer/SkillChange")
+learnButton = NodePath("MarginContainer/SkillBuy/HBoxContainer/Learn")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=3362548]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="SkillBuy" type="VBoxContainer" parent="MarginContainer" unique_id=2075684995]
+layout_mode = 2
+
+[node name="Skill_name" type="Label" parent="MarginContainer/SkillBuy" unique_id=1106119368]
+layout_mode = 2
+size_flags_vertical = 10
+text = "SKILL NAME"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/SkillBuy" unique_id=1049204253]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("2_eekn5")
+
+[node name="Skill_Effect" type="Label" parent="MarginContainer/SkillBuy" unique_id=1820618201]
+layout_mode = 2
+size_flags_vertical = 2
+text = "SKILL EFFECT"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Cost" type="Label" parent="MarginContainer/SkillBuy" unique_id=592217764]
+layout_mode = 2
+size_flags_vertical = 10
+text = "COST : $100"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/SkillBuy" unique_id=1978857510]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="Learn" type="Button" parent="MarginContainer/SkillBuy/HBoxContainer" unique_id=982150010]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+text = "LEARN SKILL"
+
+[node name="SkillChange" type="VBoxContainer" parent="MarginContainer" unique_id=1358045105]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SK_BTNS" type="VBoxContainer" parent="MarginContainer/SkillChange" unique_id=1686573360]
+layout_mode = 2
+size_flags_vertical = 2
+alignment = 1
+
+[node name="SK_BTN_1" type="Button" parent="MarginContainer/SkillChange/SK_BTNS" unique_id=2106414677]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill1" type="RichTextLabel" parent="MarginContainer/SkillChange/SK_BTNS/SK_BTN_1" unique_id=225421058]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "
+"
+scroll_active = false
+
+[node name="SK_BTN_2" type="Button" parent="MarginContainer/SkillChange/SK_BTNS" unique_id=838992687]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill2" type="RichTextLabel" parent="MarginContainer/SkillChange/SK_BTNS/SK_BTN_2" unique_id=1605637181]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+scroll_active = false
+
+[node name="SK_BTN_3" type="Button" parent="MarginContainer/SkillChange/SK_BTNS" unique_id=158305345]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill3" type="RichTextLabel" parent="MarginContainer/SkillChange/SK_BTNS/SK_BTN_3" unique_id=812113359]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "
+"
+scroll_active = false
+
+[node name="SK_BTN_4" type="Button" parent="MarginContainer/SkillChange/SK_BTNS" unique_id=477430008]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill4" type="RichTextLabel" parent="MarginContainer/SkillChange/SK_BTNS/SK_BTN_4" unique_id=902562163]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+scroll_active = false
+
+[node name="CANCEL_LEARN" type="Button" parent="MarginContainer/SkillChange" unique_id=1427432976]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+text = "CANCEL"
+
+[connection signal="pressed" from="MarginContainer/SkillBuy/HBoxContainer/Learn" to="." method="_on_learn_pressed"]
+[connection signal="pressed" from="MarginContainer/SkillChange/SK_BTNS/SK_BTN_1" to="." method="_on_sk_btn_pressed" flags=6 binds= [0]]
+[connection signal="pressed" from="MarginContainer/SkillChange/SK_BTNS/SK_BTN_2" to="." method="_on_sk_btn_pressed" flags=6 binds= [1]]
+[connection signal="pressed" from="MarginContainer/SkillChange/SK_BTNS/SK_BTN_3" to="." method="_on_sk_btn_pressed" flags=6 binds= [2]]
+[connection signal="pressed" from="MarginContainer/SkillChange/SK_BTNS/SK_BTN_4" to="." method="_on_sk_btn_pressed" flags=6 binds= [3]]
+[connection signal="pressed" from="MarginContainer/SkillChange/CANCEL_LEARN" to="." method="_on_cancel_learn_pressed"]

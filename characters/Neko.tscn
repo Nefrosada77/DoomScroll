@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://dqf58rymyqdge"]
+
+[ext_resource type="Script" uid="uid://dbsx7lljx7o3a" path="res://scripts/enemy.gd" id="1_u5a62"]
+[ext_resource type="Resource" uid="uid://dpex5wj0y1alo" path="res://skills/actives/Scratch.tres" id="2_cs3qo"]
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="3_1a580"]
+[ext_resource type="ArrayMesh" uid="uid://cocbgpxvdxd1w" path="res://Assets/Models/neko/gato.obj" id="3_cs3qo"]
+[ext_resource type="Resource" uid="uid://dkmb8k8vdagxm" path="res://skills/actives/charm.tres" id="4_6u1mo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lxe82"]
+
+[sub_resource type="Animation" id="Animation_6u1mo"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.56666666, 0.73333335, 0.93333334),
+"transitions": PackedFloat32Array(3, 1, 1, 1, 3),
+"update": 0,
+"values": [Vector3(0, -0.5, 0.05), Vector3(0, -0.1829356, 0.05), Vector3(0, -0.1829356, 0.05), Vector3(0, -0.41988778, 0.05), Vector3(0, -0.5, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.56666666, 0.73333335, 0.93333334),
+"transitions": PackedFloat32Array(3, 1, 1, 1, 3),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.34906578, 0, 0), Vector3(0, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_a62ln"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.5, 0.05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hi74q"]
+resource_name = "death_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19, 0.38, 0.57, 0.73333335, 0.93333334, 1),
+"transitions": PackedFloat32Array(3, 1, 1, 1, 2, 3, 0.1),
+"update": 0,
+"values": [Vector3(0.1699298, 0, 0), Vector3(0.5009095, 0.15707964, -0.43284166), Vector3(0.41364303, 1.0594149, -0.69464105), Vector3(0.29147, 3.2201324, -0.15358898), Vector3(0.5009095, 5.2447143, -0.45029494), Vector3(0, 6.2831855, 0), Vector3(0.14660765, 6.2831855, 1.6057029)]
+}
+
+[sub_resource type="Animation" id="Animation_1a580"]
+resource_name = "scratch"
+length = 0.96666664
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.17333332, 0.33333328, 0.46666667, 0.6733333, 0.83333325, 0.9333333),
+"transitions": PackedFloat32Array(1, 1, 0.1, 0.5, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.5, 0.05), Vector3(0, 0.3145677, 0), Vector3(0, -0.5, 0), Vector3(0, -0.5, 0), Vector3(0, 0.09870106, 0), Vector3(0, 0.29, 0), Vector3(0, -0.5, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.17333332, 0.33333328, 0.46666667, 0.6733333, 0.83333325, 0.9333333),
+"transitions": PackedFloat32Array(1, 1, 0.1, 0.5, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.64053583, -0.3403392, -0.25307274), Vector3(-0.05582353, -0.029786218, -0.107734844), Vector3(0, 0, 0), Vector3(0.3036873, 0, 0.2617994), Vector3(0.40142572, 0.008726646, 0.5235988), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xuskm"]
+_data = {
+&"Idle": SubResource("Animation_6u1mo"),
+&"RESET": SubResource("Animation_a62ln"),
+&"death_animation": SubResource("Animation_hi74q"),
+&"scratch": SubResource("Animation_1a580")
+}
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6yjb0"]
+radius = 0.8305664
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sw0xa"]
+radius = 6.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0a0k2"]
+transparency = 1
+albedo_color = Color(1, 0.43529412, 0.40392157, 0.08235294)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j1ss0"]
+material = SubResource("StandardMaterial3D_0a0k2")
+top_radius = 5.0
+bottom_radius = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cs3qo"]
+transparency = 1
+albedo_color = Color(1, 0.23921569, 0.28235295, 1)
+metallic_specular = 0.0
+
+[node name="Neko" type="CharacterBody3D" unique_id=1574311527 node_paths=PackedStringArray("animation", "marker_analysis")]
+script = ExtResource("1_u5a62")
+charName = "NekoBot"
+xp = 12
+money = 20
+main_attack = ExtResource("2_cs3qo")
+skills = Array[ExtResource("3_1a580")]([ExtResource("4_6u1mo")])
+animation = NodePath("CharAnimationPlayer")
+marker_analysis = NodePath("Marker3D")
+metadata/_custom_type_script = "uid://dbsx7lljx7o3a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1355891461]
+shape = SubResource("CapsuleShape3D_lxe82")
+
+[node name="CharAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1935505226]
+libraries/ = SubResource("AnimationLibrary_xuskm")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=2053502384]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.85, 0.1, -2)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=114685909]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=978584743]
+shape = SubResource("CylinderShape3D_6yjb0")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=394201851]
+avoidance_enabled = true
+
+[node name="LookArea" type="Area3D" parent="." unique_id=1844800554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LookArea" unique_id=1076959927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+shape = SubResource("CylinderShape3D_sw0xa")
+
+[node name="DebugArea" type="MeshInstance3D" parent="LookArea" unique_id=1325728561]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+visible = false
+mesh = SubResource("CylinderMesh_j1ss0")
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=1801309543]
+transform = Transform3D(0.5000001, 0, 0, 0, 0.49999994, 0, 0, 0, 0.4999999, 0, -0.5, 0.05)
+mesh = ExtResource("3_cs3qo")
+surface_material_override/1 = SubResource("StandardMaterial3D_cs3qo")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

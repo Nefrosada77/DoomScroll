@@ -1,0 +1,990 @@
+[gd_scene format=4 uid="uid://d0echiujcexpq"]
+
+[ext_resource type="Script" uid="uid://dpbjshssxyoip" path="res://scripts/shop_level.gd" id="1_cmuiv"]
+[ext_resource type="Shader" uid="uid://ckvw1rjjprxd8" path="res://scripts/shaders/transparent_ground.gdshader" id="2_6750i"]
+[ext_resource type="AudioStream" uid="uid://b7rjg82ppn6tc" path="res://Assets/Sounds/Music/ambient.ogg" id="2_ktswv"]
+[ext_resource type="Texture2D" uid="uid://dkr58b8kejuda" path="res://Assets/Models/shop/ShopTex.png" id="3_6750i"]
+[ext_resource type="Script" uid="uid://gjs0pwix4j17" path="res://scripts/shop.gd" id="3_rtkp1"]
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="4_ktswv"]
+[ext_resource type="FontFile" uid="uid://bcdw51wyj80fi" path="res://Assets/courier-pixel-monospaced.otf" id="5_rtkp1"]
+[ext_resource type="PackedScene" uid="uid://b5jvpquuqgl2l" path="res://scenes/shop_skill_container.tscn" id="5_sxldn"]
+[ext_resource type="PackedScene" uid="uid://bx3ngx7b0xkjj" path="res://scenes/menu_control.tscn" id="6_ssc67"]
+[ext_resource type="PackedScene" uid="uid://clkyqcltmppsh" path="res://scenes/teleporter.tscn" id="8_sxldn"]
+[ext_resource type="PackedScene" uid="uid://bstysqye8ymkm" path="res://scenes/Levels/level_2.tscn" id="9_ssc67"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rhuay"]
+sky_top_color = Color(7.2196127e-07, 0.68881625, 0.4519031, 1)
+sky_horizon_color = Color(6.8345666e-06, 0.74084073, 0.8063718, 1)
+sky_curve = 0.3
+ground_bottom_color = Color(0.11007159, 0.16502249, 0.31547672, 1)
+ground_horizon_color = Color(0.47691053, 0.66176087, 0.9296967, 1)
+ground_curve = 1.0
+use_debanding = false
+
+[sub_resource type="Sky" id="Sky_4nkto"]
+sky_material = SubResource("ProceduralSkyMaterial_rhuay")
+
+[sub_resource type="Environment" id="Environment_huiu5"]
+background_mode = 2
+background_color = Color(0.1445764, 0.67133236, 0.5908365, 1)
+sky = SubResource("Sky_4nkto")
+sky_custom_fov = 90.0
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 3
+tonemap_exposure = 0.6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxldn"]
+draw_center = false
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ssc67"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qoe5f"]
+bg_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_nhqee"]
+font_size = 32
+outline_size = 16
+outline_color = Color(0.0436391, 0.58010924, 0.2399899, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkbgw"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8p4s"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_1m3wq"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ihr2u"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h0fwe"]
+bg_color = Color(0.05465565, 0.6882809, 0.66115725, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_s2qp2"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jtety"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_y5xye"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mlekt"]
+render_priority = 0
+shader = ExtResource("2_6750i")
+shader_parameter/circle_size = 0.0
+shader_parameter/brightness = 0.2999999932944
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2os1m"]
+material = SubResource("ShaderMaterial_mlekt")
+size = Vector2(5, 5)
+center_offset = Vector3(0, -0.5, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e3sih"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_12gks"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pa8r4"]
+material = SubResource("StandardMaterial3D_12gks")
+size = Vector2(2, 5)
+center_offset = Vector3(2.5, 0, -0.5)
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pa8r4"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="MeshLibrary" id="MeshLibrary_4wdvh"]
+item/0/name = "Ground | 1x1"
+item/0/mesh = SubResource("PlaneMesh_2os1m")
+item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/mesh_cast_shadow = 0
+item/0/shapes = [SubResource("BoxShape3D_e3sih"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/navigation_layers = 1
+item/1/name = "Wall | 1x1"
+item/1/mesh = SubResource("PlaneMesh_pa8r4")
+item/1/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/mesh_cast_shadow = 1
+item/1/shapes = [SubResource("BoxShape3D_pa8r4"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/1/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/navigation_layers = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtkp1"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.6431373, 0.8745098, 0.8627451, 1)
+albedo_texture = ExtResource("3_6750i")
+texture_filter = 0
+disable_receive_shadows = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_20kot"]
+_surfaces = [{
+"aabb": AABB(-0.944037, -1, -3.091721, 4.889111, 7.117609, 6.184121),
+"format": 34359742465,
+"index_count": 660,
+"index_data": PackedByteArray("AAA2AAIAAAA3ADYANgA3AAEAAQAxADYANwA4AAEAOAAxAAEAMwA4ADcANgAxADkAAgA2ADkAAgA5AAMAAwAAAAIAOQAxADAAOAAuADEAAwA5AA8AOQAwAA8ABAACAAMABgACAAQAAwAPADoAMQAHADAADwAwAAgAMAAHAAgAMAAvAAgAMQAqAAcALgAqADEAOgAPABIADwAIABIAOgASADsACAAHAAUABQAHADwAPAAAAAUABQAAAAMABwAAADwAPQADADoAEgAIAD4ABAADAD0APQA6AD8APwA6ADsAOwASABcAEgA+ABcAOwBAAD8ACAAjAD4AFwBBADsAQQBAADsAQgBBABcAFwA+AEMAQwBCABcACAAvACMARABCAEMAQgBEAEEAPgBFAEMAPgAjAEUAQwBFAEYARgBEAEMAQQBEAEcAQQBHAEAASABEAEYARABJAEcASABJAEQAQABHABoASQAaAEcAQAAaAEoAQABKAD8AGwAaAEkASgAaAEsAGgAbAEsAPwBKABgASgBLABgAGAA9AD8ADgA9ABgAGABLAEwATAAOABgADgAEAD0ASwBNAEwASwAbAE0ATgAOAEwADAAEAA4ATgAMAA4ATABNAE8ATwBOAEwATQAbAFAATQBQAE8AUAAbAFEATwBQABkAUABRABkAUgBOAE8AGQBSAE8AEQAMAE4AUgARAE4AGwBTAFEASQBTABsAGQBRAFQAUQBTAFQAEwBSABkAVAATABkAEwAVAFIAFQARAFIAUwBJAFUAVQBJAEgAVABTAFYAUwBVAFYAVQBIABwAVgBVABwAHABIAEYAVgBXAFQAVwATAFQAHABYAFYAWABXAFYARgAdABwAHQBYABwARQAdAEYAVwAeABMAHgAVABMAWAAfAFcAHwAeAFcAHQAmAFgAJgAfAFgARQAnAB0AJwAmAB0AIwAnAEUAIwBZACcAJwApACYAWQApACcALwBZACMAIwAuAC8ALwBaAFkALgBaAC8AKwAuACMAWwAuACsAKwAqAFsAKgAuAFsAJgAqACsAKQAqACYAWQAsACkAWgAsAFkALAAqACkAKQAoACYAJgAoAB8ALgBcAFoAXAAuADgAWgBcAC0AMwBcADgAXQBaAC0ALABaAF0AMgAtAFwAXQAtADIAMgBcADMAXgAsAF0AXQAyAF4AJQAsAF4AHwAlACgAIQAsACUAKgAsACEAIgAlAB8AKABfAB8AHwBfAB4AKABgAF8AJQBgACgAXwAWAB4AYQAlACIAIgAhAGEAIQAlAGEAFQAhACIAHgAWABUAFgAhABUAYAAkAF8AXwAkABYAYAAlACAAYAAgACQAIAAlAF4AJAAhABYAFgAUABUAJAAgAGIAXgA0ACAAIAA0AGIAFQAUABEAXgAyADQAJABiABAAEQAQABQAYgA0AGMAEABiAGMAMgAqADQANAAqACEAKgAyAAcAMgA0ADMABwAyADMAMwA0ADUANAAhADUAYwA0ADUAIQAkAAsACwAkABAANQAhAAsABwAzAAsACwAzADUAMwA3ADUANQA3AGQANQBkAGMANwAAAGQAAAAHAAoAZAAAAAoACgAHAAsAYwBkAAkAZAAKAAkAZQBjAAkACQAKAGUAEABjAGUAEABlABQAFABlAGYAZQAKAGYAFABmABEADQAQABEAEQBmAAwAZwAQAA0ACwAQAGcADQALAGcABAALAA0AZgAGAAwADAAGAAQABgALAAQAZgAKAAYACgALAAYA"),
+"lods": [5.243666, PackedByteArray("AAABAAIAAgABAAMAAwAAAAIABAACAAMABQAAAAMABgACAAQABwAAAAUACAAHAAUAAAAJAAEAAAAHAAoACQAAAAoACgALAAYACgAHAAsADAAKAAYACQAKAAwADAAGAAQABgALAAQABAALAA0ABAADAA4ADAAEAA4AAwAPAA4AAwABAA8ACwAQAA0ADQAQABEAEAAJAAwADgAPABIAEwAMAA4AEQAMABMAFAAMABEAEAAMABQAEQAQABQAFQAUABEAFQARABMAFgAUABUADgASABcAEwAOABgAGAAOABcAGQATABgAGgAYABcAGgAbABgAGAAbABkAFwAbABoAGwAcABkAHAAbABcAHAATABkAFwAdABwAHQATABwAEgAdABcAHgAVABMAHgAWABUAHwAeABMAHQAfABMAIAAWAB4AHwAgAB4AFgAhABUAFQAhACIAEgAjAB0AJAAhABYAIAAkABYAIQAlACIAIgAlAB8AJgAfAB0AJAAgABAACwAkABAAIQAkAAsAEAAgAAkAJwAmAB0AIwAnAB0AJgAoAB8AKAAgAB8AHwAlACgAJQAgACgAKQAoACYAJwApACYAKQAqACYAJgAqACsAJwAsACkALAAqACkAJQAsACAAIQAsACUAKgAsACEAIAAsAC0ALQAsACcAKgAuACsAKwAuACMALwAnACMALwAtACcAIwAuAC8ALgAtAC8ACAAvACMACAAjABIADwAIABIAMAAvAAgADwAwAAgAMAAHAAgAAQAwAA8ALQAuAAEAAQAxADAAAQAuADEAMQAHADAALgAqADEAMQAqAAcAKgAyAAcAMwAtAAEAMgAtADMAMwABAAkABwAyADMALQAyACAABwAzAAsAMgAqADQAIAAyADQAMgA0ADMAIAA0AAkANAAqACEANQAhAAsANAAhADUACwAzADUACQA0ADUAMwA0ADUAMwAJADUA")],
+"name": "Shop",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 104,
+"vertex_data": PackedByteArray("xomvuwAAgD8TYBlApg7KvgAAgL8TYBlAxomvuwAAgEATYBlAxomvu7rojEATYBlAO6g/QLrojEATYBlAxomvu7rojED0jP8/O6g/QAAAgEATYBlAxomvuwAAgD/0jP8/pg7KvrrojED0jP8/1UFZQAAAgL8TYBlAO6g/QAAAgD8TYBlAO6g/QAAAgD/0jP8/1UFZQLrojEATYBlAO6g/QLrojED0jP8/GHx8QN3uV0Di6UVApg7KvrrojEATYBlA1UFZQAAAgD/0jP8/1UFZQLrojED0jP8/aaxxv93uV0Di6UVAGHx8QN3uV0DC3kXA1UFZQAAAgED0jP8/1UFZQLrojECCOQDA1UFZQAAAgECCOQDAaaxxv9cWdEDi6UVAGHx8QNcWdEDi6UVAGHx8QNcWdEDC3kXAO6g/QHTDw0D0jP8/O6g/QHTDw0CCOQDAaaxxv9cWdEDC3kXAaaxxv93uV0DC3kXA1UFZQLrojEAYYBnAO6g/QLrojEAYYBnA1UFZQAAAgL8YYBnAO6g/QAAAgD+COQDAO6g/QLrojECCOQDApg7KvrrojECCOQDA1UFZQAAAgD+COQDAO6g/QAAAgD8YYBnAxomvu7rojEAYYBnApg7KvrrojEAYYBnAO6g/QAAAgEAYYBnAxomvuwAAgEAYYBnAxomvuwAAgD+COQDAxomvu7rojECCOQDAxomvuwAAgD8YYBnApg7KvgAAgL8YYBnApg7KvgAAgD+COQDApg7KvgAAgECCOQDApg7KvgAAgED0jP8/pg7KvgAAgD/0jP8/xomvuwAAgL+COQDAxomvuwAAgL/0jP8/O6g/QAAAgL+COQDAO6g/QAAAgL/0jP8/pg7KvgAAgD8TYBlAxomvuwAAgL8TYBlApg7KvgAAgL/0jP8/pg7KvgAAgEATYBlAoS7ivt3uV0Di6UVAoS7ivtcWdEDi6UVAxomvuwAAgED0jP8/WHRbQN3uV0Di6UVAaaxxv93uV0Ae4iRAWHRbQNcWdEDi6UVAO6g/QPzRl0ATYBlAxomvu/zRl0ATYBlApg7KvvzRl0ATYBlAaaxxv9cWdEAe4iRApg7KvvzRl0D0jP8/aaxxv93uV0BuayXAaaxxv9cWdEBuayXAxomvu3TDw0D0jP8/pg7KvvzRl0CCOQDAxomvu3TDw0CCOQDA1UFZQPzRl0ATYBlA1UFZQPzRl0D0jP8/GHx8QNcWdEAe4iRA1UFZQPzRl0CCOQDAGHx8QN3uV0Ae4iRAGHx8QNcWdEBuayXA1UFZQPzRl0AYYBnAO6g/QPzRl0AYYBnAGHx8QN3uV0BuayXAxomvu/zRl0AYYBnAWHRbQNcWdEDC3kXApg7KvvzRl0AYYBnAoS7ivtcWdEDC3kXAWHRbQN3uV0DC3kXAoS7ivt3uV0DC3kXApg7KvgAAgEAYYBnApg7KvgAAgD8YYBnAxomvuwAAgECCOQDApg7KvgAAgL+COQDAxomvuwAAgL8YYBnAO6g/QAAAgL8YYBnA1UFZQAAAgEAYYBnA1UFZQAAAgD8YYBnAO6g/QAAAgECCOQDA1UFZQAAAgL+COQDA1UFZQAAAgL/0jP8/O6g/QAAAgL8TYBlA1UFZQAAAgD8TYBlA1UFZQAAAgEATYBlAO6g/QAAAgED0jP8/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ktswv"]
+_surfaces = [{
+"aabb": AABB(-0.944037, -1, -3.091721, 4.889111, 7.117609, 6.184121),
+"attribute_data": PackedByteArray("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"),
+"format": 34359742487,
+"index_count": 660,
+"index_data": PackedByteArray("AACsAAIAAACtAKwArACtAAEArQAAAK4AAgCsAK8ArgAAAAQArgAEAAMAAwAEALAAsAAEALEAsQAEAAYAsQAGAAUABQAGAAcABgACAAcABwACAAgAAgCvAAgACACvAAkAsgALALMACwCyALQAtACyAAoAswALAA0AswANAAwADAANALUAtQANALYAtgANAA4AtgAOABAAEAAOABIACwC0AA8ADgAPABIADwC0ALcAEgAPABMADwC3ABMAEwC3ABEAuAAjACIAIgAjALkAuAAiALoAIgC5ACQAJAC5ALsAugAiACgAugAoACYAJgAoALwAvAAoAL0AJAC7AL4AvgC7ACUAJAC+ACkAvQAoACkAKQC+AL8AKQC/AL0AvQC/ACcAFAAVABYAFgAVABcAGADAABoAwAAYABkAGQAYAMEAGgDAAMIAGAAbAMEAwQAbAMMAGgDCACAAIADCACEAHwAaACAAHgAaAB8AHQAeAB8AxAAeAB0AxAAbAB4AxQAbAMQAGwDFAMMAwwDFABwAKgArACwALAArAC0ALgAvADAAMAAvADEAMgAzADQANAAzADUANgA3ADgAOAA3ADkAOgDGAMcAxwDGADsAOgDIAMYAOgDHAD4APwDIADoAPwA9AMgAyQA9AD8AyQA/AMoAygA/AEEAygBBAEMAQwBBAEIAQQA+AEIAPgDHAMsAQgA+AEAAPgDLAEAAQADLADwARABFAMwAzABFAEYARgBFAEcARwBFAEgASQBKAEsASwBKAEwATQBOAM0AzQBOAE8ATwBOAFAAUABOAFEAUgBTAFQAVABTAFUAVgBXAFgAWABXAFkAWgBbAFwAXABbAF0AzgDPANAA0ADPANEAXgBfAGAAYABfAGEAYQBfAGIAYgBfANIAYwBkAGUAZQBkAGYAZgBkAGcAZwBkANMAaABpANQA1ABpAGoAagBpAGsAawBpAGwAbQBuAG8AbwBuAHAAcABuAHEAcQBuANUAcgBzANYA1gBzAHQAdABzAHUAdQBzAHYA1wDYANkA2QDYAJUA2gDXANkA2wDXANoA3ADbANoA3QDbANwA3gDfAOAAkgDeAOAA4QDeAJIA4ADfAOIA3wDjAOIA4gDjAI8A5ADlAJYAlgDlAOYA5QDnAOYA5gDnAOgA5wDpAOgA6ADpAJQAdwB4AHkAeQB4AOoAeAB6AOoA6gB6AOsAegB8AOsA6wB8AHsAfQB+AH8AfwB+AOwAfgCAAOwA7ACAAO0AgACBAO0A7QCBAIIA7gDvAPAA8QDuAPAA8gDuAPEA8ADvAPMA7wD0APMA8wD0AJEAgwCEAPUA9QCEAIUA9gCDAPUAhwCDAPYAhgCHAPYAiACHAIYAiQCKAPcA9wCKAIwA+ACJAPcAjQCJAPgAiwCNAPgAjgCNAIsA+QD6APsA+wD6APwA/QCQAP4A/gCQAP8AAAGTAAEBAQGTAAIBAwEEAQUBBQEEAQYBBwEIAQkBCQEIAQoBCwEMAQ0BDQEMAQ4BDwEQAREBEQEQARIBEwEUARUBFQEUARYBlwCYAJkAmQCYAJoAmgCYAJsAmwCYABcBnQAYAZwAnAAYARkBGAEaARkBGQEaARsBGgGfABsBGwGfAJ4AoAAcAaIAogAcAR0BHAEeAR0BHQEeAR8BHgGhAB8BHwGhAKMAIAEhASIBpwAgASIBpAAgAacAIgEhASMBIQGlACMBIwGlAKYAJAGpACUBJQGpAKsAJgEkASUBJwEkASYBqgAnASYBqAAnAaoA"),
+"lods": [5.243666, PackedByteArray("AAABAAIAAAADAAEAAwAAAAQAAwAEAAUABQAEAAYABQAGAAcABgACAAcABwACAAgAAgABAAgACAABAAkACgALAAwADAALAA0ADAANAA4ACwAKAA8ADAAOABAADwAKABEAEAAOABIADgAPABIAEgAPABMADwARABMAFAAVABYAFgAVABcAGAAZABoAGAAbABkAGQAbABwAHAAbAB0AHQAbAB4AHQAeAB8AHgAaAB8AHwAaACAAGgAZACAAIAAZACEAIgAjACQAJAAjACUAIwAiACYAJAAlACcAJgAiACgAJgAoACcAJAAnACkAJwAoACkAKgArACwALAArAC0ALgAvADAAMAAvADEAMgAzADQANAAzADUANgA3ADgAOAA3ADkAOgA7ADwAOgA9ADsAOgA8AD4APwA9ADoAPgA8AEAAPQA/AEEAQgA+AEAAQQA+AEIAPQBBAEMAQwBBAEIARABFAEYARgBFAEcARwBFAEgASQBKAEsASwBKAEwATQBOAE8ATwBOAFAAUABOAFEAUgBTAFQAVABTAFUAVgBXAFgAWABXAFkAWgBbAFwAXABbAF0AXgBfAGAAYABfAGEAYQBfAGIAYwBkAGUAZQBkAGYAZgBkAGcAaABpAGoAagBpAGsAawBpAGwAbQBuAG8AbwBuAHAAcABuAHEAcgBzAHQAdABzAHUAdQBzAHYAdwB4AHkAeAB6AHkAeQB6AHsAegB8AHsAfQB+AH8AfgCAAH8AgACBAH8AfwCBAIIAgwCEAIUAhgCDAIUAhwCDAIYAiACHAIYAiQCKAIsAiwCKAIwAjQCJAIsAjgCNAIsAjwCQAJEAkACPAJIAkQCQAJMAkwCQAJQAlACQAJUAkwCUAJYAlwCYAJkAmQCYAJoAmgCYAJsAnACdAJ4AnQCfAJ4AoAChAKIAogChAKMApAClAKYApwCkAKYAqACpAKoAqgCpAKsA")],
+"material": SubResource("StandardMaterial3D_rtkp1"),
+"name": "Shop",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 296,
+"vertex_data": PackedByteArray("xomvuwAAgD8TYBlApg7KvgAAgL8TYBlAxomvuwAAgEATYBlA1UFZQAAAgL8TYBlAO6g/QAAAgD8TYBlA1UFZQLrojEATYBlAO6g/QAAAgEATYBlAO6g/QLrojEATYBlAxomvu7rojEATYBlApg7KvrrojEATYBlApg7KvgAAgL8YYBnApg7KvgAAgD+COQDApg7KvgAAgL8TYBlApg7KvgAAgD/0jP8/pg7KvgAAgED0jP8/pg7KvgAAgECCOQDApg7KvrrojEATYBlApg7KvrrojEAYYBnApg7KvrrojED0jP8/pg7KvrrojECCOQDAxomvuwAAgD+COQDAxomvuwAAgD8YYBnAO6g/QAAAgD+COQDAO6g/QAAAgD8YYBnAO6g/QAAAgD8YYBnA1UFZQAAAgL8YYBnAO6g/QAAAgEAYYBnAxomvuwAAgD8YYBnApg7KvgAAgL8YYBnApg7KvrrojEAYYBnAxomvuwAAgEAYYBnAxomvu7rojEAYYBnAO6g/QLrojEAYYBnA1UFZQLrojEAYYBnAxomvuwAAgL+COQDApg7KvgAAgL8YYBnAxomvuwAAgL/0jP8/pg7KvgAAgL8TYBlA1UFZQAAAgL8YYBnA1UFZQAAAgL8TYBlAO6g/QAAAgL+COQDAO6g/QAAAgL/0jP8/pg7KvgAAgD+COQDAxomvuwAAgD+COQDApg7KvgAAgD/0jP8/xomvuwAAgD/0jP8/xomvuwAAgD+COQDAxomvuwAAgL+COQDAxomvuwAAgD/0jP8/xomvuwAAgL/0jP8/xomvuwAAgD8TYBlAxomvuwAAgD/0jP8/O6g/QAAAgD8TYBlAO6g/QAAAgD/0jP8/xomvuwAAgD/0jP8/xomvuwAAgL/0jP8/O6g/QAAAgD/0jP8/O6g/QAAAgL/0jP8/1UFZQAAAgD/0jP8/1UFZQAAAgL8TYBlA1UFZQLrojEATYBlA1UFZQAAAgL8YYBnA1UFZQAAAgED0jP8/1UFZQAAAgD+COQDA1UFZQLrojED0jP8/1UFZQAAAgECCOQDA1UFZQLrojECCOQDA1UFZQLrojEAYYBnAxomvuwAAgD+COQDApg7KvgAAgD+COQDAxomvu7rojECCOQDApg7KvrrojECCOQDApg7KvgAAgECCOQDAxomvuwAAgL+COQDAxomvuwAAgD+COQDA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/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//38AgP9//////////3//////////f/////////9///////////////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA//////9/AID/fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3///////7//f///////v/9///////+//3///////7////9//38AgP///3//fwCA////f/9/AID///9//38AgP9//////////3//////////f/////////9///////////////9/AID//////38AgP//////fwCA//////9/AID///9//38AgP///3//fwCA////f/9/AID///9//38AgP///3//fwCA////f/9/AID///9//38AgP///3//fwCA////f/9/AID///9//38AgP9//38AAP+//3//fwAA/7//f/9/AQD/v/9//38AAP+//3//f////z//f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP////////+///////7//7///////f//v/////////+//////////7//f///////v/9///////+//3///////7//f///////vwAA/3//fwCAAAD/f/9/AIAAAP9//38AgAAA/3//fwCA/3////7//7//f////v//v/9////+//+//3///////7////9//3//v////3//f/+/////f/9/BcD///9//3//v////3//f/+//////////7///////v//v//////x/wbA//////3//7//////////v////3//f/+/////f/9//7////9//3//v////3//f/+/////f////78AAP9//////wAA/3/+////AAD/f/H///8AAP9//f///wAA/3//////AAD/f/////8AAP9//v///wAA/3/9////AAD/f/////8AAP9/////v/9/ZkwAAP+//39mTAAA/7//f2ZMAAD/v/9/ZkwAAP+//39mTAAA/7//f2ZMAAD/v1/MAAAAAP+/X8wAAAAA/79fzAAAAAD/v1/MAAAAAP+/X8wAAAAA/79fzAAAAAD/v3TTdVN1U0SWdNN1U3VTRJZ003VTdVNElnTTdVN1U0SWdNN1U3VTRJZ003VTdVNElpcsZ1NnU7PplyxnU2dTs+mXLGdTZ1Oz6ZcsZ1NnU7PplyxnU2dTs+mXLGdTaFOz6ULJ//////+/UePGzri0iqSEL4Ovha896ELJ//////+/j7HfnFvIMZr/f8O2////v2zQka+Rr8mX/3/Dtv///7//f/9/AAD/v/9//38AAP+//3//fw0ABcD/f/9/AQD/v/9//38AAP+/////f/9/AID///9//38AgP///3//fwCA////f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA//////9/AID//////38AgP//////fwCA//////9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AID/fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+///////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA////f/9/AID///9//38AgP///3//fwCA////f/9/AID///9//38AgP///3//fwCA/3//fw0ABsD/////8f8FwJtNkZzQuerMm02RnN+ueeebTZGcCq8R55tNkZx9rhbu////f////7//////////v////3//fwXAAAD/f////78AAP9/8f///2zQka+Rr8mXbNCRr5GvyZds0JGvka/Jl2zQka+Rr8mXbNCRr5GvyZds0JGvka/Jl2zQka+Rr8mXQsn//////79Cyf//////v0LJ//////+/Qsn//////79Cyf//////v0LJ//////+//3/Dtv///7//f8O2////v/9/w7b///+//3/Dtv///7//f8O2////v/9/w7b///+//39mTAAA/7//f2ZMAAD/v1/MAAAAAP+/X8wAAAAA/7+EL4Ovha896IQvg6+Frz3ohC+Dr4WvPeiEL4Ovha896IQvg6+Frz3ohC+Dr4WvPeiEL4Ovha896HTTdVN1U0SWdNN1U3VTRJaXLGdTZ1Oz6ZcsZ1NnU7PpXxzyzaDm2eJfHPLN7scd5l8c8s0/yBTmXxzyza2jz+hR48bO/q4NklHjxs6XtD+kUePGzim7d7OPsd+ceeZVnY+x35xbyDGaj7HfnEGkjpf/f9+c////v/9/35z///+//3/fnP///7//f9+c////v0QcRJxFnNzxRBxEnEWc3PFEHEScRZzc8UQcRJxFnNzxhOP//////7+E4///////v4Tj//////+/hOP//////7//f///////v/9///////+//3///////7//f///////vx7j35zfnHCOHuPfnN+ccI4e49+c35xwjh7j35zfnHCO/3//f////z////9//38AgP///3//fwCA////f/9/AID///9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//38AgAAA/3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID//////38AgP//////fwCA//////9/AID//////38AgA==")
+}]
+shadow_mesh = SubResource("ArrayMesh_20kot")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kf1ek"]
+size = Vector3(4.1550293, 5.3100586, 5.3604736)
+
+[sub_resource type="Shader" id="Shader_vurns"]
+code = "shader_type spatial;
+render_mode unshaded;
+
+group_uniforms style;
+/** The first of the blending colors for the hole borders */
+uniform vec4 color_one: source_color = vec4(1.0, 1.0, 1.0, 1.0);
+/** The second of the blending colors for the hole borders */
+uniform vec4 color_two: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+/** Influence the color blending curve (1.0 = linear) */
+uniform float color_falloff: hint_range(0.1, 10.0) = 1.0;
+/** Influence the transparency blending curve (1.0 = linear) */
+uniform float transparency_falloff: hint_range(0.1, 10.0) = 1.0;
+
+group_uniforms hole;
+/** Defines the maximum depth of the parallax layers */
+uniform float depth_amount = 1.0;
+/** Number of layers */
+uniform int layers = 12;
+/** Base radius of the holes */
+uniform float radius: hint_range(0.0, 10.0) = 0.4;
+/** Value for radius reduction calculations (higher values make the holes on deeper levels smaller faster) */
+uniform float radius_reduction = 0.1;
+/** Radius reduction calculation method */
+uniform int radius_reduction_type: hint_enum(\"Exponential\", \"linear\") = 0;
+/** Cyclic additional variation of the radius between layers based on TIME */
+uniform bool vary_radius = true;
+/** Proportional variation amount (percentage of the layers radius) */
+uniform float radius_variation = 0.1;
+/** Speed of the variation change */
+uniform float radius_speed_variation = 1.0;
+/** Variation offset between layers */
+uniform float radius_variation_offset = 1.0;
+/** Randomize an additional offset between layers (to avoid a wave pattern) */
+uniform bool radius_random_offset = true;
+/** Center of the circular effect in UV coordinates */
+uniform vec2 center = vec2(0.5, 0.5);
+
+
+group_uniforms dither;
+/** Size of the pixel blocks used for quantization */
+uniform float pixel_size : hint_range(0.0, 100.0) = 10.0;
+/** Resolution of the viewport/texture */
+uniform vec2 resolution = vec2(512.0, 512.0);
+/** Offset applied to the dither pattern lookup */
+uniform vec2 dither_offset = vec2(2.0, 0);
+/** Size of the dither matrix to use (2x2, 4x4, or 8x8) */
+uniform int bayer_size : hint_enum(\"2x2\", \"4x4\", \"8x8\") = 2;
+/** Whether to interpolate the radius calculation for smoother edges */
+uniform bool interpolate = true;
+/** Controls how quickly the dither pattern density changes (blend border size) */
+uniform float falloff: hint_range(0.1, 10.0) = 2.5;
+
+const int bayer2[4] = {
+	0, 2,
+	3, 1
+};
+
+const int bayer4[16] = {
+	0, 8, 2, 10,
+	12, 4, 14, 6,
+	3, 11, 1, 9,
+	15, 7, 13, 5
+};
+
+const int bayer8[64] = {
+	0, 32,  8, 40,  2, 34, 10, 42,
+	48, 16, 56, 24, 50, 18, 58, 26,
+	12, 44,  4, 36, 14, 46,  6, 38,
+	60, 28, 52, 20, 62, 30, 54, 22,
+	3, 35, 11, 43,  1, 33,  9, 41,
+	51, 19, 59, 27, 49, 17, 57, 25,
+	15, 47,  7, 39, 13, 45,  5, 37,
+	63, 31, 55, 23, 61, 29, 53, 21
+};
+
+float get_bayer2(vec2 coord) {
+	int x = int(mod(coord.x, 2.0));
+	int y = int(mod(coord.y, 2.0));
+	int index = y * 2 + x;
+	return (float(bayer2[index]) + 0.5) / 4.0;
+}
+
+float get_bayer4(vec2 coord) {
+	int x = int(mod(coord.x, 4.0));
+	int y = int(mod(coord.y, 4.0));
+	int index = y * 4 + x;
+	return (float(bayer4[index]) + 0.5) / 16.0;
+}
+
+float get_bayer8(vec2 coord) {
+	int x = int(mod(coord.x, 8.0));
+	int y = int(mod(coord.y, 8.0));
+	int index = y * 8 + x;
+	return (float(bayer8[index]) + 0.5) / 64.0;
+}
+
+float get_dither(vec2 uv, vec2 step_size, float l_radius) {
+	vec2 bayer_coord = floor(uv / step_size + 1.0e-5);
+	vec2 grid_uv = bayer_coord * step_size + step_size * 0.5;
+	float dist = distance(grid_uv, center);
+	float t = pow(clamp(dist / l_radius, 0.0, 1.0), falloff);
+	float threshold;
+	if (bayer_size == 0) {
+		threshold = get_bayer2(bayer_coord);
+	} else if (bayer_size == 1) {
+		threshold = get_bayer4(bayer_coord);
+	} else {
+		threshold = get_bayer8(bayer_coord);
+	}
+	return step(threshold, 1.0 - t);
+}
+
+float get_mask(vec2 uv, vec2 step_size, vec2 offset, float l_radius) {
+	float d1 = get_dither(uv, step_size, l_radius);
+	float d2 = get_dither(uv - offset, step_size, l_radius);
+	return max(d1, d2);
+}
+
+float random(int x)
+{
+    return fract(sin(float(x)) * 521695.2921843);
+}
+
+float double_dither(vec2 l_uv, float l_radius) {
+	vec2 uv_step = pixel_size / resolution;
+	vec2 raw_offset_uv = dither_offset * uv_step;
+	vec2 effective_offset = interpolate ? raw_offset_uv * 0.5 : raw_offset_uv;
+	vec2 centered_uv = l_uv + effective_offset * 0.5;
+	float dither;
+	if (interpolate) {
+		vec2 sub_step = uv_step * 0.5;
+		vec2 quantized_uv = floor(centered_uv / uv_step) * uv_step;
+
+		vec2 q1 = vec2(uv_step.x * 0.25, uv_step.y * 0.25);
+		vec2 q3 = vec2(uv_step.x * 0.75, uv_step.y * 0.75);
+
+		float v1 = get_mask(quantized_uv + q1, sub_step, effective_offset, l_radius);
+		float v2 = get_mask(quantized_uv + vec2(q3.x, q1.y), sub_step, effective_offset, l_radius);
+		float v3 = get_mask(quantized_uv + vec2(q1.x, q3.y), sub_step, effective_offset, l_radius);
+		float v4 = get_mask(quantized_uv + q3, sub_step, effective_offset, l_radius);
+
+		dither = (v1 + v2 + v3 + v4) * 0.25;
+	} else {
+		vec2 quantized_uv = floor(centered_uv / uv_step) * uv_step;
+		dither = get_mask(quantized_uv, uv_step, effective_offset, l_radius);
+	}
+
+	return dither;
+}
+
+vec2 parallax(float depth, vec3 n, vec3 t, vec3 v) {
+	vec3 normal = normalize(n);
+	vec3 tangent = normalize(t);
+	vec3 bitangent = cross(normal, tangent);
+	vec3 view = normalize(v);
+	vec3 view_tangent = vec3(dot(view, tangent), dot(view, bitangent), dot(view, normal));
+	vec2 offset = (view_tangent.xy / max(view_tangent.z, 0.001)) * depth;
+	offset = vec2(-offset.x, offset.y);
+	return offset;
+}
+
+void fragment() {
+	float value = 1.0;
+	float sum_radius_reduction = radius;
+	
+	for(int i = 0; i < layers; i++){
+		float radius_random_offset_value = float(radius_random_offset);
+		float random_value = 1.0 - radius_random_offset_value + random(i) * float(layers) * radius_random_offset_value;
+		float t = float(i) / float(layers);
+		float depth = t * depth_amount;
+		vec2 circle_uv = UV + parallax(depth, NORMAL, TANGENT, VIEW);
+		float radius_vary_modifier = (1.0 + radius_variation * sin((TIME + float(i) * radius_variation_offset + random_value) * radius_speed_variation) * float(vary_radius));
+		float dither_value = double_dither(circle_uv, sum_radius_reduction * radius_vary_modifier) * 4.0;
+		dither_value = step(0.75, dither_value);
+		dither_value = max(dither_value, float(i)/float(layers));
+		value = min(value, dither_value);
+		sum_radius_reduction = sum_radius_reduction * (1.0 * float(radius_reduction_type) + (1.0 - radius_reduction) * float(1 - radius_reduction_type));
+		sum_radius_reduction -= (1.0 * float(radius_reduction_type)) * radius_reduction;
+	}
+	ALBEDO = mix(color_one.rgb, color_two.rgb, pow(value, color_falloff));
+	ALPHA = mix(color_one.a, color_two.a, pow(value, transparency_falloff));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ssc67"]
+render_priority = 0
+shader = SubResource("Shader_vurns")
+shader_parameter/color_one = Color(1, 1, 0.38431373, 0)
+shader_parameter/color_two = Color(0.83137256, 0.05490196, 0, 1)
+shader_parameter/color_falloff = 1.0
+shader_parameter/transparency_falloff = 0.10000000149012
+shader_parameter/depth_amount = 1.0
+shader_parameter/layers = 12
+shader_parameter/radius = 0.4
+shader_parameter/radius_reduction = 0.1
+shader_parameter/radius_reduction_type = 0
+shader_parameter/vary_radius = true
+shader_parameter/radius_variation = 0.1
+shader_parameter/radius_speed_variation = 1.0
+shader_parameter/radius_variation_offset = 1.0
+shader_parameter/radius_random_offset = true
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/pixel_size = 10.0
+shader_parameter/resolution = Vector2(512, 512)
+shader_parameter/dither_offset = Vector2(2, 0)
+shader_parameter/bayer_size = 2
+shader_parameter/interpolate = true
+shader_parameter/falloff = 2.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_qoe5f"]
+lightmap_size_hint = Vector2i(17, 17)
+material = SubResource("ShaderMaterial_ssc67")
+size = Vector2(2, 2)
+orientation = 1
+
+[sub_resource type="Animation" id="Animation_4nkto"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fcfvj"]
+resource_name = "start_battle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3, 100]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tdm1f"]
+_data = {
+&"RESET": SubResource("Animation_4nkto"),
+&"start_battle": SubResource("Animation_fcfvj")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhuay"]
+bg_color = Color(0.84705883, 0, 0.10980392, 0.92941177)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_huiu5"]
+bg_color = Color(0.84705883, 0.22745098, 0.10980392, 0.5882353)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wdvh"]
+bg_color = Color(0.84705883, 0.22745098, 0.10980392, 0.5882353)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bs23k"]
+bg_color = Color(0.84705883, 0.22745098, 0.10980392, 0.5882353)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btsjt"]
+bg_color = Color(0.84705883, 0.22745098, 0.10980392, 0.5882353)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_8wkja"]
+color = Color(1, 1, 1, 1)
+grow_begin = 5.0
+grow_end = 5.0
+thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5xye"]
+bg_color = Color(0.16470589, 0.3647059, 0.57254905, 0.7254902)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.20072436, 0.20474726, 0.17975163, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mlekt"]
+bg_color = Color(0.16470589, 0.3647059, 0.57254905, 0.7254902)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.20072436, 0.20474726, 0.17975163, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12gks"]
+bg_color = Color(0.16470589, 0.3647059, 0.57254905, 0.7254902)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.20072436, 0.20474726, 0.17975163, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="ShopLevel" type="Node3D" unique_id=1592983467 node_paths=PackedStringArray("ContainerSkills", "ShopGUI", "playerMoneyLabel", "spawn_point", "animation_player", "world", "interact_label", "encounter_radar", "worldGUI", "healthGUI", "manaGUI", "levelGUI", "ambient_player", "world_level_label", "world_level_bar", "world_timer_label")]
+script = ExtResource("1_cmuiv")
+ContainerSkills = [NodePath("ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container"), NodePath("ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container"), NodePath("ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container")]
+ShopGUI = NodePath("ShopGUI")
+playerMoneyLabel = NodePath("ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/HBoxContainer2/playerMoney")
+level_color = Color(0.35005355, 0.6758662, 0.9615596, 1)
+type = 3
+spawn_point = NodePath("SpawnPoint")
+animation_player = NodePath("AnimationPlayer")
+world = NodePath("WorldSubContainer/WorldSubViewport/World")
+interact_label = NodePath("WorldGUI/MarginContainer/InteractLabel")
+encounter_radar = NodePath("WorldGUI/EncounterRadar")
+battle = false
+worldGUI = NodePath("WorldGUI")
+healthGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/HP")
+manaGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/MP")
+levelGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/XP")
+ambient_player = NodePath("AudioStreamPlayer")
+world_level_label = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldLevel")
+world_level_bar = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldTimer")
+world_timer_label = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldTimer/MarginContainer/WorldTimer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=769831873]
+stream = ExtResource("2_ktswv")
+autoplay = true
+bus = &"Music"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=419642298]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1764925948]
+environment = SubResource("Environment_huiu5")
+
+[node name="WorldGUI" type="Control" parent="." unique_id=1134664759]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="EncounterRadar" type="PanelContainer" parent="WorldGUI" unique_id=644053048]
+modulate = Color(0.14509805, 0.7411765, 0.27450982, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sxldn")
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI" unique_id=1911356569]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WorldGUI/MarginContainer" unique_id=21252867]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+alignment = 2
+
+[node name="XP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=1593135291]
+custom_minimum_size = Vector2(350, 20)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_ssc67")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qoe5f")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=1290507610]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -30.0
+offset_right = 66.000015
+offset_bottom = 25.0
+theme_override_font_sizes/font_size = 32
+text = "Lvl. 1"
+label_settings = SubResource("LabelSettings_nhqee")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=726400618]
+layout_mode = 0
+offset_left = 196.0
+offset_top = -30.0
+offset_right = 342.0
+offset_bottom = 25.0
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 32
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_nhqee")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=598253655]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_nkbgw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p8p4s")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP" unique_id=210024273]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer" unique_id=338144987]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=253739796]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "HP"
+label_settings = SubResource("LabelSettings_1m3wq")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=1518296218]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_ihr2u")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=557473516]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ssc67")
+theme_override_styles/fill = SubResource("StyleBoxFlat_h0fwe")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP" unique_id=1854185094]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer" unique_id=941191006]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=170841798]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "MP"
+label_settings = SubResource("LabelSettings_s2qp2")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=1218698573]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_jtety")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteractLabel" type="RichTextLabel" parent="WorldGUI/MarginContainer" unique_id=503995881]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[img=100]Assets/Images/InteractIcon.png[/img] [font_size=42]Interact[/font_size]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerContainer" type="VBoxContainer" parent="WorldGUI/MarginContainer" unique_id=1685926455]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="WorldTimer" type="ProgressBar" parent="WorldGUI/MarginContainer/TimerContainer" unique_id=1513780490]
+custom_minimum_size = Vector2(350, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("4_ktswv")
+fill_mode = 1
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/TimerContainer/WorldTimer" unique_id=2060161931]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="WorldTimer" type="Label" parent="WorldGUI/MarginContainer/TimerContainer/WorldTimer/MarginContainer" unique_id=1205341750]
+layout_mode = 2
+text = "currTime / Timer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldLevel" type="Label" parent="WorldGUI/MarginContainer/TimerContainer" unique_id=2046767283]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "World Level : +0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldSubContainer" type="SubViewportContainer" parent="." unique_id=1989536834]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+
+[node name="WorldSubViewport" type="SubViewport" parent="WorldSubContainer" unique_id=595232983]
+handle_input_locally = false
+size = Vector2i(426, 240)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="WorldSubContainer/WorldSubViewport" unique_id=1330268101]
+process_mode = 4
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="WorldSubContainer/WorldSubViewport/World" unique_id=1961295613]
+navigation_mesh = SubResource("NavigationMesh_y5xye")
+
+[node name="GridMap" type="GridMap" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=2093635018]
+mesh_library = SubResource("MeshLibrary_4wdvh")
+cell_size = Vector3(5, 1, 5)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(0, 65535, 0, 0, 0, 0, 65534, 0, 0, 65534, 65535, 0, 65535, 65535, 0, 65535, 0, 0, 1, 1, 917505, 1, 0, 655361, 1, 65535, 655361, 0, 2, 1245185, 65535, 2, 1245185, 65534, 2, 1245185, 65533, 1, 262145, 65533, 0, 655361, 65533, 65535, 655361, 65534, 65534, 655360, 65535, 65534, 655360, 0, 65534, 655360, 65534, 1, 655361, 65535, 1, 655361, 0, 1, 655361, 1, 65534, 655361, 0, 65533, 655361, 65535, 65533, 655361, 65534, 65533, 655361, 65533, 65534, 655361)
+}
+
+[node name="Shop" type="MeshInstance3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=1325051761 node_paths=PackedStringArray("cancel_button") groups=["interactable"]]
+transform = Transform3D(-3.278354e-08, 0, -0.75, 0, 0.75, 0, 0.75, 0, -3.278354e-08, -7, 0.25, -9)
+mesh = SubResource("ArrayMesh_ktswv")
+script = ExtResource("3_rtkp1")
+cancel_button = NodePath("../../../../../ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/HBoxContainer2/CLOSE")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Shop" unique_id=1696937382]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Shop/StaticBody3D" unique_id=369383868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4425249, 1.6655127, -0.0043029785)
+shape = SubResource("BoxShape3D_kf1ek")
+
+[node name="Label3D" type="Label3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Shop" unique_id=2143309120]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.75, 5.25, 0)
+billboard = 2
+double_sided = false
+no_depth_test = true
+texture_filter = 0
+text = "SHOP"
+font = ExtResource("5_rtkp1")
+font_size = 256
+outline_size = 64
+uppercase = true
+
+[node name="Teleporter" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=1082447074 instance=ExtResource("8_sxldn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+mesh = SubResource("QuadMesh_qoe5f")
+next_level = ExtResource("9_ssc67")
+boss_won = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1090241618]
+root_node = NodePath("../WorldSubContainer")
+libraries/ = SubResource("AnimationLibrary_tdm1f")
+
+[node name="ShopGUI" type="Control" parent="." unique_id=1403258365]
+unique_name_in_owner = true
+visible = false
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopGUI" unique_id=442285307]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="ShopPanel" type="PanelContainer" parent="ShopGUI/MarginContainer" unique_id=1360304839]
+layout_mode = 2
+theme = ExtResource("4_ktswv")
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopGUI/MarginContainer/ShopPanel" unique_id=512301497]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer" unique_id=1769092909]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer" unique_id=1747929158]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1608814937]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=5.0 connected=0]SHOP[/wave]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="playerMoney" type="Label" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1811530234]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 32
+text = "$ 100"
+
+[node name="VSeparator" type="VSeparator" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=287067940]
+layout_mode = 2
+
+[node name="CLOSE" type="Button" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1562743563]
+custom_minimum_size = Vector2(85, 85)
+custom_maximum_size = Vector2(85, 85)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhuay")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_huiu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4wdvh")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_bs23k")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btsjt")
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer" unique_id=1347286694]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/separator = SubResource("StyleBoxLine_8wkja")
+
+[node name="SkillsShop" type="MarginContainer" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer" unique_id=1826921610]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Skills" type="HBoxContainer" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop" unique_id=2065917236]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Skill1Container" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills" unique_id=1086212674 instance=ExtResource("5_sxldn")]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y5xye")
+
+[node name="Skill2Container" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills" unique_id=500883854 instance=ExtResource("5_sxldn")]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mlekt")
+
+[node name="Skill3Container" parent="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills" unique_id=660408673 instance=ExtResource("5_sxldn")]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_12gks")
+
+[node name="ConfigMenu" parent="." unique_id=710978952 instance=ExtResource("6_ssc67")]
+visible = false
+z_index = 10
+focus_mode = 2
+focus_behavior_recursive = 1
+mouse_filter = 0
+mouse_target = true
+
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=572662241]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1769419314]
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/HBoxContainer2/CLOSE" to="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Shop" method="_on_close_pressed"]
+[connection signal="button_disable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" method="learn_button_disable"]
+[connection signal="button_disable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" method="learn_button_disable"]
+[connection signal="button_enable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" method="learn_button_enable"]
+[connection signal="button_enable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" method="learn_button_enable"]
+[connection signal="button_disable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" method="learn_button_disable"]
+[connection signal="button_disable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" method="learn_button_disable"]
+[connection signal="button_enable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" method="learn_button_enable"]
+[connection signal="button_enable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" method="learn_button_enable"]
+[connection signal="button_disable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" method="learn_button_disable"]
+[connection signal="button_disable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" method="learn_button_disable"]
+[connection signal="button_enable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" method="learn_button_enable"]
+[connection signal="button_enable" from="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container" to="ShopGUI/MarginContainer/ShopPanel/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" method="learn_button_enable"]

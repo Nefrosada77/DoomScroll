@@ -1,0 +1,406 @@
+[gd_scene format=3 uid="uid://dqljsggpuc8j7"]
+
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="1_mxoox"]
+[ext_resource type="Texture2D" uid="uid://bm2dur7s3k8gb" path="res://icon.svg" id="2_c17j4"]
+[ext_resource type="Script" uid="uid://dm1rrjsrh8ytt" path="res://scripts/reward_menu.gd" id="2_odg4j"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_whx2u"]
+color = Color(1, 1, 1, 1)
+grow_begin = 5.0
+grow_end = 5.0
+thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_whx2u"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mxoox"]
+bg_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[node name="RewardContainer" type="PanelContainer" unique_id=1605302154 node_paths=PackedStringArray("level_up_menu", "skill_reward_menu", "Skill_change_menu", "xp_gain", "xp_bar", "money_gain", "curr_money", "hp_gain", "curr_hp", "mp_gain", "curr_mp", "atk_gain", "curr_atk", "def_gain", "curr_def", "skill_name", "skill_effect", "skill_icon", "next_button")]
+custom_minimum_size = Vector2(475, 630)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.12
+anchor_right = 0.5
+anchor_bottom = 0.88
+offset_left = -237.5
+offset_top = -50.0
+offset_right = 237.5
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+theme = ExtResource("1_mxoox")
+script = ExtResource("2_odg4j")
+level_up_menu = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU")
+skill_reward_menu = NodePath("MarginContainer/VBoxContainer/SkillReward")
+Skill_change_menu = NodePath("MarginContainer/VBoxContainer/SkillChange")
+xp_gain = NodePath("MarginContainer/VBoxContainer/BATTLEGAINS/XPGain/XPGAINED")
+xp_bar = NodePath("MarginContainer/VBoxContainer/BATTLEGAINS/XPGain/ProgressBar")
+money_gain = NodePath("MarginContainer/VBoxContainer/BATTLEGAINS/$GAIN/$GAINED")
+curr_money = NodePath("MarginContainer/VBoxContainer/BATTLEGAINS/$GAIN/curr_money")
+hp_gain = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/HP/HPGAINED")
+curr_hp = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/HP/max_HP")
+mp_gain = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/MPGain/MPGAINED")
+curr_mp = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/MPGain/max_MP")
+atk_gain = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/ATK/ATKGAINED")
+curr_atk = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/ATK/attack")
+def_gain = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/DEFENSE/DEFGAINED")
+curr_def = NodePath("MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/DEFENSE/defense")
+skill_name = NodePath("MarginContainer/VBoxContainer/SkillReward/Skill_name")
+skill_effect = NodePath("MarginContainer/VBoxContainer/SkillReward/Skill_Effect")
+skill_icon = NodePath("MarginContainer/VBoxContainer/SkillReward/TextureRect")
+next_button = NodePath("MarginContainer/VBoxContainer/NEXT")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=584479978]
+layout_mode = 2
+focus_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=494690652]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BATTLEWON" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=549438151]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[rainbow freq=0.5 sat=0.2 val=1 speed=1.0]BATTLE WON!!![/rainbow]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=568728238]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_whx2u")
+
+[node name="BATTLEGAINS" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=51292195]
+layout_mode = 2
+
+[node name="XPGain" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BATTLEGAINS" unique_id=1353782466]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/BATTLEGAINS/XPGain" unique_id=1709412163]
+layout_mode = 2
+text = "XP"
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/BATTLEGAINS/XPGain" unique_id=1904683393]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_whx2u")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mxoox")
+value = 50.0
+show_percentage = false
+
+[node name="XPGAINED" type="Label" parent="MarginContainer/VBoxContainer/BATTLEGAINS/XPGain" unique_id=1269710114]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+text = "+GainedXP"
+horizontal_alignment = 2
+
+[node name="$GAIN" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BATTLEGAINS" unique_id=912823425]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/BATTLEGAINS/$GAIN" unique_id=2016942776]
+layout_mode = 2
+text = "$"
+
+[node name="curr_money" type="Label" parent="MarginContainer/VBoxContainer/BATTLEGAINS/$GAIN" unique_id=1075018623]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "MONEY"
+
+[node name="$GAINED" type="Label" parent="MarginContainer/VBoxContainer/BATTLEGAINS/$GAIN" unique_id=1206169799]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+text = "+Gained$"
+horizontal_alignment = 2
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=2091273801]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_whx2u")
+
+[node name="LEVELUPMENU" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=314056495]
+layout_mode = 2
+
+[node name="LEVELUP" type="RichTextLabel" parent="MarginContainer/VBoxContainer/LEVELUPMENU" unique_id=1612563563]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=5.0 connected=0]LEVEL UP[/wave]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="HPMPGAIN" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LEVELUPMENU" unique_id=935841730]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HP" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN" unique_id=921146684]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/HP" unique_id=564358143]
+layout_mode = 2
+text = "HP"
+
+[node name="max_HP" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/HP" unique_id=53657442]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "MAXHPNUM"
+
+[node name="HPGAINED" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/HP" unique_id=122743853]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+text = "+GainedHP"
+horizontal_alignment = 2
+
+[node name="MPGain" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN" unique_id=329454028]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/MPGain" unique_id=1197979034]
+layout_mode = 2
+text = "MP"
+
+[node name="max_MP" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/MPGain" unique_id=657629482]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "MAXMPNUM"
+
+[node name="MPGAINED" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/HPMPGAIN/MPGain" unique_id=1499488311]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+text = "+GainedMP"
+horizontal_alignment = 2
+
+[node name="ATKDEFGAIN" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LEVELUPMENU" unique_id=172976241]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ATK" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN" unique_id=630793202]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/ATK" unique_id=1535206426]
+layout_mode = 2
+text = "ATTACK"
+
+[node name="attack" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/ATK" unique_id=1148835251]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "ATKNUM"
+
+[node name="ATKGAINED" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/ATK" unique_id=1082876279]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+text = "+GainedATK"
+horizontal_alignment = 2
+
+[node name="DEFENSE" type="HBoxContainer" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN" unique_id=155774104]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/DEFENSE" unique_id=1405589397]
+layout_mode = 2
+text = "DEFENSE"
+
+[node name="defense" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/DEFENSE" unique_id=106646138]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "DEFNUM"
+
+[node name="DEFGAINED" type="Label" parent="MarginContainer/VBoxContainer/LEVELUPMENU/ATKDEFGAIN/DEFENSE" unique_id=1914875942]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+text = "+GainedDEF"
+horizontal_alignment = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/LEVELUPMENU" unique_id=718642412]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_whx2u")
+
+[node name="SkillReward" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1407368194]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="SkillGAINED" type="RichTextLabel" parent="MarginContainer/VBoxContainer/SkillReward" unique_id=765025613]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=5.0 connected=0]SKILL GAINED[/wave]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Skill_name" type="Label" parent="MarginContainer/VBoxContainer/SkillReward" unique_id=1283115405]
+layout_mode = 2
+size_flags_vertical = 10
+text = "SKILL NAME"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/SkillReward" unique_id=996177923]
+custom_maximum_size = Vector2(85, 85)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("2_c17j4")
+
+[node name="Skill_Effect" type="Label" parent="MarginContainer/VBoxContainer/SkillReward" unique_id=53096870]
+layout_mode = 2
+size_flags_vertical = 2
+text = "SKILL EFFECT"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/SkillReward" unique_id=1560944666]
+layout_mode = 2
+size_flags_vertical = 10
+alignment = 1
+
+[node name="Learn" type="Button" parent="MarginContainer/VBoxContainer/SkillReward/HBoxContainer" unique_id=1229500663]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+text = "LEARN SKILL"
+
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/SkillReward/HBoxContainer" unique_id=108879516]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+text = "CANCEL"
+
+[node name="SkillChange" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=2028941976]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/SkillChange" unique_id=487899802]
+layout_mode = 2
+size_flags_vertical = 2
+alignment = 1
+
+[node name="SK_BTN_1" type="Button" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer" unique_id=502402010]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill1" type="RichTextLabel" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_1" unique_id=283773330]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "
+"
+scroll_active = false
+
+[node name="SK_BTN_2" type="Button" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer" unique_id=804956032]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_2" unique_id=1447558929]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+scroll_active = false
+
+[node name="SK_BTN_3" type="Button" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer" unique_id=1312981488]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill3" type="RichTextLabel" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_3" unique_id=1765447715]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "
+"
+scroll_active = false
+
+[node name="SK_BTN_4" type="Button" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer" unique_id=561410758]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Skill4" type="RichTextLabel" parent="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_4" unique_id=1194282658]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+scroll_active = false
+
+[node name="CANCEL_LEARN" type="Button" parent="MarginContainer/VBoxContainer/SkillChange" unique_id=1384662114]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 10
+text = "CANCEL"
+
+[node name="NEXT" type="Button" parent="MarginContainer/VBoxContainer" unique_id=461479639]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+text = "NEXT"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SkillReward/HBoxContainer/Learn" to="." method="_on_learn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SkillReward/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_1" to="." method="_on_sk_btn_focus_entered" flags=18]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_1" to="." method="_on_sk_btn_focus_exited" flags=18]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_1" to="." method="change_skill" flags=6 binds= [0]]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_2" to="." method="_on_sk_btn_focus_entered" flags=18]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_2" to="." method="_on_sk_btn_focus_exited" flags=18]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_2" to="." method="change_skill" flags=6 binds= [1]]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_3" to="." method="_on_sk_btn_focus_entered" flags=18]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_3" to="." method="_on_sk_btn_focus_exited" flags=18]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_3" to="." method="change_skill" flags=6 binds= [2]]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_4" to="." method="_on_sk_btn_focus_entered" flags=18]
+[connection signal="focus_exited" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_4" to="." method="_on_sk_btn_focus_exited" flags=18]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SkillChange/VBoxContainer/SK_BTN_4" to="." method="change_skill" flags=6 binds= [3]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SkillChange/CANCEL_LEARN" to="." method="_on_cancel_learn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/NEXT" to="." method="_on_next_pressed" flags=6]

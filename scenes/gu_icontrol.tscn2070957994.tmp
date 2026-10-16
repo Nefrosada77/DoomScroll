@@ -1,0 +1,264 @@
+[gd_scene format=3 uid="uid://bvtnq8tbxjj1c"]
+
+[ext_resource type="Script" uid="uid://11uagao4ojaf" path="res://scripts/GUIControll.gd" id="1_ts1wk"]
+[ext_resource type="Shader" uid="uid://cgae1wlgx2ry5" path="res://guiControl.tres" id="2_7sf2g"]
+[ext_resource type="Texture2D" uid="uid://bm2dur7s3k8gb" path="res://icon.svg" id="2_ktmgr"]
+[ext_resource type="Script" uid="uid://dfhyi0my4a4gs" path="res://scripts/GUIBTN.gd" id="3_ktmgr"]
+[ext_resource type="Script" uid="uid://cwmt1q2m380l6" path="res://scripts/state_manager.gd" id="4_26h5o"]
+[ext_resource type="PackedScene" uid="uid://ddyu546yaxkyy" path="res://scenes/PlayerContainer.tscn" id="6_2aa3o"]
+[ext_resource type="PackedScene" uid="uid://spnv5dx8kiot" path="res://scenes/EnemyContainer.tscn" id="6_ruocw"]
+[ext_resource type="Script" uid="uid://vua87ycqnhrw" path="res://scripts/skillButton.gd" id="7_hrup8"]
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="7_nxhg1"]
+[ext_resource type="Script" uid="uid://wd8d2fsaj3x1" path="res://scripts/character.gd" id="10_26h5o"]
+[ext_resource type="Resource" uid="uid://d2jd8y8kxe21b" path="res://skills/Cook.tres" id="10_a1m3c"]
+[ext_resource type="PackedScene" uid="uid://bx3ngx7b0xkjj" path="res://scenes/menu_control.tscn" id="11_pjws5"]
+[ext_resource type="Script" uid="uid://gcfegid23n4n" path="res://scenes/battle.gd" id="12_yml1w"]
+[ext_resource type="Script" uid="uid://cg6v1lehdmwuj" path="res://scenes/skill_effects.gd" id="13_ol3jg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yjb0"]
+bg_color = Color(0.65882355, 0.67058825, 0.8784314, 0.13725491)
+draw_center = false
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g5add"]
+shader = ExtResource("2_7sf2g")
+shader_parameter/Speed = 5.000000074506
+shader_parameter/Hovered = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nxhg1"]
+shader = ExtResource("2_7sf2g")
+shader_parameter/Speed = 5.00000023424012
+shader_parameter/Hovered = false
+
+[sub_resource type="Resource" id="Resource_yml1w"]
+script = ExtResource("7_nxhg1")
+SkName = "Attack"
+SkCost = 10
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"
+
+[sub_resource type="Resource" id="Resource_26h5o"]
+script = ExtResource("10_26h5o")
+charName = "EVIL GUY 1"
+maxHP = 15.0
+currHP = 15.0
+metadata/_custom_type_script = "uid://wd8d2fsaj3x1"
+
+[sub_resource type="Resource" id="Resource_pjws5"]
+script = ExtResource("10_26h5o")
+charName = "NEFROSADA"
+maxHP = 25.0
+metadata/_custom_type_script = "uid://wd8d2fsaj3x1"
+
+[sub_resource type="Animation" id="Animation_pjws5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_yml1w"]
+resource_name = "start_battle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [100, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ol3jg"]
+_data = {
+&"RESET": SubResource("Animation_pjws5"),
+&"start_battle": SubResource("Animation_yml1w")
+}
+
+[node name="SubViewportContainer" type="SubViewportContainer" unique_id=561120564]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1448792326]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(1600, 900)
+size_2d_override = Vector2i(1000, 563)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="BorderGUI" type="PanelContainer" parent="SubViewport" unique_id=1707096264]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6yjb0")
+
+[node name="GUIcontrol" type="Control" parent="SubViewport" unique_id=1165126926 node_paths=PackedStringArray("Manager")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ts1wk")
+enemyContainer = ExtResource("6_ruocw")
+playerContainer = ExtResource("6_2aa3o")
+Manager = NodePath("StateManager")
+
+[node name="StateManager" type="Node" parent="SubViewport/GUIcontrol" unique_id=1410754081]
+script = ExtResource("4_26h5o")
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewport/GUIcontrol" unique_id=1524745437]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="DebugLabels" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=1171186859]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="DebugHover" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=800035472]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON HOVERED: None"
+
+[node name="DebugFocused" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=2130967617]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON SELECTED: ...."
+
+[node name="DebugSelect" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=943951395]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON SELECTED: ...."
+
+[node name="AllButtons" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=151657761]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 2
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=1971248226]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1
+
+[node name="SKILLS" type="TextureButton" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer" unique_id=410071077]
+material = SubResource("ShaderMaterial_g5add")
+layout_mode = 2
+texture_normal = ExtResource("2_ktmgr")
+script = ExtResource("3_ktmgr")
+metadata/_custom_type_script = "uid://dfhyi0my4a4gs"
+
+[node name="SkillsContainer" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=986938430]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1
+
+[node name="ATTACK" type="TextureButton" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons/SkillsContainer" unique_id=1259890698]
+material = SubResource("ShaderMaterial_nxhg1")
+layout_mode = 2
+texture_normal = ExtResource("2_ktmgr")
+script = ExtResource("7_hrup8")
+skill = SubResource("Resource_yml1w")
+metadata/_custom_type_script = "uid://vua87ycqnhrw"
+
+[node name="HEAL" type="TextureButton" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons/SkillsContainer" unique_id=489019736]
+material = SubResource("ShaderMaterial_nxhg1")
+layout_mode = 2
+texture_normal = ExtResource("2_ktmgr")
+script = ExtResource("7_hrup8")
+skill = ExtResource("10_a1m3c")
+metadata/_custom_type_script = "uid://vua87ycqnhrw"
+
+[node name="DescriptionLabel" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=1181114788]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "DEFAULT TEXT"
+
+[node name="EnemiesContainer" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=321096601]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="EnemyContainer" parent="SubViewport/GUIcontrol/MarginContainer/EnemiesContainer" unique_id=9602947 instance=ExtResource("6_ruocw")]
+layout_mode = 2
+charRef = SubResource("Resource_26h5o")
+
+[node name="PlayerContainer" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=2033497135]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="PlayerContainer" parent="SubViewport/GUIcontrol/MarginContainer/PlayerContainer" unique_id=1904812089 instance=ExtResource("6_2aa3o")]
+layout_mode = 2
+charRef = SubResource("Resource_pjws5")
+
+[node name="ConfigMenu" parent="SubViewport/GUIcontrol" unique_id=710978952 instance=ExtResource("11_pjws5")]
+visible = false
+z_index = 9
+layout_mode = 1
+mouse_target = true
+
+[node name="Battle" type="Node" parent="SubViewport" unique_id=1335650984]
+script = ExtResource("12_yml1w")
+
+[node name="skill_effects" type="Node" parent="SubViewport/Battle" unique_id=2051291596]
+script = ExtResource("13_ol3jg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1736405843]
+libraries/ = SubResource("AnimationLibrary_ol3jg")
+
+[connection signal="turn_ended" from="SubViewport/GUIcontrol/StateManager" to="SubViewport/Battle" method="round_start"]
+[connection signal="focus_entered" from="SubViewport/GUIcontrol/MarginContainer/EnemiesContainer/EnemyContainer" to="SubViewport/GUIcontrol" method="_on_button_focus_entered" flags=18]
+[connection signal="focus_exited" from="SubViewport/GUIcontrol/MarginContainer/EnemiesContainer/EnemyContainer" to="SubViewport/GUIcontrol" method="_on_button_focus_exited" flags=18]
+[connection signal="gui_input" from="SubViewport/GUIcontrol/MarginContainer/EnemiesContainer/EnemyContainer" to="SubViewport/GUIcontrol" method="_on_container_gui_input" flags=18]
+[connection signal="mouse_entered" from="SubViewport/GUIcontrol/MarginContainer/EnemiesContainer/EnemyContainer" to="SubViewport/GUIcontrol" method="_on_button_mouse_entered" flags=18]
+[connection signal="mouse_exited" from="SubViewport/GUIcontrol/MarginContainer/EnemiesContainer/EnemyContainer" to="SubViewport/GUIcontrol" method="_on_button_mouse_exited" flags=18]
+[connection signal="focus_entered" from="SubViewport/GUIcontrol/MarginContainer/PlayerContainer/PlayerContainer" to="SubViewport/GUIcontrol" method="_on_button_focus_entered" flags=18]
+[connection signal="focus_exited" from="SubViewport/GUIcontrol/MarginContainer/PlayerContainer/PlayerContainer" to="SubViewport/GUIcontrol" method="_on_button_focus_exited" flags=18]
+[connection signal="gui_input" from="SubViewport/GUIcontrol/MarginContainer/PlayerContainer/PlayerContainer" to="SubViewport/GUIcontrol" method="_on_container_gui_input" flags=18]
+[connection signal="mouse_entered" from="SubViewport/GUIcontrol/MarginContainer/PlayerContainer/PlayerContainer" to="SubViewport/GUIcontrol" method="_on_button_mouse_entered" flags=18]
+[connection signal="mouse_exited" from="SubViewport/GUIcontrol/MarginContainer/PlayerContainer/PlayerContainer" to="SubViewport/GUIcontrol" method="_on_button_mouse_exited" flags=18]

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://d22ehi0p4ay7t"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_ituwo"]
+[ext_resource type="Texture2D" uid="uid://bn3v27b3ridcs" path="res://Assets/Images/DefendIcon.png" id="1_y0ojn"]
+
+[resource]
+script = ExtResource("1_ituwo")
+skID = 3
+SkName = "Defend"
+SkDesc = "Damage received is halved"
+skType = 2
+SkHit = 3
+SkIcon = ExtResource("1_y0ojn")
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

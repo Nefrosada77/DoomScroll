@@ -1,0 +1,744 @@
+[gd_scene format=3 uid="uid://djpc1j2y8is06"]
+
+[ext_resource type="Script" uid="uid://ce2ockfjs422q" path="res://scripts/first_level.gd" id="1_j85eu"]
+[ext_resource type="AudioStream" uid="uid://b7rjg82ppn6tc" path="res://Assets/Sounds/Music/ambient.ogg" id="2_y368g"]
+[ext_resource type="PackedScene" uid="uid://ds21dcbi75xgc" path="res://characters/crypto.tscn" id="3_o21ul"]
+[ext_resource type="PackedScene" uid="uid://d0echiujcexpq" path="res://scenes/Levels/shop_level.tscn" id="4_y368g"]
+[ext_resource type="PackedScene" uid="uid://clkyqcltmppsh" path="res://scenes/teleporter.tscn" id="5_y368g"]
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="7_l5ivm"]
+[ext_resource type="Script" uid="uid://boir3t3l0yqrm" path="res://scripts/healer.gd" id="9_j85eu"]
+[ext_resource type="PackedScene" uid="uid://bx3ngx7b0xkjj" path="res://scenes/menu_control.tscn" id="10_a60bd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hvci7"]
+sky_top_color = Color(0.46213692, 0.0023471443, 0.76114905, 1)
+sky_horizon_color = Color(0.7836382, 0.52585757, 0.9560768, 1)
+sky_curve = 0.06
+ground_bottom_color = Color(0.10980392, 0.16470589, 0.3137255, 1)
+ground_horizon_color = Color(0.47843137, 0.6627451, 0.92941177, 1)
+ground_curve = 0.35
+use_debanding = false
+
+[sub_resource type="Sky" id="Sky_l5ivm"]
+sky_material = SubResource("ProceduralSkyMaterial_hvci7")
+
+[sub_resource type="Environment" id="Environment_5xbjy"]
+background_mode = 2
+background_color = Color(0.6358732, 0.47145623, 0.9540177, 1)
+sky = SubResource("Sky_l5ivm")
+sky_custom_fov = 90.0
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 3
+tonemap_exposure = 0.6
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_1s5k1"]
+agent_height = 2.0
+
+[sub_resource type="Shader" id="Shader_pa8r4"]
+code = "shader_type spatial;
+
+global uniform vec3 level_color;
+uniform float circle_size : hint_range(0.0, 0.6, 0.05) = 0.45;
+uniform float brightness : hint_range(0.0, 1.0, 0.01) = 0.2;
+
+void fragment() {
+	ALBEDO.rgb = level_color;
+	float circle = distance(UV, vec2(0.5));
+	ALPHA = (step(circle_size, circle) + 0.75) * ((abs(sin(TIME))*(brightness)+0.15)*circle);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pa8r4"]
+render_priority = 0
+shader = SubResource("Shader_pa8r4")
+shader_parameter/circle_size = 0.0
+shader_parameter/brightness = 0.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2y5yt"]
+material = SubResource("ShaderMaterial_pa8r4")
+size = Vector2(5, 5)
+center_offset = Vector3(0, -0.5, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e3sih"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15mv3"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.03529412)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y5xye"]
+material = SubResource("StandardMaterial3D_15mv3")
+size = Vector3(5, 5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pa8r4"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="MeshLibrary" id="MeshLibrary_a0dc1"]
+item/0/name = "Ground | 1x1"
+item/0/mesh = SubResource("PlaneMesh_2y5yt")
+item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/mesh_cast_shadow = 0
+item/0/shapes = [SubResource("BoxShape3D_e3sih"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/navigation_layers = 1
+item/1/name = "Wall | 1x1"
+item/1/mesh = SubResource("BoxMesh_y5xye")
+item/1/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/mesh_cast_shadow = 1
+item/1/shapes = [SubResource("BoxShape3D_pa8r4"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/1/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/navigation_layers = 1
+
+[sub_resource type="Shader" id="Shader_vurns"]
+code = "shader_type spatial;
+render_mode unshaded;
+
+group_uniforms style;
+/** The first of the blending colors for the hole borders */
+uniform vec4 color_one: source_color = vec4(1.0, 1.0, 1.0, 1.0);
+/** The second of the blending colors for the hole borders */
+uniform vec4 color_two: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+/** Influence the color blending curve (1.0 = linear) */
+uniform float color_falloff: hint_range(0.1, 10.0) = 1.0;
+/** Influence the transparency blending curve (1.0 = linear) */
+uniform float transparency_falloff: hint_range(0.1, 10.0) = 1.0;
+
+group_uniforms hole;
+/** Defines the maximum depth of the parallax layers */
+uniform float depth_amount = 1.0;
+/** Number of layers */
+uniform int layers = 12;
+/** Base radius of the holes */
+uniform float radius: hint_range(0.0, 10.0) = 0.4;
+/** Value for radius reduction calculations (higher values make the holes on deeper levels smaller faster) */
+uniform float radius_reduction = 0.1;
+/** Radius reduction calculation method */
+uniform int radius_reduction_type: hint_enum(\"Exponential\", \"linear\") = 0;
+/** Cyclic additional variation of the radius between layers based on TIME */
+uniform bool vary_radius = true;
+/** Proportional variation amount (percentage of the layers radius) */
+uniform float radius_variation = 0.1;
+/** Speed of the variation change */
+uniform float radius_speed_variation = 1.0;
+/** Variation offset between layers */
+uniform float radius_variation_offset = 1.0;
+/** Randomize an additional offset between layers (to avoid a wave pattern) */
+uniform bool radius_random_offset = true;
+/** Center of the circular effect in UV coordinates */
+uniform vec2 center = vec2(0.5, 0.5);
+
+
+group_uniforms dither;
+/** Size of the pixel blocks used for quantization */
+uniform float pixel_size : hint_range(0.0, 100.0) = 10.0;
+/** Resolution of the viewport/texture */
+uniform vec2 resolution = vec2(512.0, 512.0);
+/** Offset applied to the dither pattern lookup */
+uniform vec2 dither_offset = vec2(2.0, 0);
+/** Size of the dither matrix to use (2x2, 4x4, or 8x8) */
+uniform int bayer_size : hint_enum(\"2x2\", \"4x4\", \"8x8\") = 2;
+/** Whether to interpolate the radius calculation for smoother edges */
+uniform bool interpolate = true;
+/** Controls how quickly the dither pattern density changes (blend border size) */
+uniform float falloff: hint_range(0.1, 10.0) = 2.5;
+
+const int bayer2[4] = {
+	0, 2,
+	3, 1
+};
+
+const int bayer4[16] = {
+	0, 8, 2, 10,
+	12, 4, 14, 6,
+	3, 11, 1, 9,
+	15, 7, 13, 5
+};
+
+const int bayer8[64] = {
+	0, 32,  8, 40,  2, 34, 10, 42,
+	48, 16, 56, 24, 50, 18, 58, 26,
+	12, 44,  4, 36, 14, 46,  6, 38,
+	60, 28, 52, 20, 62, 30, 54, 22,
+	3, 35, 11, 43,  1, 33,  9, 41,
+	51, 19, 59, 27, 49, 17, 57, 25,
+	15, 47,  7, 39, 13, 45,  5, 37,
+	63, 31, 55, 23, 61, 29, 53, 21
+};
+
+float get_bayer2(vec2 coord) {
+	int x = int(mod(coord.x, 2.0));
+	int y = int(mod(coord.y, 2.0));
+	int index = y * 2 + x;
+	return (float(bayer2[index]) + 0.5) / 4.0;
+}
+
+float get_bayer4(vec2 coord) {
+	int x = int(mod(coord.x, 4.0));
+	int y = int(mod(coord.y, 4.0));
+	int index = y * 4 + x;
+	return (float(bayer4[index]) + 0.5) / 16.0;
+}
+
+float get_bayer8(vec2 coord) {
+	int x = int(mod(coord.x, 8.0));
+	int y = int(mod(coord.y, 8.0));
+	int index = y * 8 + x;
+	return (float(bayer8[index]) + 0.5) / 64.0;
+}
+
+float get_dither(vec2 uv, vec2 step_size, float l_radius) {
+	vec2 bayer_coord = floor(uv / step_size + 1.0e-5);
+	vec2 grid_uv = bayer_coord * step_size + step_size * 0.5;
+	float dist = distance(grid_uv, center);
+	float t = pow(clamp(dist / l_radius, 0.0, 1.0), falloff);
+	float threshold;
+	if (bayer_size == 0) {
+		threshold = get_bayer2(bayer_coord);
+	} else if (bayer_size == 1) {
+		threshold = get_bayer4(bayer_coord);
+	} else {
+		threshold = get_bayer8(bayer_coord);
+	}
+	return step(threshold, 1.0 - t);
+}
+
+float get_mask(vec2 uv, vec2 step_size, vec2 offset, float l_radius) {
+	float d1 = get_dither(uv, step_size, l_radius);
+	float d2 = get_dither(uv - offset, step_size, l_radius);
+	return max(d1, d2);
+}
+
+float random(int x)
+{
+    return fract(sin(float(x)) * 521695.2921843);
+}
+
+float double_dither(vec2 l_uv, float l_radius) {
+	vec2 uv_step = pixel_size / resolution;
+	vec2 raw_offset_uv = dither_offset * uv_step;
+	vec2 effective_offset = interpolate ? raw_offset_uv * 0.5 : raw_offset_uv;
+	vec2 centered_uv = l_uv + effective_offset * 0.5;
+	float dither;
+	if (interpolate) {
+		vec2 sub_step = uv_step * 0.5;
+		vec2 quantized_uv = floor(centered_uv / uv_step) * uv_step;
+
+		vec2 q1 = vec2(uv_step.x * 0.25, uv_step.y * 0.25);
+		vec2 q3 = vec2(uv_step.x * 0.75, uv_step.y * 0.75);
+
+		float v1 = get_mask(quantized_uv + q1, sub_step, effective_offset, l_radius);
+		float v2 = get_mask(quantized_uv + vec2(q3.x, q1.y), sub_step, effective_offset, l_radius);
+		float v3 = get_mask(quantized_uv + vec2(q1.x, q3.y), sub_step, effective_offset, l_radius);
+		float v4 = get_mask(quantized_uv + q3, sub_step, effective_offset, l_radius);
+
+		dither = (v1 + v2 + v3 + v4) * 0.25;
+	} else {
+		vec2 quantized_uv = floor(centered_uv / uv_step) * uv_step;
+		dither = get_mask(quantized_uv, uv_step, effective_offset, l_radius);
+	}
+
+	return dither;
+}
+
+vec2 parallax(float depth, vec3 n, vec3 t, vec3 v) {
+	vec3 normal = normalize(n);
+	vec3 tangent = normalize(t);
+	vec3 bitangent = cross(normal, tangent);
+	vec3 view = normalize(v);
+	vec3 view_tangent = vec3(dot(view, tangent), dot(view, bitangent), dot(view, normal));
+	vec2 offset = (view_tangent.xy / max(view_tangent.z, 0.001)) * depth;
+	offset = vec2(-offset.x, offset.y);
+	return offset;
+}
+
+void fragment() {
+	float value = 1.0;
+	float sum_radius_reduction = radius;
+	
+	for(int i = 0; i < layers; i++){
+		float radius_random_offset_value = float(radius_random_offset);
+		float random_value = 1.0 - radius_random_offset_value + random(i) * float(layers) * radius_random_offset_value;
+		float t = float(i) / float(layers);
+		float depth = t * depth_amount;
+		vec2 circle_uv = UV + parallax(depth, NORMAL, TANGENT, VIEW);
+		float radius_vary_modifier = (1.0 + radius_variation * sin((TIME + float(i) * radius_variation_offset + random_value) * radius_speed_variation) * float(vary_radius));
+		float dither_value = double_dither(circle_uv, sum_radius_reduction * radius_vary_modifier) * 4.0;
+		dither_value = step(0.75, dither_value);
+		dither_value = max(dither_value, float(i)/float(layers));
+		value = min(value, dither_value);
+		sum_radius_reduction = sum_radius_reduction * (1.0 * float(radius_reduction_type) + (1.0 - radius_reduction) * float(1 - radius_reduction_type));
+		sum_radius_reduction -= (1.0 * float(radius_reduction_type)) * radius_reduction;
+	}
+	ALBEDO = mix(color_one.rgb, color_two.rgb, pow(value, color_falloff));
+	ALPHA = mix(color_one.a, color_two.a, pow(value, transparency_falloff));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l5ivm"]
+render_priority = 0
+shader = SubResource("Shader_vurns")
+shader_parameter/color_one = Color(7.123351e-06, 0.92765933, 0.9312084, 0)
+shader_parameter/color_two = Color(0.30588236, 0.7176471, 0.5882353, 1)
+shader_parameter/color_falloff = 1.0
+shader_parameter/transparency_falloff = 0.40000001574012
+shader_parameter/depth_amount = 1.0
+shader_parameter/layers = 12
+shader_parameter/radius = 0.50800002413
+shader_parameter/radius_reduction = 0.1
+shader_parameter/radius_reduction_type = 0
+shader_parameter/vary_radius = false
+shader_parameter/radius_variation = 0.1
+shader_parameter/radius_speed_variation = 1.0
+shader_parameter/radius_variation_offset = 1.0
+shader_parameter/radius_random_offset = true
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/pixel_size = 10.0
+shader_parameter/resolution = Vector2(512, 512)
+shader_parameter/dither_offset = Vector2(2, 0)
+shader_parameter/bayer_size = 2
+shader_parameter/interpolate = true
+shader_parameter/falloff = 2.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_xxpsm"]
+lightmap_size_hint = Vector2i(17, 17)
+material = SubResource("ShaderMaterial_l5ivm")
+size = Vector2(2, 2)
+orientation = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftsjt"]
+albedo_color = Color(0.48570347, 0.48570353, 0.48570347, 1)
+metallic = 0.5
+metallic_specular = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_a0dc1"]
+material = SubResource("StandardMaterial3D_ftsjt")
+size = Vector3(1, 2, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4p1o3"]
+data = PackedVector3Array(-0.5, 1, 0.5, 0.5, 1, 0.5, -0.5, -1, 0.5, 0.5, 1, 0.5, 0.5, -1, 0.5, -0.5, -1, 0.5, 0.5, 1, -0.5, -0.5, 1, -0.5, 0.5, -1, -0.5, -0.5, 1, -0.5, -0.5, -1, -0.5, 0.5, -1, -0.5, 0.5, 1, 0.5, 0.5, 1, -0.5, 0.5, -1, 0.5, 0.5, 1, -0.5, 0.5, -1, -0.5, 0.5, -1, 0.5, -0.5, 1, -0.5, -0.5, 1, 0.5, -0.5, -1, -0.5, -0.5, 1, 0.5, -0.5, -1, 0.5, -0.5, -1, -0.5, 0.5, 1, 0.5, -0.5, 1, 0.5, 0.5, 1, -0.5, -0.5, 1, 0.5, -0.5, 1, -0.5, 0.5, 1, -0.5, -0.5, -1, 0.5, 0.5, -1, 0.5, -0.5, -1, -0.5, 0.5, -1, 0.5, 0.5, -1, -0.5, -0.5, -1, -0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0dc1"]
+draw_center = false
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2y5yt"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_go7sj"]
+bg_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_2y5yt"]
+font_size = 32
+outline_size = 16
+outline_color = Color(0.0436391, 0.58010924, 0.2399899, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15mv3"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3sih"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_e3sih"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2os1m"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2os1m"]
+bg_color = Color(0.05465565, 0.6882809, 0.66115725, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_go7sj"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7gny6"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="Animation" id="Animation_4nkto"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fcfvj"]
+resource_name = "start_battle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3, 50]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pa8r4"]
+_data = {
+&"RESET": SubResource("Animation_4nkto"),
+&"start_battle": SubResource("Animation_fcfvj")
+}
+
+[node name="Level1" type="Node3D" unique_id=110289429 node_paths=PackedStringArray("spawn_point", "animation_player", "world", "interact_label", "encounter_radar", "worldGUI", "healthGUI", "manaGUI", "levelGUI", "ambient_player", "world_level_label", "world_level_bar", "world_timer_label")]
+script = ExtResource("1_j85eu")
+level_color = Color(1, 0.31764707, 1, 1)
+spawn_point = NodePath("WorldSubContainer/WorldSubViewport/World/SpawnPoint")
+animation_player = NodePath("AnimationPlayer")
+world = NodePath("WorldSubContainer/WorldSubViewport/World")
+interact_label = NodePath("WorldGUI/MarginContainer/InteractLabel")
+encounter_radar = NodePath("WorldGUI/EncounterRadar")
+worldGUI = NodePath("WorldGUI")
+healthGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/HP")
+manaGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/MP")
+levelGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/XP")
+ambient_player = NodePath("AudioStreamPlayer")
+world_level_label = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldLevel")
+world_level_bar = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldTimer")
+world_timer_label = NodePath("WorldGUI/MarginContainer/TimerContainer/WorldTimer/MarginContainer/WorldTimer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1316422463]
+stream = ExtResource("2_y368g")
+autoplay = true
+bus = &"Music"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1918319049]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1509840868]
+environment = SubResource("Environment_5xbjy")
+
+[node name="WorldSubContainer" type="SubViewportContainer" parent="." unique_id=453856165]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+stretch_shrink = 3
+
+[node name="WorldSubViewport" type="SubViewport" parent="WorldSubContainer" unique_id=1928821806]
+handle_input_locally = false
+size = Vector2i(426, 240)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="WorldSubContainer/WorldSubViewport" unique_id=1800277861]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="WorldSubContainer/WorldSubViewport/World" unique_id=943753529]
+navigation_mesh = SubResource("NavigationMesh_1s5k1")
+
+[node name="GridMap" type="GridMap" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=314986038]
+mesh_library = SubResource("MeshLibrary_a0dc1")
+cell_size = Vector3(5, 1, 5)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(0, 65535, 0, 0, 0, 0, 0, 1, 0, 65535, 1, 0, 65534, 1, 0, 65534, 0, 0, 65534, 65535, 0, 65535, 65535, 0, 65535, 0, 0, 65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65530, 65535, 0, 65529, 65535, 0, 65529, 0, 0, 65530, 0, 0, 65530, 1, 0, 65529, 1, 0, 65528, 0, 0, 65527, 0, 0, 65526, 0, 0, 65525, 0, 0, 65524, 0, 0, 65523, 0, 0, 65522, 65535, 0, 65522, 0, 0, 65522, 1, 0, 65521, 1, 0, 65520, 1, 0, 65520, 0, 0, 65520, 65535, 0, 65521, 65535, 0, 65521, 0, 0, 65520, 65534, 0, 65520, 65533, 0, 65520, 65532, 0, 65519, 65532, 0, 65519, 65533, 0, 65518, 65532, 0, 65517, 65532, 0, 65517, 65533, 0, 65517, 65534, 0, 65517, 65535, 0, 65517, 0, 0, 65518, 0, 0, 65519, 0, 0, 65514, 65534, 0, 65513, 65534, 0, 65512, 65534, 0, 65511, 65534, 0, 65511, 65532, 0, 65511, 65533, 0, 65512, 65532, 0, 65513, 65532, 0, 65514, 65532, 0, 65515, 65532, 0, 65516, 65532, 0, 65511, 65535, 0, 65511, 0, 0, 65512, 0, 0, 65513, 0, 0, 65514, 0, 0, 65515, 0, 0, 65516, 0, 0, 65517, 65531, 0, 65517, 65530, 0, 65517, 65529, 0, 65517, 65528, 0, 65517, 65527, 0, 65517, 65526, 0, 65516, 65523, 0, 65516, 65524, 0, 65516, 65525, 0, 65517, 65525, 0, 65517, 65524, 0, 65517, 65523, 0, 65518, 65523, 0, 65518, 65524, 0, 65518, 65525, 0, 65517, 65522, 0, 65517, 65521, 0, 65517, 65520, 0, 65518, 65528, 0, 65519, 65528, 0, 65520, 65528, 0, 65521, 65528, 0, 65522, 65528, 0, 65522, 65527, 0, 65522, 65526, 0, 65522, 65525, 0, 65523, 65525, 0, 65524, 65525, 0, 65524, 65524, 0, 65524, 65523, 0, 65524, 65522, 0, 65524, 65521, 0, 65523, 65521, 0, 65522, 65521, 0, 65521, 65521, 0, 65521, 65520, 0, 65521, 65519, 0, 65520, 65519, 0, 65519, 65519, 0, 65518, 65519, 0, 65517, 65519, 0, 65521, 65532, 0, 65522, 65532, 0, 65523, 65532, 0, 65524, 65532, 0, 65525, 65532, 0, 65526, 65532, 0, 65526, 65531, 0, 65526, 65530, 0, 65526, 65529, 0, 65526, 65528, 0, 65525, 65528, 0, 65524, 65528, 0, 65523, 65528, 0, 65517, 65518, 0, 65517, 65517, 0, 65517, 65516, 0, 65517, 65515, 0, 65518, 65513, 0, 65518, 65514, 0, 65518, 65515, 0, 65519, 65515, 0, 65520, 65515, 0, 65520, 65514, 0, 65520, 65513, 0, 65519, 65513, 0, 65519, 65514, 0, 65522, 65512, 0, 65523, 65512, 0, 65524, 65512, 0, 65525, 65512, 0, 65526, 65512, 0, 65527, 65512, 0, 65527, 65513, 0, 65527, 65514, 0, 65527, 65515, 0, 65527, 65516, 0, 65526, 65514, 0, 65525, 65514, 0, 65524, 65514, 0, 65523, 65514, 0, 65523, 65515, 0, 65523, 65516, 0, 65523, 65517, 0, 65523, 65518, 0, 65522, 65518, 0, 65521, 65518, 0, 65528, 65513, 0, 65529, 65513, 0, 65530, 65513, 0, 65531, 65513, 0, 65528, 65515, 0, 65528, 65516, 0, 65532, 65512, 0, 65532, 65513, 0, 65532, 65514, 0, 65533, 65514, 0, 65534, 65514, 0, 65534, 65513, 0, 65534, 65512, 0, 65533, 65512, 0, 65533, 65513, 0, 65510, 0, 1507329, 65510, 65534, 0, 65516, 65531, 1507329, 65516, 65535, 1507329, 65522, 65529, 1507329, 65523, 65529, 1507329, 65524, 65529, 1507329, 65525, 65529, 1507329, 65525, 65530, 1507329, 65525, 65531, 1507329, 65524, 65531, 1507329, 65523, 65531, 1507329, 65522, 65531, 1507329, 65521, 65531, 1507329, 65520, 65531, 1507329, 65519, 65531, 1507329, 65518, 65531, 1507329, 65518, 65530, 1507329, 65518, 65529, 1507329, 65519, 65529, 1507329, 65520, 65529, 1507329, 65521, 65529, 1507329, 65515, 65524, 0, 65517, 65513, 0, 65514, 65524, 0, 65513, 65524, 0, 65512, 65523, 0, 65512, 65524, 0, 65512, 65525, 0, 65511, 65525, 0, 65510, 65525, 0, 65510, 65524, 0, 65510, 65523, 0, 65511, 65523, 0, 65511, 65524, 0, 65509, 65534, 0, 65508, 65534, 0, 65507, 65534, 0, 65506, 65534, 0, 65507, 65535, 0, 65506, 65535, 0, 65506, 0, 0, 65507, 0, 0, 65505, 0, 0, 65504, 0, 0, 65503, 0, 0, 65502, 0, 0, 65501, 0, 0, 65501, 65535, 0, 65501, 65534, 0, 65501, 65533, 0, 65501, 65532, 0, 65501, 65531, 0, 65501, 65530, 0, 65501, 65529, 0, 65502, 65529, 0, 65502, 65530, 0, 65503, 65530, 0, 65503, 65529, 0, 65502, 65528, 0, 65501, 65528, 0, 65503, 65528, 0, 65504, 65528, 0, 65505, 65528, 0, 65506, 65528, 0, 65507, 65528, 0, 65507, 65527, 0, 65507, 65526, 0, 65507, 65525, 0, 65506, 65525, 0, 65506, 65524, 0, 65506, 65523, 0, 65507, 65523, 0, 65507, 65524, 0, 65508, 65524, 0, 65509, 65524, 0, 65508, 65528, 0, 65509, 65528, 0, 65510, 65528, 0, 65511, 65528, 0, 65511, 65527, 0, 65511, 65526, 0, 65506, 65522, 0, 65506, 65521, 0, 65506, 65520, 0, 65506, 65519, 0, 65506, 65518, 0, 65505, 65522, 0, 65505, 65521, 0, 65505, 65520, 0, 65505, 65519, 0, 65505, 65518, 0, 65504, 65519, 0, 65504, 65518, 0, 65504, 65517, 0, 65504, 65516, 0, 65504, 65515, 0, 65504, 65514, 0, 65504, 65513, 0, 65505, 65517, 0, 65505, 65516, 0, 65505, 65515, 0, 65505, 65514, 0, 65505, 65513, 0, 65506, 65513, 0, 65507, 65513, 0, 65508, 65513, 0, 65509, 65513, 0, 65510, 65513, 0, 65505, 65512, 0, 65506, 65512, 0, 65507, 65512, 0, 65508, 65512, 0, 65509, 65512, 0, 65510, 65512, 0, 65506, 65514, 0, 65511, 65513, 0, 65512, 65513, 0, 65513, 65513, 0, 65514, 65513, 0, 65515, 65513, 0, 65516, 65513, 0)
+}
+
+[node name="Teleporter" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=1082447074 instance=ExtResource("5_y368g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, -0.5, -112.5)
+mesh = SubResource("QuadMesh_xxpsm")
+boss = ExtResource("3_o21ul")
+next_level = ExtResource("4_y368g")
+
+[node name="Healer" type="MeshInstance3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=73279302 groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -40.333, 1, -100)
+mesh = SubResource("BoxMesh_a0dc1")
+script = ExtResource("9_j85eu")
+description = "[img=100]Assets/Images/InteractIcon.png[/img] [font_size=42]Heal: 150[/font_size]"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Healer" unique_id=545616704]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Healer/StaticBody3D" unique_id=1948228345]
+shape = SubResource("ConcavePolygonShape3D_4p1o3")
+
+[node name="SpawnPoint" type="Marker3D" parent="WorldSubContainer/WorldSubViewport/World" unique_id=1573232919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 3)
+
+[node name="WorldGUI" type="Control" parent="." unique_id=1997823638]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="EncounterRadar" type="PanelContainer" parent="WorldGUI" unique_id=2115682692]
+modulate = Color(0.14509805, 0.7411765, 0.27450982, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a0dc1")
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI" unique_id=523143414]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WorldGUI/MarginContainer" unique_id=1418562141]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+alignment = 2
+
+[node name="XP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=2083528880]
+custom_minimum_size = Vector2(350, 20)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_2y5yt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_go7sj")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=1327328568]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -30.0
+offset_right = 66.000015
+offset_bottom = 25.0
+theme_override_font_sizes/font_size = 32
+text = "Lvl. 1"
+label_settings = SubResource("LabelSettings_2y5yt")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=794654133]
+layout_mode = 0
+offset_left = 196.0
+offset_top = -30.0
+offset_right = 342.0
+offset_bottom = 25.0
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 32
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_2y5yt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=736948913]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_15mv3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_e3sih")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP" unique_id=1175866908]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer" unique_id=1048896065]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=321740782]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "HP"
+label_settings = SubResource("LabelSettings_e3sih")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=1520841514]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_2os1m")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=515191332]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_2y5yt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2os1m")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP" unique_id=1864055137]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer" unique_id=2108251959]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=485198245]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "MP"
+label_settings = SubResource("LabelSettings_go7sj")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=98662588]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_7gny6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteractLabel" type="RichTextLabel" parent="WorldGUI/MarginContainer" unique_id=1679336036]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[img=100]Assets/Images/InteractIcon.png[/img] [font_size=42]Interact[/font_size]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerContainer" type="VBoxContainer" parent="WorldGUI/MarginContainer" unique_id=549856256]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="WorldTimer" type="ProgressBar" parent="WorldGUI/MarginContainer/TimerContainer" unique_id=1728476632]
+custom_minimum_size = Vector2(350, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("7_l5ivm")
+fill_mode = 1
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/TimerContainer/WorldTimer" unique_id=1516412005]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="WorldTimer" type="Label" parent="WorldGUI/MarginContainer/TimerContainer/WorldTimer/MarginContainer" unique_id=80423663]
+layout_mode = 2
+text = "currTime / Timer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldLevel" type="Label" parent="WorldGUI/MarginContainer/TimerContainer" unique_id=914772482]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "World Level : +0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=628769856]
+root_node = NodePath("../WorldSubContainer")
+libraries/ = SubResource("AnimationLibrary_pa8r4")
+
+[node name="ConfigMenu" parent="." unique_id=710978952 instance=ExtResource("10_a60bd")]
+visible = false
+z_index = 10
+focus_mode = 2
+focus_behavior_recursive = 1
+mouse_filter = 0
+mouse_target = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=428017320]
+color = Color(0, 0, 0, 1)

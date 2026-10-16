@@ -1,0 +1,498 @@
+[gd_scene format=3 uid="uid://bvtnq8tbxjj1c"]
+
+[ext_resource type="Resource" uid="uid://ba61odnuv8hmq" path="res://skills/actives/passTurn.tres" id="2_h4dll"]
+[ext_resource type="Shader" uid="uid://00i8ymloqq57" path="res://scripts/shaders/pixelDissolve.gdshader" id="4_saiin"]
+[ext_resource type="PackedScene" uid="uid://dar6yerkndnng" path="res://scenes/ground1x1.tscn" id="6_lv4so"]
+[ext_resource type="Shader" uid="uid://ckvw1rjjprxd8" path="res://scripts/shaders/transparent_ground.gdshader" id="7_eivww"]
+[ext_resource type="Script" uid="uid://gcfegid23n4n" path="res://scripts/battle.gd" id="8_rwtbh"]
+[ext_resource type="Script" uid="uid://cg6v1lehdmwuj" path="res://scripts/skill_effects.gd" id="9_f0g0v"]
+[ext_resource type="Script" uid="uid://11uagao4ojaf" path="res://scripts/GUIControll.gd" id="10_at2n2"]
+[ext_resource type="PackedScene" uid="uid://spnv5dx8kiot" path="res://scenes/EnemyContainer.tscn" id="11_e50ek"]
+[ext_resource type="PackedScene" uid="uid://ddyu546yaxkyy" path="res://scenes/PlayerContainer.tscn" id="12_mpb26"]
+[ext_resource type="PackedScene" uid="uid://dopai5xacpeab" path="res://scenes/skill_button.tscn" id="13_4u087"]
+[ext_resource type="Texture2D" uid="uid://bn3v27b3ridcs" path="res://Assets/Images/DefendIcon.png" id="13_p0caf"]
+[ext_resource type="Script" uid="uid://cwmt1q2m380l6" path="res://scripts/state_manager.gd" id="14_fqtyt"]
+[ext_resource type="Texture2D" uid="uid://dydqq0m0c2vem" path="res://Assets/Images/AttackIcon.png" id="15_8a2ah"]
+[ext_resource type="Shader" uid="uid://hem0kemxlsil" path="res://scripts/shaders/guiControl.gdshader" id="15_p0caf"]
+[ext_resource type="Resource" uid="uid://bqcmcfrb11des" path="res://skills/actives/basic_attack.tres" id="16_ikjs2"]
+[ext_resource type="Texture2D" uid="uid://nihitx8hrijp" path="res://Assets/Images/AnalysisIcon.png" id="18_61i1y"]
+[ext_resource type="Resource" uid="uid://d22ehi0p4ay7t" path="res://skills/actives/defend.tres" id="18_r0ctv"]
+[ext_resource type="PackedScene" uid="uid://dqljsggpuc8j7" path="res://scenes/reward_menu.tscn" id="19_p0caf"]
+[ext_resource type="Texture2D" uid="uid://kbk5ejtjhc8c" path="res://Assets/Images/SkillsIcon.png" id="20_sattt"]
+[ext_resource type="Script" uid="uid://dfhyi0my4a4gs" path="res://scripts/GUIBTN.gd" id="21_jid5g"]
+[ext_resource type="PackedScene" uid="uid://c2yg7gkdapfqv" path="res://scenes/analysis_panel.tscn" id="22_1i0gj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_61i1y"]
+shader = ExtResource("4_saiin")
+shader_parameter/pixel_color = Color(0, 0, 0, 1)
+shader_parameter/progress = 0.0
+shader_parameter/block_size = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0r4r"]
+render_priority = 0
+shader = ExtResource("7_eivww")
+shader_parameter/circle_size = 0.45000000670554
+shader_parameter/brightness = 0.2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yjb0"]
+bg_color = Color(0.65882355, 0.67058825, 0.8784314, 0.13725491)
+draw_center = false
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g5add"]
+shader = ExtResource("15_p0caf")
+shader_parameter/Speed = 2.000000095
+shader_parameter/PixelIncrease = 10.0
+shader_parameter/Hovered = false
+shader_parameter/direction = 0
+
+[sub_resource type="Animation" id="Animation_p80kq"]
+resource_name = "Hover"
+length = 0.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.5882353)]
+}
+
+[sub_resource type="Animation" id="Animation_wqklx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_61i1y"]
+_data = {
+&"Hover": SubResource("Animation_p80kq"),
+&"RESET": SubResource("Animation_wqklx")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1s5k1"]
+bg_color = Color(0.29954728, 0.29954752, 0.29954734, 0.39215687)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_djc8l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [100]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/pixel_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_saiin"]
+resource_name = "end_battle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.5, 0.5),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/pixel_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_h4dll"]
+resource_name = "start_battle"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.49),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [100, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p0caf"]
+_data = {
+&"RESET": SubResource("Animation_djc8l"),
+&"end_battle": SubResource("Animation_saiin"),
+&"start_battle": SubResource("Animation_h4dll")
+}
+
+[node name="Battle" type="Node" unique_id=1335650984 node_paths=PackedStringArray("state_manager", "skill_effects", "gui_control", "ground", "animation_player", "reward_menu", "music_player")]
+script = ExtResource("8_rwtbh")
+state_manager = NodePath("BATTLE_VIEWPORT/SubViewport/GUIcontrol/StateManager")
+skill_effects = NodePath("skill_effects")
+gui_control = NodePath("BATTLE_VIEWPORT/SubViewport/GUIcontrol")
+ground = NodePath("BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT/SubViewport/Node3D/Ground")
+animation_player = NodePath("BATTLE_VIEWPORT/AnimationPlayer")
+reward_menu = NodePath("BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/RewardContainer")
+passTurnSkill = ExtResource("2_h4dll")
+music_player = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=189689816]
+volume_db = -10.0
+
+[node name="skill_effects" type="Node" parent="." unique_id=2051291596 node_paths=PackedStringArray("skill_label")]
+script = ExtResource("9_f0g0v")
+skill_label = NodePath("../BATTLE_VIEWPORT/SubViewport/GUIcontrol/skill_selected_label")
+
+[node name="BATTLE_VIEWPORT" type="SubViewportContainer" parent="." unique_id=561120564]
+texture_filter = 1
+material = SubResource("ShaderMaterial_61i1y")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+stretch = true
+stretch_shrink = 100
+
+[node name="SubViewport" type="SubViewport" parent="BATTLE_VIEWPORT" unique_id=1448792326]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 3
+gui_embed_subwindows = true
+size = Vector2i(12, 7)
+size_2d_override = Vector2i(1000, 563)
+size_2d_override_stretch = true
+render_target_clear_mode = 1
+render_target_update_mode = 4
+
+[node name="3DWORLD_VIEWPORT" type="SubViewportContainer" parent="BATTLE_VIEWPORT/SubViewport" unique_id=1874934860]
+z_index = -5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+focus_behavior_recursive = 1
+mouse_filter = 2
+mouse_behavior_recursive = 1
+stretch = true
+stretch_shrink = 3
+
+[node name="SubViewport" type="SubViewport" parent="BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT" unique_id=726000423]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+gui_disable_input = true
+size = Vector2i(333, 187)
+size_2d_override = Vector2i(640, 360)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT/SubViewport" unique_id=400747630]
+
+[node name="Players" type="Node3D" parent="BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT/SubViewport/Node3D" unique_id=529505749]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Enemies" type="Node3D" parent="BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT/SubViewport/Node3D" unique_id=1994375647]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="camera_marker" type="Marker3D" parent="BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT/SubViewport/Node3D" unique_id=2099581003]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 4, 6)
+
+[node name="Camera3D" type="Camera3D" parent="BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT/SubViewport/Node3D" unique_id=1798374253]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 4, 6)
+projection = 1
+size = 7.5
+
+[node name="Ground" parent="BATTLE_VIEWPORT/SubViewport/3DWORLD_VIEWPORT/SubViewport/Node3D" unique_id=161240709 instance=ExtResource("6_lv4so")]
+size = Vector3(7.5, 0.01, 7.5)
+material = SubResource("ShaderMaterial_y0r4r")
+
+[node name="BorderGUI" type="PanelContainer" parent="BATTLE_VIEWPORT/SubViewport" unique_id=1707096264]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6yjb0")
+
+[node name="GUIcontrol" type="Control" parent="BATTLE_VIEWPORT/SubViewport" unique_id=1165126926 node_paths=PackedStringArray("camera_marker", "attack_button", "defend_button", "battle", "Manager", "camera", "battle_sfx")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10_at2n2")
+camera_marker = NodePath("../3DWORLD_VIEWPORT/SubViewport/Node3D/camera_marker")
+attack_button = NodePath("MarginContainer/AllButtons/ButtonsContainer/ATTACK")
+defend_button = NodePath("MarginContainer/AllButtons/ButtonsContainer/DEFEND")
+battle = NodePath("../../..")
+enemyContainer = ExtResource("11_e50ek")
+playerContainer = ExtResource("12_mpb26")
+skill_button_base = ExtResource("13_4u087")
+Manager = NodePath("StateManager")
+camera = NodePath("../3DWORLD_VIEWPORT/SubViewport/Node3D/Camera3D")
+battle_sfx = NodePath("../../BattleSounds")
+
+[node name="StateManager" type="Node" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol" unique_id=1410754081]
+script = ExtResource("14_fqtyt")
+
+[node name="MarginContainer" type="MarginContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol" unique_id=1524745437]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="DebugLabels" type="VBoxContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer" unique_id=1171186859]
+unique_name_in_owner = true
+visible = false
+z_index = 10
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+alignment = 1
+
+[node name="DebugGameState" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=1991053582]
+layout_mode = 2
+text = "GAME STATE: ...."
+
+[node name="DebugHover" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=800035472]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON HOVERED: None"
+
+[node name="DebugFocused" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=2130967617]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON SELECTED: ...."
+
+[node name="DebugSelect" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=943951395]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON SELECTED: ...."
+
+[node name="DebugBattleState" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=770551068]
+layout_mode = 2
+text = "BATTLE STATE: ...."
+
+[node name="AllButtons" type="VBoxContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer" unique_id=151657761]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 2
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=1971248226]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ATTACK" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer" unique_id=580156183 instance=ExtResource("13_4u087")]
+layout_mode = 2
+texture_normal = ExtResource("15_8a2ah")
+skill = ExtResource("16_ikjs2")
+
+[node name="DEFEND" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer" unique_id=493176819 instance=ExtResource("13_4u087")]
+layout_mode = 2
+texture_normal = ExtResource("13_p0caf")
+skill = ExtResource("18_r0ctv")
+desctription = "Damage received is halved"
+
+[node name="SKILLS" type="TextureButton" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer" unique_id=410071077 node_paths=PackedStringArray("label", "animation")]
+material = SubResource("ShaderMaterial_g5add")
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("20_sattt")
+script = ExtResource("21_jid5g")
+desctription = "Skills"
+label = NodePath("Label")
+animation = NodePath("AnimationPlayer")
+metadata/_custom_type_script = "uid://dfhyi0my4a4gs"
+
+[node name="Label" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" unique_id=1727950553]
+use_parent_material = true
+layout_mode = 0
+offset_top = -24.0
+offset_right = 128.0
+offset_bottom = -1.0
+text = "SKILLS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" unique_id=2126221052]
+libraries/ = SubResource("AnimationLibrary_61i1y")
+
+[node name="ANALYSE" type="TextureButton" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer" unique_id=348462453 node_paths=PackedStringArray("label", "animation")]
+material = SubResource("ShaderMaterial_g5add")
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("18_61i1y")
+script = ExtResource("21_jid5g")
+desctription = "Analyse"
+label = NodePath("Label")
+animation = NodePath("AnimationPlayer")
+metadata/_custom_type_script = "uid://dfhyi0my4a4gs"
+
+[node name="Label" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" unique_id=1351803863]
+use_parent_material = true
+layout_mode = 0
+offset_top = -24.0
+offset_right = 128.0
+offset_bottom = -1.0
+text = "ANALYSE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" unique_id=1136134890]
+libraries/ = SubResource("AnimationLibrary_61i1y")
+
+[node name="SkillsContainer" type="HBoxContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=986938430]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=1181114788]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "DEFAULT TEXT"
+
+[node name="EnemiesContainer" type="VBoxContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer" unique_id=321096601]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="PlayerContainer" type="VBoxContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer" unique_id=2033497135]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="AnalysisPanel" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer" unique_id=350573996 instance=ExtResource("22_1i0gj")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="RewardContainer" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer" unique_id=1605302154 instance=ExtResource("19_p0caf")]
+visible = false
+custom_minimum_size = Vector2(475, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="skill_selected_label" type="Label" parent="BATTLE_VIEWPORT/SubViewport/GUIcontrol" unique_id=253885643]
+visible = false
+layout_mode = 0
+offset_left = 350.0
+offset_top = 105.0
+offset_right = 670.0
+offset_bottom = 145.0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_1s5k1")
+text = "SKILL SELECTED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BattleSounds" type="AudioStreamPlayer2D" parent="BATTLE_VIEWPORT" unique_id=127361115]
+volume_db = 10.0
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BATTLE_VIEWPORT" unique_id=1993193895]
+libraries/ = SubResource("AnimationLibrary_p0caf")
+
+[connection signal="turn_ended" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/StateManager" to="." method="round_start"]
+[connection signal="focus_entered" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" method="_on_hover"]
+[connection signal="focus_exited" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" method="_on_not_hover"]
+[connection signal="mouse_entered" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" method="_on_hover"]
+[connection signal="mouse_exited" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/SKILLS" method="_on_not_hover"]
+[connection signal="focus_entered" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" method="_on_hover"]
+[connection signal="focus_exited" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" method="_on_not_hover"]
+[connection signal="mouse_entered" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" method="_on_hover"]
+[connection signal="mouse_exited" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" to="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer/ANALYSE" method="_on_not_hover"]
+[connection signal="end_battle" from="BATTLE_VIEWPORT/SubViewport/GUIcontrol/MarginContainer/RewardContainer" to="." method="finish_battle"]

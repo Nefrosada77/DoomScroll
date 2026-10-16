@@ -1,0 +1,194 @@
+[gd_scene format=3 uid="uid://dopai5xacpeab"]
+
+[ext_resource type="Shader" uid="uid://hem0kemxlsil" path="res://scripts/shaders/guiControl.gdshader" id="1_p80kq"]
+[ext_resource type="Texture2D" uid="uid://nihitx8hrijp" path="res://Assets/Images/AnalysisIcon.png" id="2_p80kq"]
+[ext_resource type="Script" uid="uid://vua87ycqnhrw" path="res://scripts/skillButton.gd" id="3_wqklx"]
+[ext_resource type="Texture2D" uid="uid://dydqq0m0c2vem" path="res://Assets/Images/AttackIcon.png" id="4_p80kq"]
+[ext_resource type="Texture2D" uid="uid://kbk5ejtjhc8c" path="res://Assets/Images/SkillsIcon.png" id="5_wqklx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8yom1"]
+shader = ExtResource("1_p80kq")
+shader_parameter/Speed = 2.000000095
+shader_parameter/PixelIncrease = 10.0
+shader_parameter/Hovered = false
+shader_parameter/direction = 0
+
+[sub_resource type="Animation" id="Animation_p80kq"]
+resource_name = "Hover"
+length = 0.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.5882353)]
+}
+
+[sub_resource type="Animation" id="Animation_wqklx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8yom1"]
+_data = {
+&"Hover": SubResource("Animation_p80kq"),
+&"RESET": SubResource("Animation_wqklx")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqklx"]
+bg_color = Color(0, 0, 0, 0.73333335)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.10980392, 0.2627451, 0.42352942, 1)
+corner_radius_top_left = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_p80kq"]
+font_size = 18
+font_color = Color(1, 0.17254902, 0.25490198, 1)
+outline_size = 2
+outline_color = Color(0.2, 0.20392157, 0.18039216, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8yom1"]
+bg_color = Color(0, 0, 0, 0.73333335)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.10980392, 0.2627451, 0.42352942, 1)
+corner_radius_bottom_right = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_wqklx"]
+font_size = 18
+font_color = Color(0.05490196, 0.6901961, 0.6627451, 1)
+outline_size = 2
+outline_color = Color(0.2, 0.20392157, 0.18039216, 1)
+
+[node name="SkillButton" type="TextureButton" unique_id=580156183 node_paths=PackedStringArray("power_container", "power_label", "cost_container", "cost_label", "label", "animation")]
+texture_filter = 1
+material = SubResource("ShaderMaterial_8yom1")
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("2_p80kq")
+stretch_mode = 5
+script = ExtResource("3_wqklx")
+power_container = NodePath("Power")
+power_label = NodePath("Power/Power/Label")
+cost_container = NodePath("Cost")
+cost_label = NodePath("Cost/Cost/Label")
+label = NodePath("Label")
+animation = NodePath("AnimationPlayer")
+metadata/_custom_type_script = "uid://vua87ycqnhrw"
+
+[node name="Label" type="Label" parent="." unique_id=102885739]
+use_parent_material = true
+layout_mode = 0
+offset_top = -24.0
+offset_right = 128.0
+offset_bottom = -1.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1480216742]
+libraries/ = SubResource("AnimationLibrary_8yom1")
+
+[node name="Power" type="PanelContainer" parent="." unique_id=145888334]
+visible = false
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_right = 9.0
+offset_bottom = 32.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wqklx")
+
+[node name="Power" type="HBoxContainer" parent="Power" unique_id=482099104]
+use_parent_material = true
+layout_mode = 2
+size_flags_vertical = 8
+offset_transform_position = Vector2(1.5, 2)
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Power/Power" unique_id=623638746]
+use_parent_material = true
+custom_maximum_size = Vector2(22.5, 22.5)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_p80kq")
+
+[node name="Label" type="Label" parent="Power/Power" unique_id=503517610]
+use_parent_material = true
+layout_mode = 2
+text = "120"
+label_settings = SubResource("LabelSettings_p80kq")
+
+[node name="Cost" type="PanelContainer" parent="." unique_id=495885393]
+visible = false
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -32.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8yom1")
+
+[node name="Cost" type="HBoxContainer" parent="Cost" unique_id=1058641674]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_position = Vector2(-3.5, 2)
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Cost/Cost" unique_id=1606664953]
+use_parent_material = true
+custom_maximum_size = Vector2(22.5, 22.5)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("5_wqklx")
+
+[node name="Label" type="Label" parent="Cost/Cost" unique_id=686289637]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 12
+text = "120"
+label_settings = SubResource("LabelSettings_wqklx")
+
+[connection signal="focus_entered" from="." to="." method="_on_hover"]
+[connection signal="focus_exited" from="." to="." method="_on_not_hover"]
+[connection signal="mouse_entered" from="." to="." method="_on_hover"]
+[connection signal="mouse_exited" from="." to="." method="_on_not_hover"]

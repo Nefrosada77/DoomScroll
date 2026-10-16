@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://d2jd8y8kxe21b"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_4pjp5"]
+[ext_resource type="Texture2D" uid="uid://kbk5ejtjhc8c" path="res://Assets/Images/SkillsIcon.png" id="1_gqlhy"]
+
+[resource]
+script = ExtResource("1_4pjp5")
+skID = 2
+use_weight = 0.2
+SkName = "Cook"
+SkDesc = "Heals one ally. Uses the use's maxHP instead of attack"
+SkCost = 10
+skType = 3
+skPower = 10
+SkHit = 3
+SkIcon = ExtResource("1_gqlhy")
+reward = true
+sellable = true
+reward_chance = 1.0
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

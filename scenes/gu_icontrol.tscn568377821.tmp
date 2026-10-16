@@ -1,0 +1,569 @@
+[gd_scene format=3 uid="uid://bvtnq8tbxjj1c"]
+
+[ext_resource type="Shader" uid="uid://ckvw1rjjprxd8" path="res://shaders/transparent_ground.gdshader" id="1_ol3jg"]
+[ext_resource type="Script" uid="uid://11uagao4ojaf" path="res://scripts/GUIControll.gd" id="1_ts1wk"]
+[ext_resource type="Shader" uid="uid://cgae1wlgx2ry5" path="res://shaders/guiControl.tres" id="2_7sf2g"]
+[ext_resource type="PackedScene" uid="uid://cpamtj5glqveo" path="res://scenes/PlayerBase.tscn" id="2_a1m3c"]
+[ext_resource type="Texture2D" uid="uid://bm2dur7s3k8gb" path="res://icon.svg" id="2_ktmgr"]
+[ext_resource type="Script" uid="uid://dfhyi0my4a4gs" path="res://scripts/GUIBTN.gd" id="3_ktmgr"]
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="3_ns1ln"]
+[ext_resource type="Resource" uid="uid://bqcmcfrb11des" path="res://skills/basic_attack.tres" id="4_5fhrl"]
+[ext_resource type="Script" uid="uid://cwmt1q2m380l6" path="res://scripts/state_manager.gd" id="4_26h5o"]
+[ext_resource type="Resource" uid="uid://4q1vc37kpshr" path="res://skills/Freeze.tres" id="5_2hrc2"]
+[ext_resource type="PackedScene" uid="uid://ddyu546yaxkyy" path="res://scenes/PlayerContainer.tscn" id="6_2aa3o"]
+[ext_resource type="Resource" uid="uid://d2jd8y8kxe21b" path="res://skills/Cook.tres" id="6_e8ai5"]
+[ext_resource type="PackedScene" uid="uid://spnv5dx8kiot" path="res://scenes/EnemyContainer.tscn" id="6_ruocw"]
+[ext_resource type="PackedScene" uid="uid://dopai5xacpeab" path="res://scenes/skill_button.tscn" id="8_yml1w"]
+[ext_resource type="PackedScene" uid="uid://bx3ngx7b0xkjj" path="res://scenes/menu_control.tscn" id="11_pjws5"]
+[ext_resource type="Script" uid="uid://gcfegid23n4n" path="res://scripts/battle.gd" id="12_yml1w"]
+[ext_resource type="Script" uid="uid://cg6v1lehdmwuj" path="res://scripts/skill_effects.gd" id="13_ol3jg"]
+[ext_resource type="Script" uid="uid://c7a55omu1vq58" path="res://scenes/analysispanel.gd" id="17_5fhrl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hvci7"]
+sky_top_color = Color(0.59583586, 0.00408168, 0.972696, 1)
+sky_horizon_color = Color(0.47691053, 0.66176087, 0.9296967, 1)
+sky_curve = 0.08919062
+sky_cover = ExtResource("2_ktmgr")
+ground_bottom_color = Color(0.11007159, 0.16502249, 0.31547672, 1)
+ground_horizon_color = Color(0.47691053, 0.66176087, 0.9296967, 1)
+ground_curve = 0.5971427
+
+[sub_resource type="Sky" id="Sky_4g0d5"]
+sky_material = SubResource("ProceduralSkyMaterial_hvci7")
+
+[sub_resource type="Environment" id="Environment_ns1ln"]
+background_mode = 2
+background_color = Color(0.5411765, 0.5411765, 0.8745098, 1)
+sky = SubResource("Sky_4g0d5")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1s5k1"]
+render_priority = 0
+shader = ExtResource("1_ol3jg")
+shader_parameter/color = Color(0.29411766, 1, 1, 1)
+shader_parameter/circle_size = 0.45
+shader_parameter/brightness = 0.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a0dc1"]
+material = SubResource("ShaderMaterial_1s5k1")
+size = Vector2(2.5, 2.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a1m3c"]
+size = Vector3(2.5, 0.001, 2.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yjb0"]
+bg_color = Color(0.65882355, 0.67058825, 0.8784314, 0.13725491)
+draw_center = false
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g5add"]
+shader = ExtResource("2_7sf2g")
+shader_parameter/Speed = 5.000000074506
+shader_parameter/Hovered = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7cx4"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5pcr"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iv3pb"]
+bg_color = Color(0.05465565, 0.6882809, 0.66115725, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[sub_resource type="Animation" id="Animation_pjws5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_yml1w"]
+resource_name = "start_battle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [100, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ol3jg"]
+_data = {
+&"RESET": SubResource("Animation_pjws5"),
+&"start_battle": SubResource("Animation_yml1w")
+}
+
+[node name="SubViewportContainer" type="SubViewportContainer" unique_id=561120564]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+stretch = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1232879015]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1378904103]
+environment = SubResource("Environment_ns1ln")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1448792326]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 3
+gui_embed_subwindows = true
+size = Vector2i(1600, 900)
+size_2d_override = Vector2i(1000, 563)
+size_2d_override_stretch = true
+render_target_clear_mode = 1
+render_target_update_mode = 4
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="SubViewport" unique_id=1874934860]
+z_index = -5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+focus_behavior_recursive = 1
+mouse_filter = 2
+mouse_behavior_recursive = 1
+stretch = true
+stretch_shrink = 4
+
+[node name="SubViewport" type="SubViewport" parent="SubViewport/SubViewportContainer" unique_id=726000423]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+gui_disable_input = true
+size = Vector2i(250, 140)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewport/SubViewportContainer/SubViewport" unique_id=400747630]
+
+[node name="Ground" type="MeshInstance3D" parent="SubViewport/SubViewportContainer/SubViewport/Node3D" unique_id=1098938059]
+mesh = SubResource("PlaneMesh_a0dc1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SubViewport/SubViewportContainer/SubViewport/Node3D/Ground" unique_id=776258710]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewport/SubViewportContainer/SubViewport/Node3D/Ground/StaticBody3D" unique_id=1033222476]
+shape = SubResource("BoxShape3D_a1m3c")
+
+[node name="Players" type="Node3D" parent="SubViewport/SubViewportContainer/SubViewport/Node3D" unique_id=529505749]
+unique_name_in_owner = true
+
+[node name="Player" parent="SubViewport/SubViewportContainer/SubViewport/Node3D/Players" unique_id=428104958 instance=ExtResource("2_a1m3c")]
+transform = Transform3D(-1.5298985e-08, 0, -0.35, 0, 0.35, 0, 0.35, 0, -1.5298985e-08, 0.75, 0.35, 0)
+maxMP = 20.0
+currMP = 20.0
+skills = Array[ExtResource("3_ns1ln")]([ExtResource("4_5fhrl"), ExtResource("5_2hrc2"), ExtResource("6_e8ai5")])
+
+[node name="Enemies" type="Node3D" parent="SubViewport/SubViewportContainer/SubViewport/Node3D" unique_id=1994375647]
+unique_name_in_owner = true
+
+[node name="Player" parent="SubViewport/SubViewportContainer/SubViewport/Node3D/Enemies" unique_id=2057316147 instance=ExtResource("2_a1m3c")]
+transform = Transform3D(-1.5298985e-08, 0, 0.35, 0, 0.35, 0, -0.35, 0, -1.5298985e-08, -0.75, 0.35, 0)
+maxHP = 5.0
+currHP = 5.0
+skills = Array[ExtResource("3_ns1ln")]([ExtResource("4_5fhrl")])
+
+[node name="Player2" parent="SubViewport/SubViewportContainer/SubViewport/Node3D/Enemies" unique_id=116488823 instance=ExtResource("2_a1m3c")]
+transform = Transform3D(-1.5298985e-08, 0, 0.35, 0, 0.35, 0, -0.35, 0, -1.5298985e-08, -0.75, 0.35, 0.54541814)
+maxHP = 5.0
+currHP = 5.0
+skills = Array[ExtResource("3_ns1ln")]([ExtResource("4_5fhrl")])
+
+[node name="camera_marker" type="Marker3D" parent="SubViewport/SubViewportContainer/SubViewport/Node3D" unique_id=2099581003]
+transform = Transform3D(1, 0, 0, 0, 0.7489557, 0.66262007, 0, -0.66262007, 0.7489557, 0, 1.75, 2)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/SubViewportContainer/SubViewport/Node3D" unique_id=1798374253]
+transform = Transform3D(1, 0, 0, 0, 0.7489557, 0.66262007, 0, -0.66262007, 0.7489557, 0, 1.75, 2)
+size = 1.5150701
+
+[node name="Battle" type="Node" parent="SubViewport" unique_id=1335650984]
+script = ExtResource("12_yml1w")
+
+[node name="skill_effects" type="Node" parent="SubViewport/Battle" unique_id=2051291596]
+script = ExtResource("13_ol3jg")
+
+[node name="BorderGUI" type="PanelContainer" parent="SubViewport" unique_id=1707096264]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6yjb0")
+
+[node name="GUIcontrol" type="Control" parent="SubViewport" unique_id=1165126926 node_paths=PackedStringArray("Manager", "camera")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ts1wk")
+enemyContainer = ExtResource("6_ruocw")
+playerContainer = ExtResource("6_2aa3o")
+skill_button_base = ExtResource("8_yml1w")
+Manager = NodePath("StateManager")
+camera = NodePath("../SubViewportContainer/SubViewport/Node3D/Camera3D")
+
+[node name="StateManager" type="Node" parent="SubViewport/GUIcontrol" unique_id=1410754081]
+script = ExtResource("4_26h5o")
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewport/GUIcontrol" unique_id=1524745437]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="DebugLabels" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=1171186859]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+alignment = 1
+
+[node name="DebugGameState" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=1991053582]
+layout_mode = 2
+text = "GAME STATE: ...."
+
+[node name="DebugHover" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=800035472]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON HOVERED: None"
+
+[node name="DebugFocused" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=2130967617]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON SELECTED: ...."
+
+[node name="DebugSelect" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=943951395]
+layout_mode = 2
+size_flags_vertical = 0
+text = "BUTTON SELECTED: ...."
+
+[node name="DebugBattleState" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/DebugLabels" unique_id=770551068]
+layout_mode = 2
+text = "BATTLE STATE: ...."
+
+[node name="AllButtons" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=151657761]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 2
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=1971248226]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1
+
+[node name="SKILLS" type="TextureButton" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer" unique_id=410071077]
+material = SubResource("ShaderMaterial_g5add")
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("2_ktmgr")
+script = ExtResource("3_ktmgr")
+desctription = "Skills"
+metadata/_custom_type_script = "uid://dfhyi0my4a4gs"
+
+[node name="ANALYSE" type="TextureButton" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons/ButtonsContainer" unique_id=348462453]
+material = SubResource("ShaderMaterial_g5add")
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("2_ktmgr")
+script = ExtResource("3_ktmgr")
+desctription = "Analyse"
+metadata/_custom_type_script = "uid://dfhyi0my4a4gs"
+
+[node name="SkillsContainer" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=986938430]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AllButtons" unique_id=1181114788]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "DEFAULT TEXT"
+
+[node name="EnemiesContainer" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=321096601]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="PlayerContainer" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=2033497135]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="AnalysisPanel" type="PanelContainer" parent="SubViewport/GUIcontrol/MarginContainer" unique_id=742553300 node_paths=PackedStringArray("char_name", "hp_bar", "currHP", "maxHP", "mp_bar", "currMP", "maxMP", "atk", "def", "skill_list")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(475, 0)
+custom_maximum_size = Vector2(475, -1)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+script = ExtResource("17_5fhrl")
+char_name = NodePath("MarginContainer/VBoxContainer/CHARNAME")
+hp_bar = NodePath("MarginContainer/VBoxContainer/STATS/HP/HPBar")
+currHP = NodePath("MarginContainer/VBoxContainer/STATS/HP/currHP")
+maxHP = NodePath("MarginContainer/VBoxContainer/STATS/HP/maxHP")
+mp_bar = NodePath("MarginContainer/VBoxContainer/STATS/MP/MPBar")
+currMP = NodePath("MarginContainer/VBoxContainer/STATS/MP/currMP")
+maxMP = NodePath("MarginContainer/VBoxContainer/STATS/MP/maxMP")
+atk = NodePath("MarginContainer/VBoxContainer/STATS/ATK/ATKSTAT")
+def = NodePath("MarginContainer/VBoxContainer/STATS/DEF/DEFSTAT")
+skill_list = NodePath("MarginContainer/VBoxContainer/SKILLS")
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel" unique_id=1654454706]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer" unique_id=1049133068]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="CHARNAME" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer" unique_id=42470897]
+use_parent_material = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "???"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="STATS" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer" unique_id=1521403977]
+use_parent_material = true
+layout_mode = 2
+alignment = 1
+
+[node name="STATS" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS" unique_id=73327531]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "STATS:"
+
+[node name="HP" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS" unique_id=927954185]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HPBar" type="ProgressBar" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/HP" unique_id=1889495623]
+use_parent_material = true
+custom_minimum_size = Vector2(250, 20)
+custom_maximum_size = Vector2(250, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_d7cx4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_y5pcr")
+value = 100.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/HP/HPBar" unique_id=2002443465]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="HP" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/HP/HPBar/MarginContainer" unique_id=1391723956]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 16
+text = "HP"
+
+[node name="currHP" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/HP" unique_id=1183934875]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 16
+text = "???"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="separato" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/HP" unique_id=928167622]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 16
+text = "/"
+
+[node name="maxHP" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/HP" unique_id=700167391]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 16
+text = "???"
+
+[node name="MP" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS" unique_id=1701087447]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MPBar" type="ProgressBar" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/MP" unique_id=1962881381]
+use_parent_material = true
+custom_minimum_size = Vector2(250, 20)
+custom_maximum_size = Vector2(250, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_d7cx4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_iv3pb")
+value = 100.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/MP/MPBar" unique_id=238263146]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="MP" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/MP/MPBar/MarginContainer" unique_id=1024267368]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 16
+text = "MP"
+
+[node name="currMP" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/MP" unique_id=1609915806]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 16
+text = "???"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="separato" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/MP" unique_id=1234548335]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 16
+text = "/"
+
+[node name="maxMP" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/MP" unique_id=1934708846]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 16
+text = "???"
+
+[node name="ATK" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS" unique_id=1164223566]
+layout_mode = 2
+
+[node name="ATK" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/ATK" unique_id=299278842]
+layout_mode = 2
+text = "ATTACK:"
+
+[node name="ATKSTAT" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/ATK" unique_id=156035835]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "???"
+
+[node name="DEF" type="HBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS" unique_id=286874655]
+layout_mode = 2
+
+[node name="DEF" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/DEF" unique_id=94954434]
+layout_mode = 2
+text = "DEFENSE:"
+
+[node name="DEFSTAT" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/STATS/DEF" unique_id=1857479615]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "???"
+
+[node name="SKILLS" type="VBoxContainer" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer" unique_id=850362636]
+layout_mode = 2
+
+[node name="SKILLS" type="Label" parent="SubViewport/GUIcontrol/MarginContainer/AnalysisPanel/MarginContainer/VBoxContainer/SKILLS" unique_id=913077226]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "SKILLS:"
+
+[node name="ConfigMenu" parent="SubViewport/GUIcontrol" unique_id=710978952 instance=ExtResource("11_pjws5")]
+visible = false
+z_index = 9
+layout_mode = 1
+mouse_target = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1736405843]
+libraries/ = SubResource("AnimationLibrary_ol3jg")
+
+[connection signal="turn_ended" from="SubViewport/GUIcontrol/StateManager" to="SubViewport/Battle" method="round_start"]

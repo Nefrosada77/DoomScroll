@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dkmb8k8vdagxm"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_3arpw"]
+
+[resource]
+script = ExtResource("1_3arpw")
+skID = 7
+use_weight = 0.7
+SkName = "Ch4rm"
+SkDesc = "Decreases target's attack by 20%"
+SkCost = 20
+skType = 2
+reward = true
+reward_chance = 1.0
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

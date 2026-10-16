@@ -1,0 +1,628 @@
+[gd_scene format=3 uid="uid://bx3ngx7b0xkjj"]
+
+[ext_resource type="Script" uid="uid://dhaycqi6ts2ky" path="res://scripts/menu_control.gd" id="1_oin43"]
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="2_pp2sb"]
+[ext_resource type="Theme" uid="uid://dgbnitmsp2o02" path="res://Assets/Themes/defaultTheme.tres" id="2_svpbc"]
+[ext_resource type="Script" uid="uid://bko77vfs4ludx" path="res://scripts/volSlider.gd" id="3_hs3ag"]
+[ext_resource type="Texture2D" uid="uid://bm2dur7s3k8gb" path="res://icon.svg" id="4_dw83j"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_oin43"]
+color = Color(0.5137255, 0.77254903, 0.7647059, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svpbc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hs3ag"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+draw_center = false
+border_width_left = 4
+border_width_right = 4
+border_color = Color(0.34975556, 0.595567, 0.5890058, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dw83j"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 0.0
+bg_color = Color(0.34901962, 0.59607846, 0.5882353, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_color = Color(0.5137255, 0.77254903, 0.7647059, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pp2sb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pp2sb"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_color = Color(0.3818723, 0.6671227, 0.5624779, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j76pu"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgf1j"]
+bg_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3m4gn"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqm1x"]
+bg_color = Color(0.05465565, 0.6882809, 0.66115725, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6yjb0"]
+color = Color(0.30306095, 0.7213693, 0.92001474, 1)
+grow_begin = 8.0
+grow_end = 8.0
+vertical = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thcc8"]
+bg_color = Color(0.34117648, 0.4392157, 0.6901961, 0.39215687)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rplwn"]
+content_margin_left = 10.0
+bg_color = Color(0.34117648, 0.4392157, 0.6901961, 0.39215687)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccwlx"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_top = 2
+border_color = Color(1, 1, 1, 0.75)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_detail = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j76pu"]
+
+[node name="ConfigMenu" type="SubViewportContainer" unique_id=710978952 node_paths=PackedStringArray("stats_menu", "moneylabel", "playerIcon", "ATKLabel", "DEFLabel", "hpBar", "hpLabel", "mpBar", "mpLabel", "xpBar", "xpLabel", "skills_tab", "skill_list", "passive_skill_list", "sfx")]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("1_oin43")
+stats_menu = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu")
+moneylabel = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Money/Label")
+playerIcon = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/TextureRect")
+ATKLabel = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats/HBoxContainer/Attack")
+DEFLabel = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats/HBoxContainer2/Defense")
+hpBar = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/HPBAR/ProgressBar")
+hpLabel = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/HPBAR/Label2")
+mpBar = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/MPBAR/ProgressBar")
+mpLabel = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/MPBAR/Label2")
+xpBar = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/XPBAR2/ProgressBar")
+xpLabel = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/XPBAR2/Label2")
+skills_tab = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab")
+skill_list = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab/SKILLS/SKILLS/SKILLLIST")
+passive_skill_list = NodePath("SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab/PASSIVE SKILLS/PASSIVESKILLS/PASSIVESKILLLIST")
+sfx = NodePath("MenuSFX")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1328015833]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(1280, 720)
+size_2d_override = Vector2i(900, 506)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="MenuControl" type="Control" parent="SubViewport" unique_id=435405128]
+custom_minimum_size = Vector2(900, 506)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SubViewport/MenuControl" unique_id=113043720]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 80
+
+[node name="PanelContainer" type="PanelContainer" parent="SubViewport/MenuControl/MarginContainer" unique_id=773938898]
+custom_minimum_size = Vector2(0, 435)
+layout_mode = 2
+theme = ExtResource("2_pp2sb")
+
+[node name="MenuInitial" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer" unique_id=934873123]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial" unique_id=2117197871]
+layout_mode = 2
+alignment = 1
+
+[node name="RETURN" type="Button" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer" unique_id=17806718]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_pp2sb")
+text = "RETURN TO GAME"
+flat = true
+
+[node name="STATS" type="Button" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer" unique_id=1118043642]
+layout_mode = 2
+theme = ExtResource("2_pp2sb")
+text = "STATS"
+flat = true
+
+[node name="OPTIONS" type="Button" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer" unique_id=1058963527]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_pp2sb")
+text = "OPTIONS"
+flat = true
+
+[node name="MENU" type="Button" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer" unique_id=1949909086]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_pp2sb")
+text = "Exit to Menu"
+flat = true
+
+[node name="EXIT" type="Button" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer" unique_id=1695273196]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_pp2sb")
+text = "EXIT TO DESKTOP"
+flat = true
+
+[node name="OptionsMenu" type="TabContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer" unique_id=170907946]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_colors/font_hovered_color = Color(0.58103263, 0.5810328, 0.5810338, 1)
+theme_override_colors/font_unselected_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_colors/font_outline_color = Color(0.5137255, 0.77254903, 0.7647059, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 24
+theme_override_styles/panel = SubResource("StyleBoxLine_oin43")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_svpbc")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_hs3ag")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_hs3ag")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_dw83j")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_pp2sb")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_pp2sb")
+current_tab = 1
+tab_0/disabled = true
+tab_0/hidden = true
+tab_2/disabled = true
+tab_2/hidden = true
+
+[node name="SCREEN" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu" unique_id=1565318400]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN" unique_id=188147097]
+layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer" unique_id=791507818]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SCREENRESOLU" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer" unique_id=409303206]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/SCREENRESOLU" unique_id=385174471]
+layout_mode = 2
+size_flags_horizontal = 2
+theme = ExtResource("2_svpbc")
+text = "SCREEN RESOLUTION"
+
+[node name="RESOLUTIONS" type="OptionButton" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/SCREENRESOLU" unique_id=1509397226]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+selected = 0
+item_count = 2
+popup/item_0/text = "1920 X 1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600 X 900"
+popup/item_1/id = 1
+
+[node name="FULLSCREEN" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer" unique_id=400070030]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/FULLSCREEN" unique_id=416842234]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_svpbc")
+text = "FULLSCREEN"
+
+[node name="FULLCHECK" type="CheckButton" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/FULLSCREEN" unique_id=1835220728]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "OFF"
+flat = true
+alignment = 2
+
+[node name="AUDIO" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu" unique_id=1366685272]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO" unique_id=1344957299]
+layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 16
+
+[node name="AUDIOCONT" type="VBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer" unique_id=308798433]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="MASTERVOL" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT" unique_id=2023727287]
+layout_mode = 2
+
+[node name="MASAUDILBL" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL" unique_id=334277099]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+theme = ExtResource("2_svpbc")
+text = "MASTER VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MASAUDIPERC" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL" unique_id=2093827443]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("2_svpbc")
+text = "90%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MASTERSLI" type="HSlider" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL" unique_id=1700661985 node_paths=PackedStringArray("label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+script = ExtResource("3_hs3ag")
+busName = "Master"
+label = NodePath("../MASAUDIPERC")
+
+[node name="SFXVOL2" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT" unique_id=1004114631]
+layout_mode = 2
+
+[node name="SFXAUDILBL" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2" unique_id=49901978]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+theme = ExtResource("2_svpbc")
+text = "SOUND EFFECTS VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXAUDIPERC" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2" unique_id=544923680]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("2_svpbc")
+text = "90%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXSLI" type="HSlider" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2" unique_id=74167123 node_paths=PackedStringArray("label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+script = ExtResource("3_hs3ag")
+busName = "SFX"
+label = NodePath("../SFXAUDIPERC")
+
+[node name="MUSICVOL3" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT" unique_id=119152286]
+layout_mode = 2
+
+[node name="MUSICAUDILBL" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3" unique_id=351124310]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+theme = ExtResource("2_svpbc")
+text = "MUSIC VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MUSICAUDIPERC" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3" unique_id=1981138236]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("2_svpbc")
+text = "90%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MUSICSLI" type="HSlider" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3" unique_id=1276453301 node_paths=PackedStringArray("label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+script = ExtResource("3_hs3ag")
+busName = "Music"
+label = NodePath("../MUSICAUDIPERC")
+
+[node name="GAMEPLAY" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu" unique_id=246308525]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/GAMEPLAY" unique_id=1789329816]
+layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 16
+
+[node name="StatsMenu" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer" unique_id=216230660]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu" unique_id=2140850812]
+layout_mode = 2
+
+[node name="StatsMenu" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer" unique_id=79348971]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu" unique_id=1294115941]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="XPBAR2" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer" unique_id=1236011373]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/XPBAR2" unique_id=648492525]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "XP"
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/XPBAR2" unique_id=1129030825]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_j76pu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vgf1j")
+show_percentage = false
+
+[node name="Label2" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/XPBAR2" unique_id=2079777398]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "min/max"
+
+[node name="Money" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer" unique_id=920266220]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Money" unique_id=1119229970]
+layout_mode = 2
+text = "$ ???"
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer" unique_id=925509310]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = ExtResource("4_dw83j")
+
+[node name="Stats" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer" unique_id=325543528]
+layout_mode = 2
+size_flags_vertical = 10
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats" unique_id=1093138350]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats/HBoxContainer" unique_id=1242298448]
+layout_mode = 2
+text = "ATK:"
+
+[node name="Attack" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats/HBoxContainer" unique_id=1549962890]
+layout_mode = 2
+text = "playATK"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats" unique_id=2078495089]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats/HBoxContainer2" unique_id=1422075133]
+layout_mode = 2
+text = "DEF:"
+
+[node name="Defense" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/Stats/HBoxContainer2" unique_id=603239975]
+layout_mode = 2
+text = "playDEF"
+
+[node name="HPBAR" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer" unique_id=1786311191]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/HPBAR" unique_id=1432898846]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "HP"
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/HPBAR" unique_id=1835989789]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_j76pu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3m4gn")
+show_percentage = false
+
+[node name="Label2" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/HPBAR" unique_id=1662504203]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "min/max"
+
+[node name="MPBAR" type="HBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer" unique_id=1160618675]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/MPBAR" unique_id=1185458664]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "MP"
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/MPBAR" unique_id=1448768409]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/background = SubResource("StyleBoxFlat_j76pu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gqm1x")
+show_percentage = false
+
+[node name="Label2" type="Label" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/StatsMenu/VBoxContainer/MPBAR" unique_id=1793666120]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "min/max"
+
+[node name="VSeparator" type="VSeparator" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer" unique_id=1367931133]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_6yjb0")
+
+[node name="SkillsMenu" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer" unique_id=55740378]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="SkillsTab" type="TabContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu" unique_id=166994318]
+layout_mode = 2
+focus_mode = 2
+theme_override_constants/tab_separation = 8
+theme_override_font_sizes/font_size = 24
+theme_override_styles/panel = SubResource("StyleBoxFlat_thcc8")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_rplwn")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_ccwlx")
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_j76pu")
+current_tab = 0
+
+[node name="SKILLS" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab" unique_id=528171651]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+metadata/_tab_index = 0
+
+[node name="SKILLS" type="VBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab/SKILLS" unique_id=476684981]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="SKILLLIST" type="RichTextLabel" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab/SKILLS/SKILLS" unique_id=1195958516]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PASSIVE SKILLS" type="MarginContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab" unique_id=1792788034]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+metadata/_tab_index = 1
+
+[node name="PASSIVESKILLS" type="VBoxContainer" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab/PASSIVE SKILLS" unique_id=1645139047]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="PASSIVESKILLLIST" type="RichTextLabel" parent="SubViewport/MenuControl/MarginContainer/PanelContainer/StatsMenu/HBoxContainer/SkillsMenu/SkillsTab/PASSIVE SKILLS/PASSIVESKILLS" unique_id=1585130863]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuSFX" type="AudioStreamPlayer" parent="." unique_id=1181815438]
+volume_db = 15.0
+bus = &"SFX"
+
+[connection signal="pressed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer/RETURN" to="." method="_on_button_pressed" flags=18]
+[connection signal="pressed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer/STATS" to="." method="_on_button_pressed" flags=18]
+[connection signal="pressed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer/OPTIONS" to="." method="_on_button_pressed" flags=18]
+[connection signal="pressed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer/MENU" to="." method="_on_button_pressed" flags=18]
+[connection signal="pressed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/MenuInitial/VBoxContainer/EXIT" to="." method="_on_button_pressed" flags=18]
+[connection signal="item_selected" from="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/SCREENRESOLU/RESOLUTIONS" to="." method="_on_option_button_item_selected" flags=18]
+[connection signal="toggled" from="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/FULLSCREEN/FULLCHECK" to="." method="_on_check_button_toggled" flags=18]
+[connection signal="value_changed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL/MASTERSLI" to="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL/MASTERSLI" method="_on_value_changed"]
+[connection signal="value_changed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2/SFXSLI" to="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2/SFXSLI" method="_on_value_changed"]
+[connection signal="value_changed" from="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3/MUSICSLI" to="SubViewport/MenuControl/MarginContainer/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3/MUSICSLI" method="_on_value_changed"]

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://4q1vc37kpshr"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_0ur36"]
+[ext_resource type="Texture2D" uid="uid://bttt3dbn0apyf" path="res://Assets/Images/FreezeIcon.png" id="1_03e6h"]
+
+[resource]
+script = ExtResource("1_0ur36")
+skID = 1
+use_weight = 0.1
+SkName = "Freeze"
+SkDesc = "Has a chance to freeze enemies"
+SkCost = 10
+skPower = 25
+SkIcon = ExtResource("1_03e6h")
+sellable = true
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

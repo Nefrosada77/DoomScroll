@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dje1jt76r1qc0"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_nttcb"]
+
+[resource]
+script = ExtResource("1_nttcb")
+skID = 8
+use_weight = 0.8
+SkName = "Aura Farm"
+SkDesc = "Increases user's attack by 25%"
+SkCost = 20
+skType = 2
+SkHit = 3
+reward = true
+sellable = true
+reward_chance = 0.5
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

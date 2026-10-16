@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://ciw3uksswr5t1"]
+
+[ext_resource type="Script" uid="uid://baom2qvcww5ef" path="res://scripts/player.gd" id="1_kcaux"]
+[ext_resource type="Resource" uid="uid://d22ehi0p4ay7t" path="res://skills/actives/defend.tres" id="2_1v5hn"]
+[ext_resource type="Resource" uid="uid://bqcmcfrb11des" path="res://skills/actives/basic_attack.tres" id="3_xtfm2"]
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="4_d2b20"]
+[ext_resource type="Resource" uid="uid://4q1vc37kpshr" path="res://skills/actives/Freeze.tres" id="5_d1plm"]
+[ext_resource type="PackedScene" uid="uid://venpvf7dpywq" path="res://Assets/Models/basePlayer/exported-model.glb" id="6_tnjx2"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a0dc1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a0dc1"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6yjb0"]
+radius = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hi74q"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.08235294)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6yjb0"]
+material = SubResource("StandardMaterial3D_hi74q")
+top_radius = 1.5
+bottom_radius = 1.5
+
+[node name="Player" type="CharacterBody3D" unique_id=428104958 node_paths=PackedStringArray("camera", "model", "interact_area", "raycast_pos_x", "raycast_neg_x", "raycast_pos_z", "raycast_neg_z", "animation", "marker_analysis")]
+script = ExtResource("1_kcaux")
+defend = ExtResource("2_1v5hn")
+camera = NodePath("Camera3D")
+model = NodePath("exported-model/Skinned Mesh 0/Skeleton3D/Skinned Mesh 0")
+interact_area = NodePath("Area3D")
+raycast_pos_x = NodePath("RayCasts2/+x")
+raycast_neg_x = NodePath("RayCasts2/-x")
+raycast_pos_z = NodePath("RayCasts2/+z")
+raycast_neg_z = NodePath("RayCasts2/-z")
+charName = "Player"
+main_attack = ExtResource("3_xtfm2")
+skills = Array[ExtResource("4_d2b20")]([ExtResource("5_d1plm")])
+hp_evolve = 7
+atk_evolve = 2
+animation = NodePath("exported-model/AnimationPlayer")
+marker_analysis = NodePath("Marker3D")
+
+[node name="exported-model" parent="." unique_id=101721941 instance=ExtResource("6_tnjx2")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.6, 0)
+
+[node name="Skeleton3D" parent="exported-model/Skinned Mesh 0" parent_id_path=PackedInt32Array(101721941, 1071156896) index="0" unique_id=656797920]
+bones/1/position = Vector3(0.037689105, 0.113135986, 1.657293)
+bones/1/rotation = Quaternion(0.81892234, -0.031422716, 0.03664339, 0.57187086)
+bones/2/rotation = Quaternion(-0.0647027, 1.1025115e-07, -2.3192639e-08, 0.9979046)
+bones/3/rotation = Quaternion(0.106378146, 0.08512924, -0.06831212, 0.98831683)
+bones/4/rotation = Quaternion(0.074638575, 0.27976322, -0.002193466, 0.9571609)
+bones/5/rotation = Quaternion(0.15963277, -0.18108958, -0.045108963, 0.9693757)
+bones/6/rotation = Quaternion(-0.21099603, 2.0663501e-08, -2.8379606e-08, 0.9774869)
+bones/7/rotation = Quaternion(-0.016260568, 4.0828343e-08, -4.968739e-09, 0.9998678)
+bones/8/rotation = Quaternion(-0.5956939, -0.2325471, -0.3255798, 0.6964686)
+bones/9/rotation = Quaternion(-0.10892397, 0.73433423, -0.399459, 0.53788614)
+bones/10/rotation = Quaternion(0.63822573, 0.10634945, -0.029041471, 0.76191497)
+bones/11/rotation = Quaternion(0.11670909, -0.0029165838, -0.04477884, 0.992152)
+bones/12/rotation = Quaternion(0.45364815, 0.5562003, -0.4366294, 0.54240155)
+bones/13/rotation = Quaternion(-0.5859873, 0.25602394, 0.35298595, 0.6829872)
+bones/14/rotation = Quaternion(-0.06847914, 0.6854408, -0.53136927, -0.49308035)
+bones/15/rotation = Quaternion(0.68986976, 0.28330225, -0.2410267, 0.6210682)
+bones/16/rotation = Quaternion(0.19062181, -0.03912924, 0.045610283, 0.97982246)
+bones/17/rotation = Quaternion(0.45364824, -0.5562, 0.43662986, 0.5424014)
+bones/18/rotation = Quaternion(0.88456446, -0.04952185, 0.006105958, 0.46374118)
+bones/19/rotation = Quaternion(0.002641203, -0.0012219753, -6.363675e-06, 0.9999958)
+bones/20/rotation = Quaternion(-0.48845294, 0.023229063, 0.046741858, 0.87102777)
+bones/21/rotation = Quaternion(-0.000137047, 0.9643067, -0.26478744, -0.00049954734)
+bones/22/rotation = Quaternion(-5.4779008e-08, -3.0681427e-08, -2.4511875e-09, 1)
+bones/23/rotation = Quaternion(0.98331624, -0.04211533, 0.0051927567, -0.17688566)
+bones/24/rotation = Quaternion(0.41868097, -0.009405746, 0.0043260907, 0.90807444)
+bones/25/rotation = Quaternion(-0.4210372, 0.022219958, -0.011145768, 0.90670276)
+bones/26/rotation = Quaternion(-0.00013714924, 0.9643067, -0.2647874, -0.0004995469)
+bones/27/rotation = Quaternion(-3.1728796e-08, -3.2619933e-08, -5.5554185e-15, 1)
+
+[node name="DebugMesh" type="MeshInstance3D" parent="." unique_id=1344799489]
+visible = false
+mesh = SubResource("CapsuleMesh_a0dc1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1774503686]
+shape = SubResource("CapsuleShape3D_a0dc1")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=1757155284]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.85, 0.25, -2)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1049990855]
+transform = Transform3D(1, 0, 0, 0, 0.9396927, 0.34202015, 0, -0.34202015, 0.9396927, 0, 2.18, 3.435)
+fov = 80.0
+size = 6.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=767568768]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=254406209]
+shape = SubResource("CylinderShape3D_6yjb0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=934788342]
+visible = false
+mesh = SubResource("CylinderMesh_6yjb0")
+
+[node name="RayCasts2" type="Node3D" parent="." unique_id=2025760609]
+
+[node name="+z" type="RayCast3D" parent="RayCasts2" unique_id=421676432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+target_position = Vector3(0, -5, 0)
+debug_shape_thickness = 5
+
+[node name="-z" type="RayCast3D" parent="RayCasts2" unique_id=75557288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+target_position = Vector3(0, -5, 0)
+debug_shape_thickness = 5
+
+[node name="-x" type="RayCast3D" parent="RayCasts2" unique_id=1878359723]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+target_position = Vector3(0, -5, 0)
+debug_shape_thickness = 5
+
+[node name="+x" type="RayCast3D" parent="RayCasts2" unique_id=218741224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+target_position = Vector3(0, -5, 0)
+debug_shape_thickness = 5
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_interact_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_interact_body_exited"]
+
+[editable path="exported-model"]

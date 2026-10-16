@@ -1,0 +1,664 @@
+[gd_scene format=3 uid="uid://d0echiujcexpq"]
+
+[ext_resource type="Script" uid="uid://dpbjshssxyoip" path="res://scripts/shop_level.gd" id="1_2pges"]
+[ext_resource type="Shader" uid="uid://ckvw1rjjprxd8" path="res://shaders/transparent_ground.gdshader" id="2_tdm1f"]
+[ext_resource type="Script" uid="uid://gjs0pwix4j17" path="res://scripts/shop.gd" id="3_huiu5"]
+[ext_resource type="PackedScene" uid="uid://cpamtj5glqveo" path="res://scenes/PlayerBase.tscn" id="3_rhuay"]
+[ext_resource type="PackedScene" uid="uid://bx3ngx7b0xkjj" path="res://scenes/menu_control.tscn" id="6_rhuay"]
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="7_8wkja"]
+[ext_resource type="Texture2D" uid="uid://bm2dur7s3k8gb" path="res://icon.svg" id="8_y5xye"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rhuay"]
+sky_top_color = Color(0.46213692, 0.0023471443, 0.76114905, 1)
+sky_horizon_color = Color(0.7836382, 0.52585757, 0.9560768, 1)
+sky_curve = 0.06
+ground_bottom_color = Color(0.11007159, 0.16502249, 0.31547672, 1)
+ground_horizon_color = Color(0.47691053, 0.66176087, 0.9296967, 1)
+ground_curve = 0.35
+use_debanding = false
+
+[sub_resource type="Sky" id="Sky_4nkto"]
+sky_material = SubResource("ProceduralSkyMaterial_rhuay")
+
+[sub_resource type="Environment" id="Environment_huiu5"]
+background_mode = 2
+background_color = Color(0.6358732, 0.47145623, 0.9540177, 1)
+sky = SubResource("Sky_4nkto")
+sky_custom_fov = 90.0
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 3
+tonemap_exposure = 0.6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2pges"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6gqgd"]
+bg_color = Color(0.05490196, 0.6901961, 0.2901961, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_rc5fg"]
+font_size = 32
+outline_size = 16
+outline_color = Color(0.0436391, 0.58010924, 0.2399899, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tf2h"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tdm1f"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_rhuay"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_huiu5"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.8085329, 0.2731269, 0.21525493, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wkja"]
+bg_color = Color(0.05465565, 0.6882809, 0.66115725, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_y5xye"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mlekt"]
+font_size = 40
+outline_size = 16
+outline_color = Color(0.042113557, 0.5678352, 0.5447922, 1)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_y5xye"]
+vertices = PackedVector3Array(-0.75, 0, 8.25, -1, 0, 6.25, -9.25, 0, 9.25, 4.5, 0, 9.25, 0.75, 0, 8.25, -9.25, 0, -4.25, 4.5, 0, -4.25, 1.25, 0, 7.75, 1, 0, 6)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 5, 1), PackedInt32Array(1, 5, 6), PackedInt32Array(3, 4, 7), PackedInt32Array(7, 8, 3), PackedInt32Array(3, 8, 6), PackedInt32Array(6, 8, 1)]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mlekt"]
+render_priority = 0
+shader = ExtResource("2_tdm1f")
+shader_parameter/circle_size = 0.0
+shader_parameter/brightness = 0.2999999932944
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2os1m"]
+material = SubResource("ShaderMaterial_mlekt")
+size = Vector2(5, 5)
+center_offset = Vector3(0, -0.5, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e3sih"]
+size = Vector3(5, 0.1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_12gks"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pa8r4"]
+material = SubResource("StandardMaterial3D_12gks")
+size = Vector2(2, 5)
+center_offset = Vector3(2.5, 0, -0.5)
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pa8r4"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="MeshLibrary" id="MeshLibrary_4wdvh"]
+item/0/name = "Ground | 1x1"
+item/0/mesh = SubResource("PlaneMesh_2os1m")
+item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/mesh_cast_shadow = 0
+item/0/shapes = [SubResource("BoxShape3D_e3sih"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/0/navigation_layers = 1
+item/1/name = "Wall | 1x1"
+item/1/mesh = SubResource("PlaneMesh_pa8r4")
+item/1/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/mesh_cast_shadow = 1
+item/1/shapes = [SubResource("BoxShape3D_pa8r4"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)]
+item/1/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+item/1/navigation_layers = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_6yjb0"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_rhuay"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="Animation" id="Animation_4nkto"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fcfvj"]
+resource_name = "start_battle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:stretch_shrink")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6, 100]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tdm1f"]
+_data = {
+&"RESET": SubResource("Animation_4nkto"),
+&"start_battle": SubResource("Animation_fcfvj")
+}
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_8wkja"]
+color = Color(1, 1, 1, 1)
+grow_begin = 5.0
+grow_end = 5.0
+thickness = 2
+
+[node name="ShopLevel" type="Node3D" unique_id=1592983467 node_paths=PackedStringArray("animation_player", "canvas", "world", "worldGUI", "healthGUI", "manaGUI", "levelGUI")]
+script = ExtResource("1_2pges")
+level_color = Color(0.35005355, 0.6758662, 0.9615596, 1)
+animation_player = NodePath("AnimationPlayer")
+canvas = NodePath("CanvasModulate")
+world = NodePath("WorldSubContainer/WorldSubViewport/World")
+worldGUI = NodePath("WorldGUI")
+healthGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/HP")
+manaGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/MP")
+levelGUI = NodePath("WorldGUI/MarginContainer/VBoxContainer/XP")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=419642298]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1764925948]
+environment = SubResource("Environment_huiu5")
+
+[node name="WorldGUI" type="Control" parent="." unique_id=63155760]
+unique_name_in_owner = true
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI" unique_id=2105689269]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WorldGUI/MarginContainer" unique_id=1500825276]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+alignment = 2
+
+[node name="XP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=2011217521]
+custom_minimum_size = Vector2(350, 20)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_2pges")
+theme_override_styles/fill = SubResource("StyleBoxFlat_6gqgd")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=156459076]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -30.0
+offset_right = 66.000015
+offset_bottom = 25.0
+theme_override_font_sizes/font_size = 32
+text = "Lvl. 1"
+label_settings = SubResource("LabelSettings_rc5fg")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/XP" unique_id=1710469466]
+layout_mode = 0
+offset_left = 196.0
+offset_top = -30.0
+offset_right = 342.0
+offset_bottom = 25.0
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 32
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_rc5fg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=935828009]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_3tf2h")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tdm1f")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP" unique_id=292385338]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer" unique_id=1219681673]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=292149430]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "HP"
+label_settings = SubResource("LabelSettings_rhuay")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/HP/MarginContainer/HBoxContainer" unique_id=1560222334]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_huiu5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MP" type="ProgressBar" parent="WorldGUI/MarginContainer/VBoxContainer" unique_id=214365013]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_2pges")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8wkja")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP" unique_id=1373217776]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer" unique_id=1682607170]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=588316273]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "MP"
+label_settings = SubResource("LabelSettings_y5xye")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="WorldGUI/MarginContainer/VBoxContainer/MP/MarginContainer/HBoxContainer" unique_id=348309591]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "??? / ???"
+label_settings = SubResource("LabelSettings_mlekt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteractLabel" type="RichTextLabel" parent="WorldGUI/MarginContainer" unique_id=1634699462]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[img=100]Assets/Images/AttackIcon.png[/img] [font_size=42]Interact[/font_size]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldSubContainer" type="SubViewportContainer" parent="." unique_id=1989536834]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 4
+
+[node name="WorldSubViewport" type="SubViewport" parent="WorldSubContainer" unique_id=595232983]
+handle_input_locally = false
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="WorldSubContainer/WorldSubViewport" unique_id=1330268101]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="WorldSubContainer/WorldSubViewport/World" unique_id=1961295613]
+navigation_mesh = SubResource("NavigationMesh_y5xye")
+
+[node name="GridMap" type="GridMap" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=2093635018]
+mesh_library = SubResource("MeshLibrary_4wdvh")
+cell_size = Vector3(5, 1, 5)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(0, 65535, 0, 0, 0, 0, 0, 1, 0, 65535, 1, 0, 65534, 1, 0, 65534, 0, 0, 65534, 65535, 0, 65535, 65535, 0, 65535, 0, 0, 1, 1, 917505, 1, 0, 917505, 1, 65535, 917505, 0, 2, 1245185, 65535, 2, 1245185, 65534, 2, 1245185, 65533, 1, 262145, 65533, 0, 262145, 65533, 65535, 262145, 65534, 65534, 1507329, 65535, 65534, 1507329, 0, 65534, 1507329)
+}
+
+[node name="Shop" type="MeshInstance3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D" unique_id=1325051761 node_paths=PackedStringArray("cancel_button") groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+mesh = SubResource("BoxMesh_6yjb0")
+script = ExtResource("3_huiu5")
+cancel_button = NodePath("../../../../../ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/CLOSE")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Shop" unique_id=1696937382]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Shop/StaticBody3D" unique_id=369383868]
+shape = SubResource("ConcavePolygonShape3D_rhuay")
+
+[node name="Player" parent="WorldSubContainer/WorldSubViewport/World" unique_id=428104958 instance=ExtResource("3_rhuay")]
+transform = Transform3D(-0.777703, 0, 0.6286319, 0, 1, 0, -0.6286319, 0, -0.777703, -1.208, 1, -1.086)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1090241618]
+root_node = NodePath("../WorldSubContainer")
+libraries/ = SubResource("AnimationLibrary_tdm1f")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1284093868]
+
+[node name="ShopGUI" type="Control" parent="." unique_id=1403258365]
+unique_name_in_owner = true
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopGUI" unique_id=442285307]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="PanelContainer" type="PanelContainer" parent="ShopGUI/MarginContainer" unique_id=1360304839]
+layout_mode = 2
+theme = ExtResource("7_8wkja")
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopGUI/MarginContainer/PanelContainer" unique_id=512301497]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer" unique_id=1769092909]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1608814937]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=5.0 connected=0]SHOP[/wave]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1347286694]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/separator = SubResource("StyleBoxLine_8wkja")
+
+[node name="SkillsShop" type="MarginContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1826921610]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Skills" type="HBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop" unique_id=2065917236]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Skill1Container" type="PanelContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills" unique_id=1182833540]
+custom_minimum_size = Vector2(370, 456)
+custom_maximum_size = Vector2(370, 456)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container" unique_id=1601406495]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container/MarginContainer" unique_id=1162753098]
+layout_mode = 2
+
+[node name="Skill_name" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container/MarginContainer/VBoxContainer" unique_id=986932657]
+layout_mode = 2
+size_flags_vertical = 10
+text = "SKILL NAME"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container/MarginContainer/VBoxContainer" unique_id=1066499365]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("8_y5xye")
+
+[node name="Skill_Effect" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container/MarginContainer/VBoxContainer" unique_id=2000912852]
+layout_mode = 2
+size_flags_vertical = 2
+text = "SKILL EFFECT"
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container/MarginContainer/VBoxContainer" unique_id=424572671]
+layout_mode = 2
+size_flags_vertical = 10
+text = "COST : $100"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container/MarginContainer/VBoxContainer" unique_id=335995637]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="Learn" type="Button" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill1Container/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1489487039]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+text = "LEARN SKILL"
+
+[node name="Skill2Container" type="PanelContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills" unique_id=1818721886]
+custom_minimum_size = Vector2(370, 456)
+custom_maximum_size = Vector2(370, 456)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container" unique_id=1010906210]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container/MarginContainer" unique_id=360362265]
+layout_mode = 2
+
+[node name="Skill_name" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container/MarginContainer/VBoxContainer" unique_id=2054309859]
+layout_mode = 2
+size_flags_vertical = 10
+text = "SKILL NAME"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container/MarginContainer/VBoxContainer" unique_id=1510468809]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("8_y5xye")
+
+[node name="Skill_Effect" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container/MarginContainer/VBoxContainer" unique_id=1164931493]
+layout_mode = 2
+size_flags_vertical = 2
+text = "SKILL EFFECT"
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container/MarginContainer/VBoxContainer" unique_id=131449172]
+layout_mode = 2
+size_flags_vertical = 10
+text = "COST : $100"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container/MarginContainer/VBoxContainer" unique_id=1840421893]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="Learn" type="Button" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill2Container/MarginContainer/VBoxContainer/HBoxContainer" unique_id=338464383]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+text = "LEARN SKILL"
+
+[node name="Skill3Container2" type="PanelContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills" unique_id=2008355614]
+custom_minimum_size = Vector2(370, 456)
+custom_maximum_size = Vector2(370, 456)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2" unique_id=1295878187]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2/MarginContainer" unique_id=1712662704]
+layout_mode = 2
+
+[node name="Skill_name" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2/MarginContainer/VBoxContainer" unique_id=1934089269]
+layout_mode = 2
+size_flags_vertical = 10
+text = "SKILL NAME"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2/MarginContainer/VBoxContainer" unique_id=407482017]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("8_y5xye")
+
+[node name="Skill_Effect" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2/MarginContainer/VBoxContainer" unique_id=744714116]
+layout_mode = 2
+size_flags_vertical = 2
+text = "SKILL EFFECT"
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2/MarginContainer/VBoxContainer" unique_id=346278460]
+layout_mode = 2
+size_flags_vertical = 10
+text = "COST : $100"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2/MarginContainer/VBoxContainer" unique_id=1214407089]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="Learn" type="Button" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SkillsShop/Skills/Skill3Container2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1360224999]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+text = "LEARN SKILL"
+
+[node name="CLOSE" type="Button" parent="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1562743563]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "CLOSE"
+
+[node name="ConfigMenu" parent="." unique_id=710978952 instance=ExtResource("6_rhuay")]
+visible = false
+z_index = 10
+focus_mode = 2
+focus_behavior_recursive = 1
+mouse_filter = 0
+mouse_target = true
+
+[connection signal="pressed" from="ShopGUI/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/CLOSE" to="WorldSubContainer/WorldSubViewport/World/NavigationRegion3D/Shop" method="_on_close_pressed"]

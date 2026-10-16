@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://cf2k6hi531hn8"]
+
+[ext_resource type="Texture2D" uid="uid://bvyx1rhj4jy4p" path="res://Assets/Images/AttackPlusIcon.png" id="1_40ip1"]
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="2_bf8et"]
+
+[resource]
+script = ExtResource("2_bf8et")
+skID = 60
+SkName = "Attack Plus"
+SkDesc = "Boosts character attack by 20%"
+skType = 1
+SkHit = 6
+SkIcon = ExtResource("1_40ip1")
+reward = true
+sellable = true
+reward_chance = 0.5
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

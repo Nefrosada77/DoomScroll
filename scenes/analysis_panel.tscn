@@ -1,0 +1,329 @@
+[gd_scene format=3 uid="uid://c2yg7gkdapfqv"]
+
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="1_6g3bo"]
+[ext_resource type="Script" uid="uid://c7a55omu1vq58" path="res://scripts/analysispanel.gd" id="1_o0rkq"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_o0rkq"]
+color = Color(1, 1, 1, 1)
+grow_begin = 5.0
+grow_end = 5.0
+thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7cx4"]
+bg_color = Color(0, 0, 0, 0.29411766)
+skew = Vector2(0.25, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5pcr"]
+bg_color = Color(0.92992187, 0.42003396, 0.35436678, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iv3pb"]
+bg_color = Color(0.05465565, 0.6882809, 0.66115725, 1)
+skew = Vector2(0.25, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[node name="AnalysisPanel" type="PanelContainer" unique_id=350573996 node_paths=PackedStringArray("char_name", "char_lvl", "hp_bar", "currHP", "maxHP", "mp_bar", "currMP", "mp", "maxMP", "atk", "def", "skill_list", "passive_skill_list", "separator", "scroll_container")]
+custom_minimum_size = Vector2(475, 0)
+custom_maximum_size = Vector2(475, -1)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.5
+anchor_bottom = 0.9
+offset_left = -216.0
+offset_right = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+mouse_filter = 2
+theme = ExtResource("1_6g3bo")
+script = ExtResource("1_o0rkq")
+char_name = NodePath("MarginContainer/ScrollContainer/VBoxContainer/CHARNAME/CHARNAME")
+char_lvl = NodePath("MarginContainer/ScrollContainer/VBoxContainer/CHARNAME/CHARLVL")
+hp_bar = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP/HPBar")
+currHP = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP/currHP")
+maxHP = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP/maxHP")
+mp_bar = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP/MPBar")
+currMP = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP/currMP")
+mp = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP")
+maxMP = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP/maxMP")
+atk = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/ATK/ATKSTAT")
+def = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/DEF/DEFSTAT")
+skill_list = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/SKILLS/SKILLS/SKILLLIST")
+passive_skill_list = NodePath("MarginContainer/ScrollContainer/VBoxContainer/TabContainer/PASSIVE SKILLS/PASSIVESKILLS/PASSIVESKILLLIST")
+separator = NodePath("MarginContainer/ScrollContainer/VBoxContainer/HSeparator")
+scroll_container = NodePath("MarginContainer/ScrollContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1775922919]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=263070164]
+layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 8
+follow_focus = true
+draw_focus_border = true
+horizontal_scroll_mode = 0
+scroll_hint_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=939129126]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="CHARNAME" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=1574669924]
+layout_mode = 2
+
+[node name="CHARNAME" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/CHARNAME" unique_id=171923558]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+focus_behavior_recursive = 1
+theme_override_font_sizes/font_size = 32
+text = "???"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CHARLVL" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/CHARNAME" unique_id=1067504602]
+layout_mode = 2
+text = "LVL ???"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=1451867252]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_o0rkq")
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=897163205]
+layout_mode = 2
+focus_mode = 2
+current_tab = 0
+
+[node name="STATS" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer" unique_id=1000065522]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+metadata/_tab_index = 0
+
+[node name="STATS" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS" unique_id=591657541]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="HP" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS" unique_id=53032999]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HPBar" type="ProgressBar" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP" unique_id=1810380626]
+use_parent_material = true
+custom_minimum_size = Vector2(250, 30)
+custom_maximum_size = Vector2(250, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_d7cx4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_y5pcr")
+value = 100.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP/HPBar" unique_id=541515935]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="HP" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP/HPBar/MarginContainer" unique_id=1643819520]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "HP"
+
+[node name="currHP" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP" unique_id=1438963350]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 24
+text = "???"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="separato" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP" unique_id=397994913]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 16
+text = "/"
+
+[node name="maxHP" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/HP" unique_id=740468675]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "???"
+
+[node name="MP" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS" unique_id=1279557420]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MPBar" type="ProgressBar" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP" unique_id=476911782]
+use_parent_material = true
+custom_minimum_size = Vector2(250, 30)
+custom_maximum_size = Vector2(250, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_d7cx4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_iv3pb")
+value = 100.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP/MPBar" unique_id=989968080]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="MP" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP/MPBar/MarginContainer" unique_id=1650982741]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "MP"
+
+[node name="currMP" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP" unique_id=1355284523]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 24
+text = "???"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="separato" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP" unique_id=161374276]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 16
+text = "/"
+
+[node name="maxMP" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/MP" unique_id=261093302]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 24
+text = "???"
+
+[node name="ATK" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS" unique_id=265021131]
+layout_mode = 2
+
+[node name="ATK" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/ATK" unique_id=1535199183]
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 1
+theme_override_font_sizes/font_size = 20
+text = "ATTACK:"
+
+[node name="ATKSTAT" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/ATK" unique_id=1625619701]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 24
+text = "???"
+
+[node name="DEF" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS" unique_id=1546205183]
+layout_mode = 2
+
+[node name="DEF" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/DEF" unique_id=200835181]
+layout_mode = 2
+focus_mode = 2
+focus_behavior_recursive = 1
+theme_override_font_sizes/font_size = 20
+text = "DEFENSE:"
+
+[node name="DEFSTAT" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/STATS/STATS/DEF" unique_id=1499317599]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 24
+text = "???"
+
+[node name="SKILLS" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer" unique_id=1208971204]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+metadata/_tab_index = 1
+
+[node name="SKILLS" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/SKILLS" unique_id=1812343329]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="SKILLLIST" type="RichTextLabel" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/SKILLS/SKILLS" unique_id=1762383478]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+
+[node name="PASSIVE SKILLS" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer" unique_id=460325209]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+metadata/_tab_index = 2
+
+[node name="PASSIVESKILLS" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/PASSIVE SKILLS" unique_id=1197530089]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="PASSIVESKILLLIST" type="RichTextLabel" parent="MarginContainer/ScrollContainer/VBoxContainer/TabContainer/PASSIVE SKILLS/PASSIVESKILLS" unique_id=1418921102]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+
+[node name="StatusChanges" type="PanelContainer" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=1744445252]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3

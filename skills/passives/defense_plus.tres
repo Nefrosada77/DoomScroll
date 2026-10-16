@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://jth3gf41hr6n"]
+
+[ext_resource type="Script" uid="uid://b6tuc53xl7cuu" path="res://scripts/skill.gd" id="1_askqp"]
+[ext_resource type="Texture2D" uid="uid://cgxgab2lmo11t" path="res://Assets/Images/DefendPlusIcon.png" id="1_nmcq3"]
+
+[resource]
+script = ExtResource("1_askqp")
+skID = 61
+SkName = "Defense Plus"
+SkDesc = "Boosts character defense by 20%"
+skType = 1
+SkHit = 6
+SkIcon = ExtResource("1_nmcq3")
+reward = true
+sellable = true
+metadata/_custom_type_script = "uid://b6tuc53xl7cuu"

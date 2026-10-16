@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://cpg7fg02q5ps8"]
+
+[ext_resource type="Script" uid="uid://bayniskuf80rk" path="res://scripts/char_container.gd" id="1_iyia2"]
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_sx8hh"]
+parameter_name = "Hovered"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_iyia2"]
+default_input_values = [0, 0.0, 1, 10.0]
+operator = 2
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_ha80t"]
+default_input_values = [0, 0.0, 1, 10.0]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_fwv4a"]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_uqeoq"]
+input_name = "vertex"
+
+[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_ygc4a"]
+function = 0
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_tynhi"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(0, 0)]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_8g2m7"]
+parameter_name = "Speed"
+hint = 2
+min = 0.1
+max = 10.0
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_1c7an"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_7mtsl"]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_agke5"]
+operator = 2
+
+[sub_resource type="VisualShader" id="VisualShader_ss2hd"]
+mode = 1
+flags/light_only = false
+nodes/vertex/4/node = SubResource("VisualShaderNodeFloatFunc_ygc4a")
+nodes/vertex/4/position = Vector2(-1020, 200)
+nodes/vertex/5/node = SubResource("VisualShaderNodeVectorOp_tynhi")
+nodes/vertex/5/position = Vector2(200, 120)
+nodes/vertex/6/node = SubResource("VisualShaderNodeFloatParameter_8g2m7")
+nodes/vertex/6/position = Vector2(-1580, 340)
+nodes/vertex/7/node = SubResource("VisualShaderNodeFloatOp_1c7an")
+nodes/vertex/7/position = Vector2(-1260, 200)
+nodes/vertex/8/node = SubResource("VisualShaderNodeVectorCompose_7mtsl")
+nodes/vertex/8/position = Vector2(-20, 140)
+nodes/vertex/9/node = SubResource("VisualShaderNodeFloatOp_agke5")
+nodes/vertex/9/position = Vector2(-260, 180)
+nodes/vertex/10/node = SubResource("VisualShaderNodeBooleanParameter_sx8hh")
+nodes/vertex/10/position = Vector2(-660, 400)
+nodes/vertex/11/node = SubResource("VisualShaderNodeFloatOp_iyia2")
+nodes/vertex/11/position = Vector2(-800, 180)
+nodes/vertex/12/node = SubResource("VisualShaderNodeFloatOp_ha80t")
+nodes/vertex/12/position = Vector2(-580, 180)
+nodes/vertex/13/node = SubResource("VisualShaderNodeInput_fwv4a")
+nodes/vertex/13/position = Vector2(-1580, 200)
+nodes/vertex/14/node = SubResource("VisualShaderNodeInput_uqeoq")
+nodes/vertex/14/position = Vector2(-220, 440)
+nodes/vertex/connections = PackedInt32Array(4, 0, 11, 0, 11, 0, 12, 0, 7, 0, 4, 0, 6, 0, 7, 1, 12, 0, 9, 0, 10, 0, 9, 1, 13, 0, 7, 0, 5, 0, 0, 0, 8, 0, 5, 0, 14, 0, 5, 1, 9, 0, 8, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8bqx"]
+shader = SubResource("VisualShader_ss2hd")
+shader_parameter/Speed = 2.500000037253
+shader_parameter/Hovered = false
+
+[node name="CharContainer" type="PanelContainer" unique_id=9602947]
+material = SubResource("ShaderMaterial_f8bqx")
+custom_minimum_size = Vector2(200, 0)
+size_flags_vertical = 3
+script = ExtResource("1_iyia2")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1185106150]
+use_parent_material = true
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2011469709]
+use_parent_material = true
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2054962345]
+use_parent_material = true
+layout_mode = 2
+text = "CHARNAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer" unique_id=1561325588]
+use_parent_material = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+value = 50.0
+show_percentage = false

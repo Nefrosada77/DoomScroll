@@ -1,0 +1,421 @@
+[gd_scene format=3 uid="uid://bqoe241yd6ttd"]
+
+[ext_resource type="Theme" uid="uid://dnabmn0gx5bcm" path="res://Assets/Themes/menuTheme.tres" id="1_jfien"]
+[ext_resource type="Script" uid="uid://dcyof0eo08evn" path="res://scripts/main_menu.gd" id="1_yb5uv"]
+[ext_resource type="Theme" uid="uid://dgbnitmsp2o02" path="res://Assets/Themes/defaultTheme.tres" id="2_0bfng"]
+[ext_resource type="AudioStream" uid="uid://6xlaqq3e18qa" path="res://Assets/Sounds/Music/menu.ogg" id="3_d3eho"]
+[ext_resource type="Script" uid="uid://bko77vfs4ludx" path="res://scripts/volSlider.gd" id="3_yb5uv"]
+[ext_resource type="Shader" uid="uid://hem0kemxlsil" path="res://scripts/shaders/guiControl.gdshader" id="4_d3eho"]
+[ext_resource type="Shader" uid="uid://00i8ymloqq57" path="res://scripts/shaders/pixelDissolve.gdshader" id="5_h8c6n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8c6n"]
+shader = ExtResource("5_h8c6n")
+shader_parameter/pixel_color = Color(0, 0, 0, 1)
+shader_parameter/progress = 0.0
+shader_parameter/block_size = 16.0
+
+[sub_resource type="Gradient" id="Gradient_yb5uv"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.342, 0.6385542, 0.92771083)
+colors = PackedColorArray(0.6392157, 0.63529414, 0.85490197, 1, 0.7607843, 0.8627451, 1, 1, 0, 0.3764706, 0.64705884, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1s5k1"]
+gradient = SubResource("Gradient_yb5uv")
+fill = 1
+fill_from = Vector2(0.902, 1)
+fill_to = Vector2(-0.094, 0.561)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h8c6n"]
+bg_color = Color(0.10980392, 0.2627451, 0.42352942, 1)
+border_width_left = 32
+border_width_top = 32
+border_width_right = 32
+border_width_bottom = 32
+border_color = Color(0.20072436, 0.20474726, 0.17975163, 1)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5d5v2"]
+shader = ExtResource("4_d3eho")
+shader_parameter/Speed = 2.0
+shader_parameter/PixelIncrease = 10.0
+shader_parameter/Hovered = false
+shader_parameter/direction = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d3eho"]
+bg_color = Color(0.34117648, 0.4392157, 0.6901961, 0.39215687)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="Animation" id="Animation_h8c6n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Control/TextureRect/PanelContainer:theme_override_styles/panel:bg_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.10980392, 0.2627451, 0.42352942, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_d3eho"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Control/TextureRect/PanelContainer:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.25, 3.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.10980392, 0.2627451, 0.42352942, 0.8392157), Color(0.24313726, 0.21568628, 0.62352943, 0.78431374)]
+}
+
+[sub_resource type="Animation" id="Animation_yb5uv"]
+resource_name = "start_game"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h8c6n"]
+_data = {
+&"RESET": SubResource("Animation_h8c6n"),
+&"idle": SubResource("Animation_d3eho"),
+&"start_game": SubResource("Animation_yb5uv")
+}
+
+[node name="MainMenu" type="SubViewportContainer" unique_id=1878179313 node_paths=PackedStringArray("animation")]
+material = SubResource("ShaderMaterial_h8c6n")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+stretch = true
+script = ExtResource("1_yb5uv")
+animation = NodePath("AnimationPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1115645198]
+unique_name_in_owner = true
+stream = ExtResource("3_d3eho")
+autoplay = true
+bus = &"Music"
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1102209548]
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="Control" type="Control" parent="SubViewport" unique_id=684301804]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport/Control" unique_id=2092310974]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_1s5k1")
+
+[node name="PanelContainer" type="PanelContainer" parent="SubViewport/Control/TextureRect" unique_id=963015644]
+custom_maximum_size = Vector2(1175, 625)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jfien")
+theme_override_styles/panel = SubResource("StyleBoxFlat_h8c6n")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewport/Control/TextureRect/PanelContainer" unique_id=1736774474]
+layout_mode = 2
+
+[node name="StartMenu" type="VBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/CenterContainer" unique_id=359690793]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Title" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu" unique_id=1987765181]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "DOOM Scroll"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButtons" type="VBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu" unique_id=1975667365]
+layout_mode = 2
+
+[node name="START" type="Button" parent="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu/MenuButtons" unique_id=891073716]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_5d5v2")
+layout_mode = 2
+text = "START RUN"
+
+[node name="OPTIONS" type="Button" parent="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu/MenuButtons" unique_id=104996833]
+layout_mode = 2
+text = "OPTIONS"
+
+[node name="CREDITS" type="Button" parent="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu/MenuButtons" unique_id=93799657]
+visible = false
+layout_mode = 2
+text = "START RUN"
+
+[node name="EXIT" type="Button" parent="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu/MenuButtons" unique_id=1063778890]
+visible = false
+layout_mode = 2
+text = "EXIT"
+
+[node name="OptionsMenu" type="TabContainer" parent="SubViewport/Control/TextureRect/PanelContainer" unique_id=1700833376]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.9, 0.9)
+focus_mode = 2
+theme_override_colors/font_hovered_color = Color(0.58103263, 0.5810328, 0.5810338, 1)
+theme_override_colors/font_unselected_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_colors/font_outline_color = Color(0.5137255, 0.77254903, 0.7647059, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 24
+theme_override_styles/panel = SubResource("StyleBoxFlat_d3eho")
+tab_alignment = 1
+current_tab = 1
+tab_0/disabled = true
+tab_0/hidden = true
+tab_2/disabled = true
+tab_2/hidden = true
+
+[node name="SCREEN" type="MarginContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu" unique_id=1448609043]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN" unique_id=697943470]
+layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN/ScrollContainer" unique_id=1750627857]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SCREENRESOLU" type="HBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer" unique_id=1353998373]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/SCREENRESOLU" unique_id=792070135]
+layout_mode = 2
+size_flags_horizontal = 2
+theme = ExtResource("2_0bfng")
+text = "SCREEN RESOLUTION"
+
+[node name="RESOLUTIONS" type="OptionButton" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/SCREENRESOLU" unique_id=26144147]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+selected = 0
+item_count = 2
+popup/item_0/text = "1920 X 1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600 X 900"
+popup/item_1/id = 1
+
+[node name="FULLSCREEN" type="HBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer" unique_id=1965640655]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/FULLSCREEN" unique_id=666143106]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_0bfng")
+text = "FULLSCREEN"
+
+[node name="FULLCHECK" type="CheckButton" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/SCREEN/ScrollContainer/VBoxContainer/FULLSCREEN" unique_id=1596334271]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "OFF"
+flat = true
+alignment = 2
+
+[node name="AUDIO" type="MarginContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu" unique_id=1415570457]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO" unique_id=432958159]
+layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 16
+
+[node name="AUDIOCONT" type="VBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer" unique_id=1225796809]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="MASTERVOL" type="HBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT" unique_id=738491583]
+layout_mode = 2
+
+[node name="MASAUDILBL" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL" unique_id=1442636469]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+theme = ExtResource("2_0bfng")
+text = "MASTER VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MASAUDIPERC" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL" unique_id=1441438564]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("2_0bfng")
+text = "90%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MASTERSLI" type="HSlider" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL" unique_id=1132661803 node_paths=PackedStringArray("label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+script = ExtResource("3_yb5uv")
+busName = "Master"
+label = NodePath("../MASAUDIPERC")
+
+[node name="SFXVOL2" type="HBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT" unique_id=1421498813]
+layout_mode = 2
+
+[node name="SFXAUDILBL" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2" unique_id=1822058697]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+theme = ExtResource("2_0bfng")
+text = "SOUND EFFECTS VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXAUDIPERC" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2" unique_id=654222948]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("2_0bfng")
+text = "90%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXSLI" type="HSlider" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2" unique_id=1403105427 node_paths=PackedStringArray("label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+script = ExtResource("3_yb5uv")
+busName = "SFX"
+label = NodePath("../SFXAUDIPERC")
+
+[node name="MUSICVOL3" type="HBoxContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT" unique_id=879447263]
+layout_mode = 2
+
+[node name="MUSICAUDILBL" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3" unique_id=284286649]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 1.5
+theme = ExtResource("2_0bfng")
+text = "MUSIC VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MUSICAUDIPERC" type="Label" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3" unique_id=432402796]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("2_0bfng")
+text = "90%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MUSICSLI" type="HSlider" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3" unique_id=1913942820 node_paths=PackedStringArray("label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+script = ExtResource("3_yb5uv")
+busName = "Music"
+label = NodePath("../MUSICAUDIPERC")
+
+[node name="GAMEPLAY" type="MarginContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu" unique_id=1528007602]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/GAMEPLAY" unique_id=1308451784]
+layout_mode = 2
+theme_override_constants/scrollbar_h_separation = 16
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=466723555]
+libraries/ = SubResource("AnimationLibrary_h8c6n")
+autoplay = &"idle"
+
+[connection signal="pressed" from="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu/MenuButtons/START" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="SubViewport/Control/TextureRect/PanelContainer/CenterContainer/StartMenu/MenuButtons/OPTIONS" to="." method="_on_options_pressed"]
+[connection signal="value_changed" from="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL/MASTERSLI" to="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MASTERVOL/MASTERSLI" method="_on_value_changed"]
+[connection signal="value_changed" from="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2/SFXSLI" to="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/SFXVOL2/SFXSLI" method="_on_value_changed"]
+[connection signal="value_changed" from="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3/MUSICSLI" to="SubViewport/Control/TextureRect/PanelContainer/OptionsMenu/AUDIO/ScrollContainer/AUDIOCONT/MUSICVOL3/MUSICSLI" method="_on_value_changed"]

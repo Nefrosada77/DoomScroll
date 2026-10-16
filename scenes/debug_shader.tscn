@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cq5ly68o2ht16"]
+
+[ext_resource type="Shader" uid="uid://hem0kemxlsil" path="res://scripts/shaders/guiControl.gdshader" id="1_jcg6k"]
+[ext_resource type="Texture2D" uid="uid://dydqq0m0c2vem" path="res://Assets/Images/AttackIcon.png" id="1_unvcu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcg6k"]
+shader = ExtResource("1_jcg6k")
+shader_parameter/Speed = 2.000000095
+shader_parameter/GlowSpeed = 3.0
+shader_parameter/PixelIncrease = 10.0
+shader_parameter/Hovered = false
+shader_parameter/direction = 0
+shader_parameter/MinAlpha = 0.50000002375
+
+[node name="DebugShader" type="Sprite2D" unique_id=364111727]
+texture_filter = 3
+material = SubResource("ShaderMaterial_jcg6k")
+texture = ExtResource("1_unvcu")
